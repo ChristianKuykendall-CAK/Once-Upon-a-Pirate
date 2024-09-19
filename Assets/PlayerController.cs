@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
     public float H;
     public float V;
     public Vector2 facingDirection = Vector2.right;
-    public float speed;
     public float moveForce;
     private Rigidbody2D rbody;
     // Start is called before the first frame update
