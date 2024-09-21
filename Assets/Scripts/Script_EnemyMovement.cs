@@ -14,24 +14,20 @@ public class Script_EnemyMovement : MonoBehaviour
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
+        Vector2 switchX = Vector2.left;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void FixedUpdate()
     {
+        LayerMask EnemyMask = LayerMask.GetMask("enemyLayer");
         
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
-        if (hit.collider != GameObject.FindWithTag("Ground"))
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, ~EnemyMask);
+        Debug.DrawRay(transform.position, Vector2.down, Color.red);
+        Debug.Log(hit.collider);
+        if (hit.collider == null)
         {
-            rbody.AddForce(switchX * moveForce);
-        }
-        else
-        {
+            rbody.velocity = Vector2.zero;
             if (switchX == Vector2.left)
             {
                 switchX = Vector2.right;
@@ -40,6 +36,8 @@ public class Script_EnemyMovement : MonoBehaviour
             {
                 switchX = Vector2.left;
             }
+
         }
+        rbody.AddForce(switchX * moveForce);
     }
 }
