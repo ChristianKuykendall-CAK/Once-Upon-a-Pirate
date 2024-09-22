@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public Vector2 facingDirection = Vector2.right;
     public float moveForce;
     private Rigidbody2D rbody;
+    private float delay = .8f;
+    private bool isJumping = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,8 @@ public class PlayerController : MonoBehaviour
         {
             FlipX();
         }
+        if (Input.GetKey(KeyCode.W) && !isJumping)
+            StartCoroutine(JumpPeriod());
         void FlipX()
         {
             Vector3 theScale = transform.localScale;
@@ -41,7 +45,23 @@ public class PlayerController : MonoBehaviour
     {
         if (rbody.velocity.x < 10 && rbody.velocity.x > -10)
             rbody.AddForce(Vector2.right * Mathf.Round(H) * moveForce);
-        if (rbody.velocity.y < 2 && rbody.velocity.y > -2)
-            rbody.AddForce(Vector2.up * V * moveForce * 10);
+
+        //if (rbody.velocity.y < 2 && rbody.velocity.y > -2) // dropdown platform
+        //RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
+        //if (hit.collider.CompareTag("platform")
+        //{
+            
+        //}
+
+    }
+    IEnumerator JumpPeriod()
+    {
+        isJumping = true;
+        
+        rbody.AddForce(Vector2.up * (moveForce / 2), ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(delay);
+        
+        isJumping = false;
     }
 }
