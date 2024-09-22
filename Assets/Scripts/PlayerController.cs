@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rbody;
     private float delay = .8f;
     private bool isJumping = false;
+    private bool Falling = false;
 
     private TilemapCollider2D tilemapCollider;
     // Start is called before the first frame update
@@ -52,13 +53,16 @@ public class PlayerController : MonoBehaviour
             rbody.AddForce(Vector2.right * Mathf.Round(H) * moveForce);
 
         //if (rbody.velocity.y < 2 && rbody.velocity.y > -2) // dropdown platform
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, ~PlayerMask);
-        Debug.DrawRay(transform.position, Vector2.down, Color.red);
+        Vector2 raycastStart = new Vector2(transform.position.x, transform.position.y - 1f);
+        RaycastHit2D hit = Physics2D.Raycast(raycastStart, Vector2.down, .1f, ~PlayerMask);
+        Debug.DrawRay(raycastStart, Vector2.down, Color.red);
         Debug.Log(hit.collider);
 
-        if (hit.collider != null && hit.collider.CompareTag("Platform"))
+        if (hit.collider != null && hit.collider.CompareTag("Platform") && !Falling)
         {
             tilemapCollider.isTrigger = false;
+            if (Input.GetKey(KeyCode.S))
+                StartCoroutine(FallThrough());
         }
         else
         {
@@ -76,7 +80,15 @@ public class PlayerController : MonoBehaviour
         
         isJumping = false;
     }
+    IEnumerator FallThrough()
+    {
+        Falling = true;
+        tilemapCollider.isTrigger = true;
+        Debug.Log("Working");
+        yield return new WaitForSeconds(1);
+        Falling = false;
 
+    }
     void FlipX()
     {
         Vector3 theScale = transform.localScale;
