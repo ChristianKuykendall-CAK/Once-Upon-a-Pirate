@@ -17,8 +17,8 @@ TagManager:
   - 
   - groundLayer
   - enemyLayer
-  - 
-  - 
+  - playerLayer
+  - enemyLayerPlatform
   - 
   - 
   - 

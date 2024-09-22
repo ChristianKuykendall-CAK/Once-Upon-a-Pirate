@@ -24,8 +24,8 @@ public class Script_EnemyMovement : MonoBehaviour
         LayerMask EnemyMask = LayerMask.GetMask("enemyLayer");
         
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, ~EnemyMask);
-        Debug.DrawRay(transform.position, Vector2.down, Color.red);
-        Debug.Log(hit.collider);
+        //Debug.DrawRay(transform.position, Vector2.down, Color.red);
+        //Debug.Log(hit.collider);
         
         if (hit.collider == null)
         {
