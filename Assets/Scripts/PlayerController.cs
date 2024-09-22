@@ -45,9 +45,14 @@ public class PlayerController : MonoBehaviour
     {
         if (rbody.velocity.x < 10 && rbody.velocity.x > -10)
             rbody.AddForce(Vector2.right * Mathf.Round(H) * moveForce);
-        
+
         //if (rbody.velocity.y < 2 && rbody.velocity.y > -2) // dropdown platform
+        //RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
+        //if (hit.collider.CompareTag("platform")
+        //{
             
+        //}
+
     }
     IEnumerator JumpPeriod()
     {
