@@ -95,4 +95,14 @@ public class PlayerController : MonoBehaviour
         theScale.x = theScale.x * -1;
         transform.localScale = theScale;
     }
+
+    //collision with item pickups
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Ammo"))
+        {
+            GameManager.instance.ammo += 2;
+            Destroy(collision.gameObject);
+        }
+    }
 }
