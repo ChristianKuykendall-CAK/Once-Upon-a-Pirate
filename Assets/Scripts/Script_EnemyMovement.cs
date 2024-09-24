@@ -70,18 +70,8 @@ public class Script_EnemyMovement : MonoBehaviour
                 // creates collider
                 attackCollider.transform.position = transform.position + new Vector3(switchX.x, switchX.y, 0);
                 boxCollider.size = new Vector2(.5f, .5f);
-                void OnTriggerEnter2D(BoxCollider2D other)
-                {
-                    if (other.CompareTag("Player"))
-                    {
-                        Rigidbody2D rbodyPlayer = other.GetComponent<Rigidbody2D>();
-                        rbodyPlayer.AddForce(switchX * 10);
-                        // health = health - 25;
-                        // Player.rbody.Addforce : pull from PlayerController class?
-                    }
-                }
                 
-                // times collider
+                // collider timer
                 Destroy(attackCollider, 0.5f);
                 Invoke("AttackPlayer", 1f);
             }

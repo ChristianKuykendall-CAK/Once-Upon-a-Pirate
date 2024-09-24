@@ -14,7 +14,9 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false;
     private bool Falling = false; // Helps toggle platform
 
+    private CapsuleCollider2D capcol;
     private TilemapCollider2D tilemapCollider;
+    private SpriteRenderer srpren;
 
     void Start()
     {
@@ -67,7 +69,11 @@ public class PlayerController : MonoBehaviour
         {
             tilemapCollider.isTrigger = true;
         }
-
+    }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        capcol.isTrigger = true;
+        srpren.color = Color.red;
     }
     // Forces player to jump once
     IEnumerator JumpPeriod()
