@@ -155,10 +155,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84e1b2c10f34ba45b9f916700e9dacd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 1
   facingDirection: {x: 1, y: 0}
   moveForce: 32
-  bullet_prefab: {fileID: 801804769}
-  moveSpeed: 5
+  moveSpeed: 8
+  bullet_prefab: {fileID: 0}
 --- !u!50 &5168721
 Rigidbody2D:
   serializedVersion: 4
@@ -171,10 +172,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 6
+  m_GravityScale: 50
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -282,11 +283,10 @@ Transform:
   m_GameObject: {fileID: 5168719}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.47, y: 1.1500001, z: 0}
+  m_LocalPosition: {x: -8.47, y: 0.9000001, z: 0}
   m_LocalScale: {x: 1, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 801804770}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &60044122
@@ -584,10 +584,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84e1b2c10f34ba45b9f916700e9dacd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   facingDirection: {x: 1, y: 0}
   moveForce: 32
+  moveSpeed: 8
   bullet_prefab: {fileID: 0}
-  moveSpeed: 5
 --- !u!50 &331306951
 Rigidbody2D:
   serializedVersion: 4
@@ -600,10 +601,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 6
+  m_GravityScale: 50
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -711,7 +712,7 @@ Transform:
   m_GameObject: {fileID: 331306949}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.78, y: 1.1500001, z: 0}
+  m_LocalPosition: {x: 8.78, y: 0.9000001, z: 0}
   m_LocalScale: {x: 1, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1500,37 +1501,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &801804769
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 801804770}
-  m_Layer: 9
-  m_Name: Bullet_Point
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &801804770
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 801804769}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.75, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5168724}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &838511270
 GameObject:
   m_ObjectHideFlags: 0
@@ -1809,7 +1779,7 @@ GameObject:
   - component: {fileID: 1067725448}
   m_Layer: 10
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1956,7 +1926,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   H: 0
-  V: 0
   facingDirection: {x: 1, y: 0}
   moveForce: 80
 --- !u!1 &2141926581
