@@ -9,7 +9,9 @@ public class PlayerController : MonoBehaviour
     public Vector2 facingDirection = Vector2.right;
     public float moveForce;
 
+    private SpriteRenderer rend;
     private Rigidbody2D rbody;
+    private Animator anim;
     private float delay = .8f;
     private bool isJumping = false;
     private bool Falling = false; // Helps toggle platform
@@ -18,7 +20,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        rend = GetComponent<SpriteRenderer>();
         rbody = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         // Set up change tilemap collider to turn into trigger so player can drop through
         GameObject tilemapObject = GameObject.Find("Tilemap_Dropdown_Platform");
         if (tilemapObject != null) 
@@ -35,10 +39,12 @@ public class PlayerController : MonoBehaviour
         if (H < 0 && facingDirection == Vector2.right)
         {
             FlipX();
+            facingDirection = Vector2.left;
         }
         else if (H > 0 && facingDirection == Vector2.left)
         {
             FlipX();
+            facingDirection = Vector2.right;
         }
         if (Input.GetKey(KeyCode.W) && !isJumping)
             StartCoroutine(JumpPeriod());
@@ -72,6 +78,7 @@ public class PlayerController : MonoBehaviour
     // Forces player to jump once
     IEnumerator JumpPeriod()
     {
+
         isJumping = true;
         
         rbody.AddForce(Vector2.up * (moveForce / 2), ForceMode2D.Impulse);
