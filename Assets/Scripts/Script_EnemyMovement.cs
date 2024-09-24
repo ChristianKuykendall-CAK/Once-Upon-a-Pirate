@@ -18,6 +18,8 @@ public class Script_EnemyMovement : MonoBehaviour
     private Vector2 switchX = Vector2.left;
     private Rigidbody2D rbody;
 
+    private bool attacking = false;
+
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
@@ -45,23 +47,48 @@ public class Script_EnemyMovement : MonoBehaviour
                 switchX = Vector2.left;
             }
         }
-        rbody.velocity = switchX * moveSpeed;
+        if(!attacking)
+            rbody.velocity = switchX * moveSpeed;
 
         if(enemyType == EnemyType.Melee)
         {
+            // raycast is set in front of enemy
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
             if(hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
             {
+                // helps toggle the enemy to start and stop moving when attacking
+                attacking = true;
+                // add new gameobject and the make a boxcollider2D component for that gameobject
                 GameObject attackCollider = new GameObject("AttackCollider");
-
                 BoxCollider2D boxCollider = attackCollider.AddComponent<BoxCollider2D>();
 
+                // set collider to a trigger for player to get damaged by
+                boxCollider.isTrigger = true;
+                // stops enemy before attack
+                rbody.velocity = Vector2.zero;
+
+                // creates collider
                 attackCollider.transform.position = transform.position + new Vector3(switchX.x, switchX.y, 0);
-
-                boxCollider.size = new Vector2(1f, 1f);
-
+                boxCollider.size = new Vector2(.5f, .5f);
+                void OnTriggerEnter2D(BoxCollider2D other)
+                {
+                    if (other.CompareTag("Player"))
+                    {
+                        Rigidbody2D rbodyPlayer = other.GetComponent<Rigidbody2D>();
+                        rbodyPlayer.AddForce(switchX * 10);
+                        // health = health - 25;
+                        // Player.rbody.Addforce : pull from PlayerController class?
+                    }
+                }
+                
+                // times collider
                 Destroy(attackCollider, 0.5f);
+                Invoke("AttackPlayer", 1f);
             }
         }
+    }
+    void AttackPlayer()
+    {
+        attacking = false;
     }
 }
