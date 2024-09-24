@@ -14,16 +14,14 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false;
     private bool Falling = false; // Helps toggle platform
 
-    private CapsuleCollider2D capcol;
     private TilemapCollider2D tilemapCollider;
-    private SpriteRenderer srpren;
 
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
         // Set up change tilemap collider to turn into trigger so player can drop through
         GameObject tilemapObject = GameObject.Find("Tilemap_Dropdown_Platform");
-        if (tilemapObject != null) 
+        if (tilemapObject != null)
         {
             tilemapCollider = tilemapObject.GetComponent<TilemapCollider2D>();
         }
@@ -33,7 +31,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         H = Input.GetAxis("Horizontal");
-        
+
         if (H < 0 && facingDirection == Vector2.right)
         {
             FlipX();
@@ -69,21 +67,17 @@ public class PlayerController : MonoBehaviour
         {
             tilemapCollider.isTrigger = true;
         }
-    }
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        capcol.isTrigger = true;
-        srpren.color = Color.red;
+
     }
     // Forces player to jump once
     IEnumerator JumpPeriod()
     {
         isJumping = true;
-        
+
         rbody.AddForce(Vector2.up * (moveForce / 2), ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(delay);
-        
+
         isJumping = false;
     }
     // Keeps platform turned off long enough for player to fall through
@@ -100,5 +94,23 @@ public class PlayerController : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x = theScale.x * -1;
         transform.localScale = theScale;
+    }
+
+    //collision with item pickups
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ammo"))
+        {
+            //GameManager.instance.ammo += 2;
+            Destroy(collision.gameObject);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.CompareTag("AttackCollider"))
+        {
+            //GameManager.instance.health -= 25;
+            //rbody.velocity
+        }
     }
 }
