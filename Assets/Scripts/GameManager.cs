@@ -20,4 +20,10 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
     }
+
+    void FixedUpdate()
+    {
+        if(health > 100)
+            health = 100;
+    }
 }

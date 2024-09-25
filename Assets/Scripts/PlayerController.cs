@@ -111,5 +111,15 @@ public class PlayerController : MonoBehaviour
             GameManager.instance.ammo += 2;
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.CompareTag("Health"))
+        {
+            GameManager.instance.health += 50;
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("Coin"))
+        {
+            GameManager.instance.coins += 1;
+            Destroy(collision.gameObject);
+        }
     }
 }
