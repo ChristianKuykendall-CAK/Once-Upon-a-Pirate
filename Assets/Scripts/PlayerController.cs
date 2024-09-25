@@ -9,7 +9,9 @@ public class PlayerController : MonoBehaviour
     public Vector2 facingDirection = Vector2.right;
     public float moveForce;
 
+    private SpriteRenderer rend;
     private Rigidbody2D rbody;
+    private Animator anim;
     private float delay = .8f;
     private bool isJumping = false;
     private bool Falling = false; // Helps toggle platform
@@ -18,10 +20,12 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        rend = GetComponent<SpriteRenderer>();
         rbody = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         // Set up change tilemap collider to turn into trigger so player can drop through
         GameObject tilemapObject = GameObject.Find("Tilemap_Dropdown_Platform");
-        if (tilemapObject != null) 
+        if (tilemapObject != null)
         {
             tilemapCollider = tilemapObject.GetComponent<TilemapCollider2D>();
         }
@@ -31,15 +35,28 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         H = Input.GetAxis("Horizontal");
-        
+        // left mouse button
+        if(Input.GetMouseButtonDown(0))
+        {
+
+        }
+        // right mouse button
+        if (Input.GetMouseButtonDown(1))
+        {
+
+        }
+
         if (H < 0 && facingDirection == Vector2.right)
         {
             FlipX();
+            facingDirection = Vector2.left;
         }
         else if (H > 0 && facingDirection == Vector2.left)
         {
             FlipX();
+            facingDirection = Vector2.right;
         }
+
         if (Input.GetKey(KeyCode.W) && !isJumping)
             StartCoroutine(JumpPeriod());
     }
@@ -72,12 +89,13 @@ public class PlayerController : MonoBehaviour
     // Forces player to jump once
     IEnumerator JumpPeriod()
     {
+
         isJumping = true;
-        
+
         rbody.AddForce(Vector2.up * (moveForce / 2), ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(delay);
-        
+
         isJumping = false;
     }
     // Keeps platform turned off long enough for player to fall through
@@ -94,5 +112,20 @@ public class PlayerController : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x = theScale.x * -1;
         transform.localScale = theScale;
+    }
+
+    //collision with item pickups
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ammo"))
+        {
+            //GameManager.instance.ammo += 2;
+            Destroy(collision.gameObject);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        rbody.AddForce(facingDirection * moveForce * 3 * -1);
+        //GameManager.isntance.health -= 25;
     }
 }
