@@ -18,6 +18,8 @@ public class Script_EnemyMovement : MonoBehaviour
     private Vector2 switchX = Vector2.left;
     private Rigidbody2D rbody;
 
+    private float offset;
+
     void Start()
     {
         rbody = GetComponent<Rigidbody2D>();
@@ -55,10 +57,13 @@ public class Script_EnemyMovement : MonoBehaviour
                 GameObject attackCollider = new GameObject("AttackCollider");
 
                 BoxCollider2D boxCollider = attackCollider.AddComponent<BoxCollider2D>();
+                if (switchX == Vector2.left)
+                    offset = -.5f;
+                else if (switchX == Vector2.right)
+                    offset = .5f;
+                attackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
 
-                attackCollider.transform.position = transform.position + new Vector3(switchX.x, switchX.y, 0);
-
-                boxCollider.size = new Vector2(1f, 1f);
+                boxCollider.size = new Vector2(.5f, .5f);
 
                 Destroy(attackCollider, 0.5f);
             }
