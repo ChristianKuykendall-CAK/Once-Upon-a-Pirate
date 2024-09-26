@@ -15,7 +15,7 @@ public class Script_EnemyMovement : MonoBehaviour
     // for ranged enemy
     public GameObject bullet_prefab;
     public Transform firePoint;
-    private float fireDelay = 1f;
+    private float fireDelay = 2f;
     private float nextTimeToFire = 0;
     public Transform playerTransform;
 
@@ -76,7 +76,7 @@ public class Script_EnemyMovement : MonoBehaviour
 
         if(enemyType == EnemyType.Ranged)
         {
-            if(Vector2.Distance(playerTransform.position, transform.position) < 5)
+            if(Vector2.Distance(playerTransform.position, transform.position) < 10 && Time.time > nextTimeToFire)
             {
                 Instantiate(bullet_prefab, firePoint.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : firePoint.rotation);
                 nextTimeToFire = Time.time + fireDelay;

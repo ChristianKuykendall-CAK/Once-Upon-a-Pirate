@@ -157,10 +157,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 1
   facingDirection: {x: 1, y: 0}
-  moveForce: 32
-  moveSpeed: 8
+  moveForce: 0
+  moveSpeed: 0
   bullet_prefab: {fileID: 3635994762763880266, guid: 6a5565e3fb080f0439c6d6676f9d68f4, type: 3}
-  firePoint: {fileID: 0}
+  firePoint: {fileID: 857726708}
   playerTransform: {fileID: 1067725447}
 --- !u!50 &5168721
 Rigidbody2D:
@@ -288,7 +288,8 @@ Transform:
   m_LocalPosition: {x: -8.47, y: 0.9000001, z: 0}
   m_LocalScale: {x: 1, y: 0.9, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 857726708}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &60044122
@@ -1768,6 +1769,37 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &857726707
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 857726708}
+  m_Layer: 0
+  m_Name: firePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &857726708
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857726707}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.51, y: 0.09, z: 0}
+  m_LocalScale: {x: 1, y: 1.1111112, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5168724}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1067725443
 GameObject:
   m_ObjectHideFlags: 0
