@@ -159,7 +159,9 @@ MonoBehaviour:
   facingDirection: {x: 1, y: 0}
   moveForce: 32
   moveSpeed: 8
-  bullet_prefab: {fileID: 0}
+  bullet_prefab: {fileID: 3635994762763880266, guid: 6a5565e3fb080f0439c6d6676f9d68f4, type: 3}
+  firePoint: {fileID: 0}
+  playerTransform: {fileID: 1067725447}
 --- !u!50 &5168721
 Rigidbody2D:
   serializedVersion: 4
@@ -589,6 +591,8 @@ MonoBehaviour:
   moveForce: 32
   moveSpeed: 8
   bullet_prefab: {fileID: 0}
+  firePoint: {fileID: 0}
+  playerTransform: {fileID: 0}
 --- !u!50 &331306951
 Rigidbody2D:
   serializedVersion: 4

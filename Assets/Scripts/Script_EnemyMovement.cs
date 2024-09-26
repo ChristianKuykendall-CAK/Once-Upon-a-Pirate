@@ -14,6 +14,10 @@ public class Script_EnemyMovement : MonoBehaviour
 
     // for ranged enemy
     public GameObject bullet_prefab;
+    public Transform firePoint;
+    private float fireDelay = 1f;
+    private float nextTimeToFire = 0;
+    public Transform playerTransform;
 
     private Vector2 switchX = Vector2.left;
     private Rigidbody2D rbody;
@@ -67,6 +71,15 @@ public class Script_EnemyMovement : MonoBehaviour
                 boxCollider.size = new Vector2(.5f, .5f);
 
                 Destroy(attackCollider, 0.5f);
+            }
+        }
+
+        if(enemyType == EnemyType.Ranged)
+        {
+            if(Vector2.Distance(playerTransform.position, transform.position) < 5)
+            {
+                Instantiate(bullet_prefab, firePoint.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : firePoint.rotation);
+                nextTimeToFire = Time.time + fireDelay;
             }
         }
     }
