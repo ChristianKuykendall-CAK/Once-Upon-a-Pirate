@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -46,8 +47,10 @@ public class PlayerController : MonoBehaviour
             FlipX();
             facingDirection = Vector2.right;
         }
-        if (Input.GetKey(KeyCode.W) && !isJumping)
-            StartCoroutine(JumpPeriod());
+        //if (Input.GetKey(KeyCode.W) && !isJumping)
+        //{
+          //  StartCoroutine(JumpPeriod());
+        //}
     }
 
     private void FixedUpdate()
@@ -74,17 +77,24 @@ public class PlayerController : MonoBehaviour
             tilemapCollider.isTrigger = true;
         }
 
+        //supposed to call the jump anim but only does it once...
+        if (hit.collider != null && hit.collider.CompareTag("Ground"))
+            anim.SetBool("isJumping", false);
+        else if(Input.GetKey(KeyCode.W) && !isJumping)
+        {
+            anim.SetBool("isJumping", true);
+            StartCoroutine(JumpPeriod());
+        }
     }
     // Forces player to jump once
     IEnumerator JumpPeriod()
     {
-
         isJumping = true;
-        
+
         rbody.AddForce(Vector2.up * (moveForce / 2), ForceMode2D.Impulse);
 
         yield return new WaitForSeconds(delay);
-        
+
         isJumping = false;
     }
     // Keeps platform turned off long enough for player to fall through
