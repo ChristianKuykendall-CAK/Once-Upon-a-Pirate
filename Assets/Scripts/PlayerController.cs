@@ -125,7 +125,8 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        rbody.AddForce(facingDirection * moveForce * 3 * -1);
+        if(!collider.CompareTag("Platform"))
+            rbody.AddForce(facingDirection * moveForce * -10);
         //GameManager.isntance.health -= 25;
     }
 }

@@ -19,6 +19,7 @@ public class Script_EnemyMovement : MonoBehaviour
     private Rigidbody2D rbody;
 
     private float offset;
+    private bool frozen = false;
 
     void Start()
     {
@@ -47,7 +48,8 @@ public class Script_EnemyMovement : MonoBehaviour
                 switchX = Vector2.left;
             }
         }
-        rbody.velocity = switchX * moveSpeed;
+        if(!frozen)
+            rbody.velocity = switchX * moveSpeed;
 
         if(enemyType == EnemyType.Melee)
         {
@@ -59,9 +61,13 @@ public class Script_EnemyMovement : MonoBehaviour
                 BoxCollider2D boxCollider = attackCollider.AddComponent<BoxCollider2D>();
                 boxCollider.isTrigger = true;
                 if (switchX == Vector2.left)
-                    offset = -.5f;
+                    offset = -.25f;
                 else if (switchX == Vector2.right)
-                    offset = .5f;
+                    offset = .25f;
+
+                Invoke("Freeze", 2f);
+                frozen = true;
+
                 attackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
                 
                 boxCollider.size = new Vector2(.5f, .5f);
@@ -69,5 +75,10 @@ public class Script_EnemyMovement : MonoBehaviour
                 Destroy(attackCollider, 0.5f);
             }
         }
+    }
+    void Freeze()
+    {
+        frozen = false;
+        rbody.velocity = switchX * 0;
     }
 }
