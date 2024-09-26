@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 5168720}
   m_Layer: 9
   m_Name: Enemy_Ranged
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -566,7 +566,7 @@ GameObject:
   - component: {fileID: 331306950}
   m_Layer: 9
   m_Name: Enemy_Melee
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2043,6 +2043,8 @@ MonoBehaviour:
   H: 0
   facingDirection: {x: 1, y: 0}
   moveForce: 80
+  bullet: {fileID: 3635994762763880266, guid: 6a5565e3fb080f0439c6d6676f9d68f4, type: 3}
+  bullet_point: {fileID: 432485675}
 --- !u!1 &2141926581
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,8 @@ public class Script_EnemyMovement : MonoBehaviour
     public float moveForce;
     public float moveSpeed;
 
+    private int health = 100;
+
     // for ranged enemy
     public GameObject bullet_prefab;
 
@@ -35,7 +37,10 @@ public class Script_EnemyMovement : MonoBehaviour
 
         //Debug.DrawRay(transform.position, Vector2.down, Color.red);
         //Debug.Log(hit.collider);
-        
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
         if (hit.collider == null && rbody.velocity.y == 0)
         {
             if (switchX == Vector2.left)
@@ -74,10 +79,15 @@ public class Script_EnemyMovement : MonoBehaviour
                 Destroy(EnemyattackCollider, 0.5f);
             }
         }
+        if(enemyType == EnemyType.Ranged)
+        {
+
+        }
     }
     void Freeze()
     {
         frozen = false;
         rbody.velocity = switchX * 0;
     }
+    
 }

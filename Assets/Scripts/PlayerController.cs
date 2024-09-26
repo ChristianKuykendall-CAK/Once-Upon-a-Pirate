@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public float H;
     public Vector2 facingDirection = Vector2.right;
     public float moveForce;
+    public GameObject bullet;
+    public Transform bullet_point;
 
     private SpriteRenderer rend;
     private Rigidbody2D rbody;
@@ -58,7 +60,7 @@ public class PlayerController : MonoBehaviour
         // right mouse button
         if (Input.GetMouseButtonDown(1))
         {
-
+            Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
         }
 
         if (H < 0 && facingDirection == Vector2.right)
@@ -140,8 +142,17 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if(!collider.CompareTag("Platform"))
+        if (!collider.CompareTag("Platform"))
+        {
             rbody.AddForce(facingDirection * moveForce * -10);
-        GameManager.instance.health -= 25;
+            Invoke("Invincibility", 0f);
+            GameManager.instance.health -= 25;
+        }
+    }
+    void Invincibility()
+    {
+        SpriteRenderer spriteRenderer;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.color = Color.blue;
     }
 }
