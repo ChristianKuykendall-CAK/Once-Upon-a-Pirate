@@ -8,7 +8,6 @@ public class Script_EnemyMovement : MonoBehaviour
     public enum EnemyType { Melee, Ranged }
     public EnemyType enemyType;
 
-    public Vector2 facingDirection = Vector2.right;
     public float moveForce;
     public float moveSpeed;
 
@@ -56,9 +55,9 @@ public class Script_EnemyMovement : MonoBehaviour
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
             if(hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
             {
-                GameObject attackCollider = new GameObject("AttackCollider");
+                GameObject EnemyattackCollider = new GameObject("EnemyAttackCollider");
 
-                BoxCollider2D boxCollider = attackCollider.AddComponent<BoxCollider2D>();
+                BoxCollider2D boxCollider = EnemyattackCollider.AddComponent<BoxCollider2D>();
                 boxCollider.isTrigger = true;
                 if (switchX == Vector2.left)
                     offset = -.25f;
@@ -68,11 +67,11 @@ public class Script_EnemyMovement : MonoBehaviour
                 Invoke("Freeze", 2f);
                 frozen = true;
 
-                attackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
+                EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
                 
                 boxCollider.size = new Vector2(.5f, .5f);
 
-                Destroy(attackCollider, 0.5f);
+                Destroy(EnemyattackCollider, 0.5f);
             }
         }
     }

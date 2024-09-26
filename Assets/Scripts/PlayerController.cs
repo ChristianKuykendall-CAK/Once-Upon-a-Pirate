@@ -12,7 +12,10 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer rend;
     private Rigidbody2D rbody;
     private Animator anim;
+
     private float delay = .8f;
+    private float offset;
+
     private bool isJumping = false;
     private bool Falling = false; // Helps toggle platform
 
@@ -38,7 +41,19 @@ public class PlayerController : MonoBehaviour
         // left mouse button
         if(Input.GetMouseButtonDown(0))
         {
+            GameObject playerAttackCollider = new GameObject("PlayerAttackCollider");
+            BoxCollider2D boxCollider = playerAttackCollider.AddComponent<BoxCollider2D>();
+            boxCollider.isTrigger = true;
 
+            if (facingDirection == Vector2.left)
+                offset = -.25f;
+            else if (facingDirection == Vector2.right)
+                offset = .25f;
+
+            playerAttackCollider.transform.position = transform.position + new Vector3(facingDirection.x + offset, facingDirection.y, 0);
+            boxCollider.size = new Vector2(1f, 1f);
+
+            Destroy(playerAttackCollider, 0.5f);
         }
         // right mouse button
         if (Input.GetMouseButtonDown(1))
@@ -119,7 +134,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ammo"))
         {
-            //GameManager.instance.ammo += 2;
+            GameManager.instance.ammo += 2;
             Destroy(collision.gameObject);
         }
     }
@@ -127,6 +142,6 @@ public class PlayerController : MonoBehaviour
     {
         if(!collider.CompareTag("Platform"))
             rbody.AddForce(facingDirection * moveForce * -10);
-        //GameManager.isntance.health -= 25;
+        GameManager.instance.health -= 25;
     }
 }
