@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private float delay = .8f;
     private bool isJumping = false;
     private bool Falling = false; // Helps toggle platform
+    private Vector2 movement;
 
     private TilemapCollider2D tilemapCollider;
 
@@ -35,22 +36,34 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        movement.x = Input.GetAxis("Horizontal");
         H = Input.GetAxis("Horizontal");
         
         if (H < 0 && facingDirection == Vector2.right)
         {
             FlipX();
             facingDirection = Vector2.left;
+            //anim.SetBool("isWalking", true);
+            
         }
         else if (H > 0 && facingDirection == Vector2.left)
         {
             FlipX();
             facingDirection = Vector2.right;
+            //anim.SetBool("isWalking", true);
         }
         //if (Input.GetKey(KeyCode.W) && !isJumping)
         //{
           //  StartCoroutine(JumpPeriod());
         //}
+        if (movement != Vector2.zero)
+        {
+            anim.SetBool("isWalking", true);
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
+        }
     }
 
     private void FixedUpdate()
