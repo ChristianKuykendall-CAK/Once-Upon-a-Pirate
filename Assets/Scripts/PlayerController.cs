@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         H = Input.GetAxis("Horizontal");
         // left mouse button
         if(Input.GetMouseButtonDown(0))
@@ -145,14 +146,16 @@ public class PlayerController : MonoBehaviour
         if (!collider.CompareTag("Platform"))
         {
             rbody.AddForce(facingDirection * moveForce * -10);
-            Invoke("Invincibility", 0f);
+            StartCoroutine(Invicibility());
             GameManager.instance.health -= 25;
         }
     }
-    void Invincibility()
+    IEnumerator Invicibility()
     {
-        SpriteRenderer spriteRenderer;
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.color = Color.blue;
+        rend.color = Color.blue;
+
+        yield return new WaitForSeconds(2);
+
+        rend.color = Color.red;
     }
 }

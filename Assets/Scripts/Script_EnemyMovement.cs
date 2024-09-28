@@ -89,5 +89,15 @@ public class Script_EnemyMovement : MonoBehaviour
         frozen = false;
         rbody.velocity = switchX * 0;
     }
-    
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            health -= 25;
+        }
+    }
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        health -= 20;
+    }
 }
