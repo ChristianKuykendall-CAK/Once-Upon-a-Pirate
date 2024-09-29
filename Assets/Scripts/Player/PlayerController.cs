@@ -14,9 +14,11 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer rend;
     private Rigidbody2D rbody;
     private Animator anim;
+    private bool isShooting = false;
 
     private float delay = .8f;
     private float offset;
+    private float animationLength;
 
     private bool isJumping = false;
     private bool Falling = false; // Helps toggle platform
@@ -62,8 +64,18 @@ public class PlayerController : MonoBehaviour
         // right mouse button
         if (Input.GetMouseButtonDown(1))
         {
-            Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
+            //while(Input.GetMouseButtonDown(1) == true) 
+            //{
+                anim.SetBool("isShooting", true);
+                isShooting = true;
+                Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
+            //}
         }
+        //else
+        //{
+            //anim.SetBool("isShooting", false);
+            //isShooting = false;
+        //}
 
         if (H < 0 && facingDirection == Vector2.right)
         {
@@ -161,6 +173,7 @@ public class PlayerController : MonoBehaviour
             GameManager.instance.health -= 25;
         }
     }
+
     IEnumerator Invicibility()
     {
         //rend.color = Color.blue;
