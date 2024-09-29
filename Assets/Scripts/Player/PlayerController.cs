@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -9,14 +8,18 @@ public class PlayerController : MonoBehaviour
     public float H;
     public Vector2 facingDirection = Vector2.right;
     public float moveForce;
+    public GameObject bullet;
+    public Transform bullet_point;
 
     private SpriteRenderer rend;
     private Rigidbody2D rbody;
     private Animator anim;
+
     private float delay = .8f;
+    private float offset;
+
     private bool isJumping = false;
     private bool Falling = false; // Helps toggle platform
-    private Vector2 movement;
 
     private TilemapCollider2D tilemapCollider;
 
@@ -27,7 +30,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         // Set up change tilemap collider to turn into trigger so player can drop through
         GameObject tilemapObject = GameObject.Find("Tilemap_Dropdown_Platform");
-        if (tilemapObject != null) 
+        if (tilemapObject != null)
         {
             tilemapCollider = tilemapObject.GetComponent<TilemapCollider2D>();
         }
@@ -36,34 +39,45 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxis("Horizontal");
+
         H = Input.GetAxis("Horizontal");
-        
+        // left mouse button
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameObject playerAttackCollider = new GameObject("PlayerAttackCollider");
+            BoxCollider2D boxCollider = playerAttackCollider.AddComponent<BoxCollider2D>();
+            playerAttackCollider.gameObject.tag = "PlayerAttack";
+            boxCollider.isTrigger = true;
+
+            if (facingDirection == Vector2.left)
+                offset = -.25f;
+            else if (facingDirection == Vector2.right)
+                offset = .25f;
+
+            playerAttackCollider.transform.position = transform.position + new Vector3(facingDirection.x + offset, facingDirection.y, 0);
+            boxCollider.size = new Vector2(1f, 1f);
+
+            Destroy(playerAttackCollider, 0.5f);
+        }
+        // right mouse button
+        if (Input.GetMouseButtonDown(1))
+        {
+            Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
+        }
+
         if (H < 0 && facingDirection == Vector2.right)
         {
             FlipX();
             facingDirection = Vector2.left;
-            //anim.SetBool("isWalking", true);
-            
         }
         else if (H > 0 && facingDirection == Vector2.left)
         {
             FlipX();
             facingDirection = Vector2.right;
-            //anim.SetBool("isWalking", true);
         }
-        //if (Input.GetKey(KeyCode.W) && !isJumping)
-        //{
-          //  StartCoroutine(JumpPeriod());
-        //}
-        if (movement != Vector2.zero)
-        {
-            anim.SetBool("isWalking", true);
-        }
-        else
-        {
-            anim.SetBool("isWalking", false);
-        }
+
+        if (Input.GetKey(KeyCode.W) && !isJumping)
+            StartCoroutine(JumpPeriod());
     }
 
     private void FixedUpdate()
@@ -90,18 +104,11 @@ public class PlayerController : MonoBehaviour
             tilemapCollider.isTrigger = true;
         }
 
-        //supposed to call the jump anim but only does it once...
-        if (hit.collider != null && hit.collider.CompareTag("Ground"))
-            anim.SetBool("isJumping", false);
-        else if(Input.GetKey(KeyCode.W) && !isJumping)
-        {
-            anim.SetBool("isJumping", true);
-            StartCoroutine(JumpPeriod());
-        }
     }
     // Forces player to jump once
     IEnumerator JumpPeriod()
     {
+
         isJumping = true;
 
         rbody.AddForce(Vector2.up * (moveForce / 2), ForceMode2D.Impulse);
@@ -129,7 +136,7 @@ public class PlayerController : MonoBehaviour
     //collision with item pickups
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Ammo"))
+        if (collision.gameObject.CompareTag("Ammo"))
         {
             GameManager.instance.ammo += 2;
             Destroy(collision.gameObject);
@@ -144,5 +151,22 @@ public class PlayerController : MonoBehaviour
             GameManager.instance.coins += 1;
             Destroy(collision.gameObject);
         }
+    }   
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.CompareTag("EnemyAttack"))
+        {
+            rbody.AddForce(facingDirection * moveForce * -10);
+            StartCoroutine(Invicibility());
+            GameManager.instance.health -= 25;
+        }
+    }
+    IEnumerator Invicibility()
+    {
+        //rend.color = Color.blue;
+
+        yield return new WaitForSeconds(2);
+
+        //rend.color = Color.red;
     }
 }

@@ -9,6 +9,10 @@ TagManager:
   - Ammo
   - Coin
   - Health
+  - Bullet
+  - Enemy
+  - PlayerAttack
+  - EnemyAttack
   layers:
   - Default
   - TransparentFX
