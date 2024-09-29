@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3677918510076021916}
   - component: {fileID: 2827244986475380643}
   m_Layer: 0
-  m_Name: pirate
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

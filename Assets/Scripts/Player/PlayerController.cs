@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false;
     private bool Falling = false; // Helps toggle platform
 
+
     private TilemapCollider2D tilemapCollider;
 
     void Start()
@@ -60,11 +61,13 @@ public class PlayerController : MonoBehaviour
             Destroy(playerAttackCollider, 0.5f);
         }
         // right mouse button
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && GameManager.instance.ammo > 0)
         {
             Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
+            GameManager.instance.ammo -= 1;
         }
-
+        
+        //Sprite flipping
         if (H < 0 && facingDirection == Vector2.right)
         {
             FlipX();
@@ -76,6 +79,7 @@ public class PlayerController : MonoBehaviour
             facingDirection = Vector2.right;
         }
 
+        //Jumping
         if (Input.GetKey(KeyCode.W) && !isJumping)
             StartCoroutine(JumpPeriod());
     }
@@ -93,7 +97,7 @@ public class PlayerController : MonoBehaviour
         //Debug.DrawRay(raycastStart, Vector2.down, Color.red);
         //Debug.Log(hit.collider);
 
-        if (hit.collider != null && hit.collider.CompareTag("Platform") && !Falling)
+     /*   if (hit.collider != null && hit.collider.CompareTag("Platform") && !Falling)
         {
             tilemapCollider.isTrigger = false;
             if (Input.GetKey(KeyCode.S))
@@ -102,6 +106,12 @@ public class PlayerController : MonoBehaviour
         else
         {
             tilemapCollider.isTrigger = true;
+        }*/
+
+        //Player death
+        if(GameManager.instance.health <= 0)
+        {
+            Die();
         }
 
     }
@@ -168,5 +178,11 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         //rend.color = Color.red;
+    }
+
+    private void Die()
+    {
+        
+        Destroy(gameObject);
     }
 }
