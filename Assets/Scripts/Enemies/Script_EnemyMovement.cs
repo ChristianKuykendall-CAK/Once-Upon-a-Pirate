@@ -39,7 +39,7 @@ public class Script_EnemyMovement : MonoBehaviour
     {
         // Enemies are put on their own layer so then the raycast can ignore them with ~EnemyMask
         LayerMask EnemyMask = LayerMask.GetMask("enemyLayer");
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1f, ~EnemyMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 2f, ~EnemyMask);
 
         //Debug.DrawRay(transform.position, Vector2.down, Color.red);
         //Debug.Log(hit.collider);

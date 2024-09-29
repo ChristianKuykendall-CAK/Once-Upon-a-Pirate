@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7253210572194756372}
   - component: {fileID: 5493670387528492296}
   - component: {fileID: 8762815806066434236}
-  - component: {fileID: 9213949394433844094}
   - component: {fileID: 4517015184330669897}
+  - component: {fileID: 9213949394433844094}
   m_Layer: 9
   m_Name: Ranged Enemy
   m_TagString: Enemy
@@ -129,33 +129,6 @@ MonoBehaviour:
   firePoint: {fileID: 3407158602542822245}
   playerTransform: {fileID: 0}
   facingDirection: {x: 1, y: 0}
---- !u!50 &9213949394433844094
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5063559350607872294}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!70 &4517015184330669897
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -191,6 +164,33 @@ CapsuleCollider2D:
   m_Offset: {x: 0.008718899, y: 0.0000001021794}
   m_Size: {x: 0.38965622, y: 1}
   m_Direction: 0
+--- !u!50 &9213949394433844094
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5063559350607872294}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 30
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &5257687333216450806
 GameObject:
   m_ObjectHideFlags: 0
