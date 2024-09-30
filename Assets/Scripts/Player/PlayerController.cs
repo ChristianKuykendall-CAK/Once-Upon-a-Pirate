@@ -46,7 +46,8 @@ public class PlayerController : MonoBehaviour
         // left mouse button
         if (Input.GetMouseButtonDown(0))
         {
-            anim.SetBool("isSlicing", true);
+            //triggers the melee attack 
+            anim.SetTrigger("isSlicing");
 
             GameObject playerAttackCollider = new GameObject("PlayerAttackCollider");
             BoxCollider2D boxCollider = playerAttackCollider.AddComponent<BoxCollider2D>();
@@ -62,14 +63,20 @@ public class PlayerController : MonoBehaviour
             boxCollider.size = new Vector2(1f, 1f);
 
             Destroy(playerAttackCollider, 0.5f);
-          
         }
+
         // right mouse button
         if (Input.GetMouseButtonDown(1))
         {
-            anim.SetBool("isShooting", true);
+            //triggers the shooting animation
+            anim.SetTrigger("isShooting");
+
             isShooting = true;
             Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
+        }
+        if(H > 0)
+        {
+            anim.SetTrigger("isWalking");
         }
 
         if (H < 0 && facingDirection == Vector2.right)
@@ -115,8 +122,9 @@ public class PlayerController : MonoBehaviour
     // Forces player to jump once
     IEnumerator JumpPeriod()
     {
+        //triggers the jump
+        anim.SetTrigger("isJumping");
 
-        anim.SetBool("isJumping", true);
         isJumping = true;
 
         rbody.AddForce(Vector2.up * (moveForce / 2), ForceMode2D.Impulse);
@@ -124,7 +132,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         isJumping = false;
-        anim.SetBool("isJumping", false);
     }
     // Keeps platform turned off long enough for player to fall through
     IEnumerator FallThrough()
