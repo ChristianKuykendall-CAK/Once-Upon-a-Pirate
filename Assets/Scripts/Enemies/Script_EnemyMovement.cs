@@ -142,6 +142,10 @@ public class Script_EnemyMovement : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collider)
     {
+        if (collider.CompareTag("EnemyAttack"))
+        {
+            return;
+        }
         health -= 20;
     }
 

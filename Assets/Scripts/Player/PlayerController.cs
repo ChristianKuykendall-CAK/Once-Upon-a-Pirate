@@ -76,9 +76,13 @@ public class PlayerController : MonoBehaviour
         }
 
         //if the player moves, trigger the walking animation
-        if (H > 0)
+        if (H > 0 || H < 0)
         {
-            anim.SetTrigger("isWalking");
+            anim.SetBool("isWalking", true);
+        }
+        else 
+        {
+            anim.SetBool("isWalking", false);
         }
 
         //Sprite flipping
@@ -148,7 +152,7 @@ public class PlayerController : MonoBehaviour
     {
         Falling = true;
         tilemapCollider.isTrigger = true;
-        Debug.Log("Is working");
+        // Debug.Log("Is working");
         yield return new WaitForSeconds(1f);
         Falling = false;
 
@@ -183,7 +187,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collider.CompareTag("EnemyAttack"))
         {
-            rbody.AddForce(facingDirection * moveForce * -10);
+            Vector2 directionAwayFromEnemy = (transform.position - collider.transform.position).normalized;
+            rbody.AddForce(directionAwayFromEnemy * (moveForce / 2), ForceMode2D.Impulse);
             if (!noDamage)
                 GameManager.instance.health -= 25;
             StartCoroutine(Invicibility());
