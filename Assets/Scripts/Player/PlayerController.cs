@@ -47,6 +47,9 @@ public class PlayerController : MonoBehaviour
         // left mouse button
         if (Input.GetMouseButtonDown(0))
         {
+            //triggers the melee animation
+            anim.SetTrigger("isSlicing");
+
             GameObject playerAttackCollider = new GameObject("PlayerAttackCollider");
             BoxCollider2D boxCollider = playerAttackCollider.AddComponent<BoxCollider2D>();
             playerAttackCollider.gameObject.tag = "PlayerAttack";
@@ -65,10 +68,19 @@ public class PlayerController : MonoBehaviour
         // right mouse button
         if (Input.GetMouseButtonDown(1) && GameManager.instance.ammo > 0)
         {
+            //triggers the shooting animation
+            anim.SetTrigger("isShooting");
+
             Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
             GameManager.instance.ammo -= 1;
         }
-        
+
+        //if the player moves, trigger the walking animation
+        if (H > 0)
+        {
+            anim.SetTrigger("isWalking");
+        }
+
         //Sprite flipping
         if (H < 0 && facingDirection == Vector2.right)
         {
@@ -120,6 +132,8 @@ public class PlayerController : MonoBehaviour
     // Forces player to jump once
     IEnumerator JumpPeriod()
     {
+        //triggers the jumping animation
+        anim.SetTrigger("isJumping");
 
         isJumping = true;
 

@@ -13,6 +13,8 @@ public class Script_EnemyMovement : MonoBehaviour
     public float moveSpeed;
 
     private int health = 100;
+    private SpriteRenderer rend;
+    private Animator anim;
 
     // for ranged enemy
     public GameObject bullet_prefab;
@@ -22,7 +24,7 @@ public class Script_EnemyMovement : MonoBehaviour
     public Transform playerTransform;
     public Vector2 facingDirection = Vector2.right;
 
-    private Vector2 switchX = Vector2.left;
+    private Vector2 switchX = Vector2.right;
     private Rigidbody2D rbody;
 
     private float offset;
@@ -30,6 +32,8 @@ public class Script_EnemyMovement : MonoBehaviour
 
     void Start()
     {
+        rend = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
         rbody = GetComponent<Rigidbody2D>();
         Vector2 switchX = Vector2.left;
     }
@@ -45,6 +49,7 @@ public class Script_EnemyMovement : MonoBehaviour
         //Debug.Log(hit.collider);
         if (health <= 0)
         {
+            //anim.SetTrigger("isDead");
             Destroy(gameObject);
         }
         if (hit.collider == null && rbody.velocity.y == 0)
@@ -61,12 +66,20 @@ public class Script_EnemyMovement : MonoBehaviour
         if (!frozen)
             rbody.velocity = switchX * moveSpeed;
 
+        //triggers the walking animation
+        if(moveSpeed > 0)
+        {
+            anim.SetTrigger("isWalking");
+            anim.SetBool("isSlicing", false);
+        }
+
         if (enemyType == EnemyType.Melee)
         {
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
             RaycastHit2D hitWall= Physics2D.Raycast(transform.position, switchX, 2.5f, ~EnemyMask);
             if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
             {
+
                 GameObject EnemyattackCollider = new GameObject("EnemyAttackCollider");
                 EnemyattackCollider.gameObject.tag = "EnemyAttack";
                 BoxCollider2D boxCollider = EnemyattackCollider.AddComponent<BoxCollider2D>();
@@ -78,20 +91,27 @@ public class Script_EnemyMovement : MonoBehaviour
 
                 Invoke("Freeze", 2f);
                 frozen = true;
-
+                
                 EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
 
                 boxCollider.size = new Vector2(.5f, .5f);
 
                 Destroy(EnemyattackCollider, 0.5f);
+                anim.SetBool("isSlicing", true);
             } else if(hitWall.collider != null && hitWall.collider.CompareTag("Ground"))
             {
                 if (switchX == Vector2.left)
                 {
+                    //flips the sprite
+                    FlipX();
+
                     switchX = Vector2.right;
                 }
                 else
                 {
+                    //flips the sprite
+                    FlipX();
+
                     switchX = Vector2.left;
                 }
             }
@@ -100,6 +120,9 @@ public class Script_EnemyMovement : MonoBehaviour
         {
             if (Vector2.Distance(playerTransform.position, transform.position) < 10 && Time.time > nextTimeToFire)
             {
+                //trigger the shooting anim
+                anim.SetTrigger("isShooting");
+
                 Instantiate(bullet_prefab, firePoint.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : firePoint.rotation);
                 nextTimeToFire = Time.time + fireDelay;
             }
@@ -120,5 +143,13 @@ public class Script_EnemyMovement : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collider)
     {
         health -= 20;
+    }
+
+    //flips the sprite 
+    void FlipX()
+    {
+        Vector3 theScale = transform.localScale;
+        theScale.x = theScale.x * -1;
+        transform.localScale = theScale;
     }
 }
