@@ -118,12 +118,17 @@ public class Script_EnemyMovement : MonoBehaviour
         }
         if (enemyType == EnemyType.Ranged)
         {
-            if (Vector2.Distance(playerTransform.position, transform.position) < 10 && Time.time > nextTimeToFire)
+
+                //Begins firing when the player is within 20 distance
+            if (Vector2.Distance(playerTransform.position, transform.position) < 20 && Time.time > nextTimeToFire)
             {
                 //trigger the shooting anim
                 anim.SetTrigger("isShooting");
 
+                //spawns bullet prefab in direction facing
                 Instantiate(bullet_prefab, firePoint.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : firePoint.rotation);
+
+                //bullet fire time, DELAY!
                 nextTimeToFire = Time.time + fireDelay;
             }
         }

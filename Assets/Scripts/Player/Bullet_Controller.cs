@@ -10,7 +10,7 @@ public class Bullet_Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("Destroy", 4f);
+        Invoke("Destroy", 3f);
     }
 
     // Update is called once per frame

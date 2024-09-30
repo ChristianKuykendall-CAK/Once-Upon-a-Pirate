@@ -8,7 +8,11 @@ public class PlayerController : MonoBehaviour
     public float H;
     public Vector2 facingDirection = Vector2.right;
     public float moveForce;
+    
+    //Bullet stuff
     public GameObject bullet;
+    private float fireDelay = 1f;
+    private float nextTimeToFire = 0;
     public Transform bullet_point;
 
     private SpriteRenderer rend;
@@ -66,13 +70,19 @@ public class PlayerController : MonoBehaviour
             Destroy(playerAttackCollider, 0.5f);
         }
         // right mouse button
-        if (Input.GetMouseButtonDown(1) && GameManager.instance.ammo > 0)
+        if (Input.GetMouseButtonDown(1) && GameManager.instance.ammo > 0 && Time.time > nextTimeToFire)
         {
             //triggers the shooting animation
             anim.SetTrigger("isShooting");
 
+            //Summons bullet prefab, remove ammo!!!!!!!!11
             Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
             GameManager.instance.ammo -= 1;
+
+            //bullet fire time, DELAY!
+            nextTimeToFire = Time.time + fireDelay;
+
+
         }
 
         //if the player moves, trigger the walking animation
@@ -157,6 +167,8 @@ public class PlayerController : MonoBehaviour
         Falling = false;
 
     }
+
+    //flips the sprite along the x axis
     void FlipX()
     {
         Vector3 theScale = transform.localScale;
@@ -164,27 +176,9 @@ public class PlayerController : MonoBehaviour
         transform.localScale = theScale;
     }
 
-    //collision with item pickups
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ammo"))
-        {
-            GameManager.instance.ammo += 2;
-            Destroy(collision.gameObject);
-        }
-        if (collision.gameObject.CompareTag("Health"))
-        {
-            GameManager.instance.health += 50;
-            Destroy(collision.gameObject);
-        }
-        if (collision.gameObject.CompareTag("Coin"))
-        {
-            GameManager.instance.coins += 1;
-            Destroy(collision.gameObject);
-        }
-    }   
     private void OnTriggerEnter2D(Collider2D collider)
     {
+        //Enemy attack trigger 
         if (collider.CompareTag("EnemyAttack"))
         {
             Vector2 directionAwayFromEnemy = (transform.position - collider.transform.position).normalized;
@@ -193,6 +187,22 @@ public class PlayerController : MonoBehaviour
                 GameManager.instance.health -= 25;
             StartCoroutine(Invicibility());
             
+        }
+        //Item Pickup triggers
+        if (collider.CompareTag("Ammo"))
+        {
+            GameManager.instance.ammo += 2;
+            Destroy(collider.gameObject);
+        }
+        if (collider.CompareTag("Health"))
+        {
+            GameManager.instance.health += 50;
+            Destroy(collider.gameObject);
+        }
+        if (collider.CompareTag("Coin"))
+        {
+            GameManager.instance.coins += 1;
+            Destroy(collider.gameObject);
         }
     }
     IEnumerator Invicibility()
