@@ -64,6 +64,7 @@ public class Script_EnemyMovement : MonoBehaviour
         if (enemyType == EnemyType.Melee)
         {
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
+            RaycastHit2D hitWall= Physics2D.Raycast(transform.position, switchX, 2.5f, ~EnemyMask);
             if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
             {
                 GameObject EnemyattackCollider = new GameObject("EnemyAttackCollider");
@@ -83,6 +84,16 @@ public class Script_EnemyMovement : MonoBehaviour
                 boxCollider.size = new Vector2(.5f, .5f);
 
                 Destroy(EnemyattackCollider, 0.5f);
+            } else if(hitWall.collider != null && hitWall.collider.CompareTag("Ground"))
+            {
+                if (switchX == Vector2.left)
+                {
+                    switchX = Vector2.right;
+                }
+                else
+                {
+                    switchX = Vector2.left;
+                }
             }
         }
         if (enemyType == EnemyType.Ranged)

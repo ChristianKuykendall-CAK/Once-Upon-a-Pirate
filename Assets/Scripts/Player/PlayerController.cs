@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isJumping = false;
     private bool Falling = false; // Helps toggle platform
+    private bool noDamage = false;
 
 
     private TilemapCollider2D tilemapCollider;
@@ -30,10 +31,11 @@ public class PlayerController : MonoBehaviour
         rbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         // Set up change tilemap collider to turn into trigger so player can drop through
-        GameObject tilemapObject = GameObject.Find("Tilemap_Dropdown_Platform");
+        GameObject tilemapObject = GameObject.Find("Platform");
         if (tilemapObject != null)
         {
             tilemapCollider = tilemapObject.GetComponent<TilemapCollider2D>();
+            Debug.Log("Tilemap found");
         }
     }
 
@@ -92,12 +94,12 @@ public class PlayerController : MonoBehaviour
             rbody.AddForce(Vector2.right * Mathf.Round(H) * moveForce);
 
         Vector2 raycastStart = new Vector2(transform.position.x, transform.position.y - 1f);
-        RaycastHit2D hit = Physics2D.Raycast(raycastStart, Vector2.down, .1f, ~PlayerMask);
+        RaycastHit2D hit = Physics2D.Raycast(raycastStart, Vector2.down, 1f, ~PlayerMask);
 
         //Debug.DrawRay(raycastStart, Vector2.down, Color.red);
         //Debug.Log(hit.collider);
 
-     /*   if (hit.collider != null && hit.collider.CompareTag("Platform") && !Falling)
+        if (hit.collider != null && hit.collider.CompareTag("Platform") && !Falling)
         {
             tilemapCollider.isTrigger = false;
             if (Input.GetKey(KeyCode.S))
@@ -106,7 +108,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             tilemapCollider.isTrigger = true;
-        }*/
+        }
 
         //Player death
         if(GameManager.instance.health <= 0)
@@ -132,7 +134,8 @@ public class PlayerController : MonoBehaviour
     {
         Falling = true;
         tilemapCollider.isTrigger = true;
-        yield return new WaitForSeconds(1);
+        Debug.Log("Is working");
+        yield return new WaitForSeconds(1f);
         Falling = false;
 
     }
@@ -167,16 +170,18 @@ public class PlayerController : MonoBehaviour
         if (collider.CompareTag("EnemyAttack"))
         {
             rbody.AddForce(facingDirection * moveForce * -10);
+            if (!noDamage)
+                GameManager.instance.health -= 25;
             StartCoroutine(Invicibility());
-            GameManager.instance.health -= 25;
+            
         }
     }
     IEnumerator Invicibility()
     {
         //rend.color = Color.blue;
-
+        noDamage = true;
         yield return new WaitForSeconds(2);
-
+        noDamage = false;
         //rend.color = Color.red;
     }
 
