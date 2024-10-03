@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     void FixedUpdate()
     {
         //Prevents player health from going above 100
-        if (health > 100)
+        if(health > 100)
             health = 100;
 
         //Updates the player's health, ammo, and coin count every frame

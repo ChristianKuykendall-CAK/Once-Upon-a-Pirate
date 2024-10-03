@@ -6,8 +6,13 @@ TagManager:
   tags:
   - Ground
   - Platform
-  - Enemy
+  - Ammo
+  - Coin
+  - Health
   - Bullet
+  - Enemy
+  - PlayerAttack
+  - EnemyAttack
   layers:
   - Default
   - TransparentFX
@@ -44,4 +49,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: New Layer 1
+    uniqueID: 2259531919
     locked: 0
