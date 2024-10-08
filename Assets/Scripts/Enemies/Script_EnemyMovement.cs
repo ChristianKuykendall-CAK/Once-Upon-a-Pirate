@@ -98,7 +98,7 @@ public class Script_EnemyMovement : MonoBehaviour
 
                 Destroy(EnemyattackCollider, 0.5f);
                 anim.SetBool("isSlicing", true);
-            } else if(hitWall.collider != null && hitWall.collider.CompareTag("Ground"))
+            } else if(hitWall.collider != null && (hitWall.collider.CompareTag("Ground")))
             {
                 if (switchX == Vector2.left)
                 {
@@ -130,6 +130,14 @@ public class Script_EnemyMovement : MonoBehaviour
 
                 //bullet fire time, DELAY!
                 nextTimeToFire = Time.time + fireDelay;
+            }
+            if(playerTransform.position.x > transform.position.x)
+            {
+                switchX = Vector2.right;
+            }
+            else if(playerTransform.position.x < transform.position.x)
+            {
+                switchX = Vector2.left;
             }
         }
     }

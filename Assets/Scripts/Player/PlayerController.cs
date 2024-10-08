@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         if (tilemapObject != null)
         {
             tilemapCollider = tilemapObject.GetComponent<TilemapCollider2D>();
-            Debug.Log("Tilemap found");
+            // Debug.Log("Tilemap found");
         }
     }
 
