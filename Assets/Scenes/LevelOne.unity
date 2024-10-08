@@ -8807,7 +8807,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -9625,10 +9625,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -448523766, guid: d218df453a6de10438af9d48df38a358, type: 3}
     - target: {fileID: 8762815806066434236, guid: ccc22e2ebefc1c244ad705dede8b8ea4, type: 3}
-      propertyPath: playerTransform
-      value: 
-      objectReference: {fileID: 926461376}
-    - target: {fileID: 8762815806066434236, guid: ccc22e2ebefc1c244ad705dede8b8ea4, type: 3}
       propertyPath: facingDirection.x
       value: 1
       objectReference: {fileID: 0}
@@ -9638,11 +9634,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9085122700523045776, guid: ccc22e2ebefc1c244ad705dede8b8ea4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.49
+      value: -11.89
       objectReference: {fileID: 0}
     - target: {fileID: 9085122700523045776, guid: ccc22e2ebefc1c244ad705dede8b8ea4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.34
+      value: -2.36
       objectReference: {fileID: 0}
     - target: {fileID: 9085122700523045776, guid: ccc22e2ebefc1c244ad705dede8b8ea4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9689,10 +9685,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1131873195664596396, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
-      propertyPath: bullet
-      value: 
-      objectReference: {fileID: 3635994762763880266, guid: 6a5565e3fb080f0439c6d6676f9d68f4, type: 3}
     - target: {fileID: 1131873195664596396, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
       propertyPath: bullet_point
       value: 

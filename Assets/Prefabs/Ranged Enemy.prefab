@@ -127,7 +127,7 @@ MonoBehaviour:
   moveSpeed: 0
   bullet_prefab: {fileID: 3635994762763880266, guid: e24c8e7bca354fe499ada993a61c26bf, type: 3}
   firePoint: {fileID: 3407158602542822245}
-  playerTransform: {fileID: 0}
+  playerTransform: {fileID: 2153123421008969266, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
   facingDirection: {x: 1, y: 0}
 --- !u!70 &4517015184330669897
 CapsuleCollider2D:

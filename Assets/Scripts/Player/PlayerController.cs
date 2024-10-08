@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isJumping = false;
     private bool Falling = false; // Helps toggle platform
-    private bool noDamage = false;
+    private bool noDamage = false; // Invicibility frames
 
 
     private TilemapCollider2D tilemapCollider;
@@ -77,7 +77,8 @@ public class PlayerController : MonoBehaviour
 
             //Summons bullet prefab, remove ammo!!!!!!!!11
             Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
-            GameManager.instance.ammo -= 1;
+            if(GameManager.instance != null)
+                GameManager.instance.ammo -= 1;
 
             //bullet fire time, DELAY!
             nextTimeToFire = Time.time + fireDelay;
@@ -137,11 +138,10 @@ public class PlayerController : MonoBehaviour
         }
 
         //Player death
-        if(GameManager.instance.health <= 0)
+        if (GameManager.instance.health <= 0)
         {
             Die();
         }
-
     }
     // Forces player to jump once
     IEnumerator JumpPeriod()
@@ -186,23 +186,25 @@ public class PlayerController : MonoBehaviour
             if (!noDamage)
                 GameManager.instance.health -= 25;
             StartCoroutine(Invicibility());
-            
+
         }
-        //Item Pickup triggers
-        if (collider.CompareTag("Ammo"))
-        {
-            GameManager.instance.ammo += 2;
-            Destroy(collider.gameObject);
-        }
-        if (collider.CompareTag("Health"))
-        {
-            GameManager.instance.health += 50;
-            Destroy(collider.gameObject);
-        }
-        if (collider.CompareTag("Coin"))
-        {
-            GameManager.instance.coins += 1;
-            Destroy(collider.gameObject);
+        if (GameManager.instance != null) {
+            //Item Pickup triggers
+            if (collider.CompareTag("Ammo"))
+            {
+                GameManager.instance.ammo += 2;
+                Destroy(collider.gameObject);
+            }
+            if (collider.CompareTag("Health"))
+            {
+                GameManager.instance.health += 50;
+                Destroy(collider.gameObject);
+            }
+            if (collider.CompareTag("Coin"))
+            {
+                GameManager.instance.coins += 1;
+                Destroy(collider.gameObject);
+            }
         }
     }
     IEnumerator Invicibility()

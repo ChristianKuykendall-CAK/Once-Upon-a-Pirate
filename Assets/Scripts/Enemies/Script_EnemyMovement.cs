@@ -76,7 +76,7 @@ public class Script_EnemyMovement : MonoBehaviour
         if (enemyType == EnemyType.Melee)
         {
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
-            RaycastHit2D hitWall= Physics2D.Raycast(transform.position, switchX, 2.5f, ~EnemyMask);
+            RaycastHit2D hitWall= Physics2D.Raycast(transform.position, switchX, .8f, ~EnemyMask);
             if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
             {
 
@@ -147,7 +147,11 @@ public class Script_EnemyMovement : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("EnemyAttack"))
+        if (collider.CompareTag("EnemyAttack") || 
+            collider.CompareTag("Ammo") || 
+            collider.CompareTag("Health") || 
+            collider.CompareTag("Coin") ||
+            collider.CompareTag("EnemyBullet"))
         {
             return;
         }
