@@ -8500,6 +8500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1763392096}
   - component: {fileID: 1763392097}
+  - component: {fileID: 1763392098}
   m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
@@ -8574,6 +8575,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1763392098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763392095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 482beb201c0c79c4fbc60d522be4dfe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 2
+  backgroundWidth: 20
 --- !u!1 &1780674594
 GameObject:
   m_ObjectHideFlags: 0
@@ -9699,11 +9714,11 @@ PrefabInstance:
       objectReference: {fileID: 2092474961}
     - target: {fileID: 2153123421008969266, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.46
+      value: 67.7
       objectReference: {fileID: 0}
     - target: {fileID: 2153123421008969266, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.12
+      value: 3.7
       objectReference: {fileID: 0}
     - target: {fileID: 2153123421008969266, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
       propertyPath: m_LocalPosition.z

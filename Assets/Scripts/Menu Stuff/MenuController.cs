@@ -25,7 +25,7 @@ public class MenuManager : MonoBehaviour
 
     public void StartGame() //starts game when the start button is pressed
     {
-        SceneManager.LoadScene("TestingEnvironment");
+        SceneManager.LoadScene("LevelOne");
     }
 
     public void LoadGame() //loads the saved game when the load button is pressed
