@@ -37,7 +37,10 @@ public class Script_EnemyMovement : MonoBehaviour
         rbody = GetComponent<Rigidbody2D>();
         Vector2 switchX = Vector2.left;
     }
-
+    void Update()
+    {
+        
+    }
 
     private void FixedUpdate()
     {
@@ -75,8 +78,11 @@ public class Script_EnemyMovement : MonoBehaviour
 
         if (enemyType == EnemyType.Melee)
         {
+            gameObject.tag = "MeleeEnemy";
+            
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
             RaycastHit2D hitWall= Physics2D.Raycast(transform.position, switchX, .8f, ~EnemyMask);
+
             if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
             {
 
@@ -84,6 +90,7 @@ public class Script_EnemyMovement : MonoBehaviour
                 EnemyattackCollider.gameObject.tag = "EnemyAttack";
                 BoxCollider2D boxCollider = EnemyattackCollider.AddComponent<BoxCollider2D>();
                 boxCollider.isTrigger = true;
+
                 if (switchX == Vector2.left)
                     offset = -.25f;
                 else if (switchX == Vector2.right)
@@ -98,7 +105,7 @@ public class Script_EnemyMovement : MonoBehaviour
 
                 Destroy(EnemyattackCollider, 0.5f);
                 anim.SetBool("isSlicing", true);
-            } else if(hitWall.collider != null && (hitWall.collider.CompareTag("Ground")))
+            } else if(hitWall.collider != null && (hitWall.collider.CompareTag("Ground") || hitWall.collider.CompareTag("RangedEnemy")))
             {
                 if (switchX == Vector2.left)
                 {
@@ -118,10 +125,29 @@ public class Script_EnemyMovement : MonoBehaviour
         }
         if (enemyType == EnemyType.Ranged)
         {
-
-                //Begins firing when the player is within 20 distance
-            if (Vector2.Distance(playerTransform.position, transform.position) < 20 && Time.time > nextTimeToFire)
+            gameObject.layer = LayerMask.NameToLayer("Default");
+            gameObject.tag = "RangedEnemy";
+            //Begins firing when the player is within 20 distance
+            if (Vector2.Distance(playerTransform.position, transform.position) < 20f && Time.time > nextTimeToFire)
             {
+                if (playerTransform.position.x > transform.position.x)
+                {
+                    switchX = Vector2.right;
+                    facingDirection = Vector2.right;
+                    if (transform.localScale.x < 0) // If the sprite is flipped, flip it back
+                    {
+                        FlipX();
+                    }
+                }
+                else if (playerTransform.position.x < transform.position.x)
+                {
+                    switchX = Vector2.left;
+                    facingDirection = Vector2.left;
+                    if (transform.localScale.x > 0) // If the sprite is not flipped, flip it
+                    {
+                        FlipX();
+                    }
+                }
                 //trigger the shooting anim
                 anim.SetTrigger("isShooting");
 
@@ -131,14 +157,7 @@ public class Script_EnemyMovement : MonoBehaviour
                 //bullet fire time, DELAY!
                 nextTimeToFire = Time.time + fireDelay;
             }
-            if(playerTransform.position.x > transform.position.x)
-            {
-                switchX = Vector2.right;
-            }
-            else if(playerTransform.position.x < transform.position.x)
-            {
-                switchX = Vector2.left;
-            }
+
         }
     }
     void Freeze()
