@@ -16,6 +16,7 @@ TagManager:
   - EnemyBullet
   - RangedEnemy
   - MeleeEnemy
+  - CheckPoint
   layers:
   - Default
   - TransparentFX

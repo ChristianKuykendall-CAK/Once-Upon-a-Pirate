@@ -2175,6 +2175,46 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2ed615599c49094482d3e74dce9cbf2, type: 3}
+--- !u!1 &1122006188 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6342173143444866244, guid: ab681c8078e7ae94ebe15a89e83df5c9, type: 3}
+  m_PrefabInstance: {fileID: 1238360470650110360}
+  m_PrefabAsset: {fileID: 0}
+--- !u!70 &1122006193
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122006188}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.6, y: 1}
+  m_Direction: 0
 --- !u!1 &1209883753
 GameObject:
   m_ObjectHideFlags: 0
@@ -9519,11 +9559,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5376593917011236836, guid: ab681c8078e7ae94ebe15a89e83df5c9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5
+      value: 11.7
       objectReference: {fileID: 0}
     - target: {fileID: 5376593917011236836, guid: ab681c8078e7ae94ebe15a89e83df5c9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.86
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 5376593917011236836, guid: ab681c8078e7ae94ebe15a89e83df5c9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9564,7 +9604,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6342173143444866244, guid: ab681c8078e7ae94ebe15a89e83df5c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1122006193}
   m_SourcePrefab: {fileID: 100100000, guid: ab681c8078e7ae94ebe15a89e83df5c9, type: 3}
 --- !u!1001 &2418605045359894867
 PrefabInstance:
@@ -9714,11 +9757,11 @@ PrefabInstance:
       objectReference: {fileID: 2092474961}
     - target: {fileID: 2153123421008969266, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 67.7
+      value: 68.08
       objectReference: {fileID: 0}
     - target: {fileID: 2153123421008969266, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.7
+      value: 3.26
       objectReference: {fileID: 0}
     - target: {fileID: 2153123421008969266, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
       propertyPath: m_LocalPosition.z

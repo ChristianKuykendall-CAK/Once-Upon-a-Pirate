@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -38,5 +40,33 @@ public class GameManager : MonoBehaviour
         HealthText.text = "Health: " + health;
         AmmoText.text = "Ammo: " + ammo;
         CoinText.text = "Coins: " + coins;
+    }
+    public void Save()
+    {
+        SaveManager theData = new SaveManager();
+        //theData.currentRoom = NavigationManager.instance.currentRoom.name;
+        theData.health = health; // health data
+        theData.ammo = ammo; // health data
+
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream fileStream = File.Create(Application.persistentDataPath + "/player.save");
+        bf.Serialize(fileStream, theData);
+        fileStream.Close();
+
+        Debug.Log("Game saved successfully.");
+    }
+    public void Load()
+    {
+        if (File.Exists(Application.persistentDataPath + "/player.save"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream fileStream = File.Open(Application.persistentDataPath + "/player.save", FileMode.Open);
+            SaveManager theData = (SaveManager)bf.Deserialize(fileStream);
+            fileStream.Close();
+
+            //NavigationManager.instance.SetCurrentRoom(theData.currentRoom);
+            health = theData.health;
+            ammo = theData.ammo;
+        }
     }
 }

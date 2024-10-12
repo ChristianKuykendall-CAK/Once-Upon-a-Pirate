@@ -205,6 +205,10 @@ public class PlayerController : MonoBehaviour
                 GameManager.instance.coins += 1;
                 Destroy(collider.gameObject);
             }
+            if (collider.CompareTag("CheckPoint"))
+            {
+                GameManager.instance.Save();
+            }
         }
     }
     IEnumerator Invicibility()
