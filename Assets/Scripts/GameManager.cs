@@ -43,7 +43,11 @@ public class GameManager : MonoBehaviour
     }
     public void Save()
     {
-        SaveManager theData = new SaveManager();
+        SaveManager theData = new SaveManager()
+        {
+            health = health,
+            ammo = ammo
+        };
         //theData.currentRoom = NavigationManager.instance.currentRoom.name;
         theData.health = health; // health data
         theData.ammo = ammo; // health data
@@ -67,6 +71,9 @@ public class GameManager : MonoBehaviour
             //NavigationManager.instance.SetCurrentRoom(theData.currentRoom);
             health = theData.health;
             ammo = theData.ammo;
+
+            HealthText.text = "Health: " + health;
+            AmmoText.text = "Ammo: " + ammo;
         }
     }
 }

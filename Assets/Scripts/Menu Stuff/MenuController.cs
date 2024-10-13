@@ -28,11 +28,23 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("LevelOne");
     }
 
-    public void LoadGame() //loads the saved game when the load button is pressed
+    public void LoadGame()
     {
-       
+        SceneManager.LoadScene("LevelOne");
+        // Ensure we load the game after the scene has fully loaded
+        SceneManager.sceneLoaded += OnGameSceneLoaded;
     }
-   
+
+    private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "LevelOne" && GameManager.instance != null)
+        {
+            GameManager.instance.Load();
+            SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
+        }
+    }
+
+
     public void ControlsScreen() //opens the controls view screen when the controls button is pressed
     {
         SceneManager.LoadScene("Controls");

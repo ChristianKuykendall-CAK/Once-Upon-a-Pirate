@@ -5,7 +5,6 @@ using UnityEngine;
 public class BackgroundScrolling : MonoBehaviour
 {
     public float scrollSpeed = 0.5f;  // Speed of the background scrolling
-    public float backgroundWidth = 10f; // Width of the background sprite (set this based on your sprite's size)
 
     private Vector3 startPosition;
 
