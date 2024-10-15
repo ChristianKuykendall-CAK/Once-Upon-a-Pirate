@@ -13,10 +13,7 @@ public class GameManager : MonoBehaviour
     public int ammo = 5;
     public int coins = 0;
 
-    //Text variables
-    public Text HealthText;
-    public Text AmmoText;
-    public Text CoinText;
+    
 
     private void Awake()
     {
@@ -35,11 +32,11 @@ public class GameManager : MonoBehaviour
         //Prevents player health from going above 100
         if(health > 100)
             health = 100;
+        //Prevents player health from going below 0
+        if (health < 0)
+            health = 0;
 
-        //Updates the player's health, ammo, and coin count every frame
-        HealthText.text = "Health: " + health;
-        AmmoText.text = "Ammo: " + ammo;
-        CoinText.text = "Coins: " + coins;
+        
     }
     public void Save()
     {
@@ -72,8 +69,7 @@ public class GameManager : MonoBehaviour
             health = theData.health;
             ammo = theData.ammo;
 
-            HealthText.text = "Health: " + health;
-            AmmoText.text = "Ammo: " + ammo;
+            
         }
     }
 }
