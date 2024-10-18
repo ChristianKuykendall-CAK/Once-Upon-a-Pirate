@@ -8,4 +8,5 @@ public class SaveManager
 {
     public int ammo;
     public int health;
+    public List<string> pickedUpItems;
 }

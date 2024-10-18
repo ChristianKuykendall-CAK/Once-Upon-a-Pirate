@@ -2,37 +2,22 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class ObjectPlacement : MonoBehaviour
 {
-    public enum ObjectPlaced {health, ammo, coin}
+    public enum ObjectPlaced { health, ammo, coin }
     public ObjectPlaced objectPlaced;
 
-    public GameObject healthPickupPrefab;
-    public GameObject ammoPickupPrefab;
-    public GameObject coinPickupPrefab;
+    public GameObject healthPickupPrefab; // This can be used for reference only
+    public GameObject ammoPickupPrefab;   // You can define this as well
+    public GameObject coinPickupPrefab;    // You can define this as well
 
     public Vector3 spawnAreaSize = new Vector3(24f, 13f, 2f);
     public List<Health_ObjectPool> healthDataList;
-    //public List<Ammo_ObjectPool> ammoDataList;
-    //public List<Coin_ObjectPool> coinDataList;
-
 
     void Start()
     {
         InvokeRepeating("LaunchCircle", 2.0f, 0.3f);
-        if(objectPlaced == ObjectPlaced.health)
-        {
-            if (Health_ObjectPool.SharedInstance != null)
-                healthDataList = Health_ObjectPool.SharedInstance.healthDataList;
-            if (healthPickupPrefab != null)
-            {
-                healthPickupPrefab.transform.position = spawnAreaSize;
-                healthPickupPrefab.transform.rotation = Quaternion.identity; // Or set to desired rotation
-                healthPickupPrefab.SetActive(true); // Activate the pickup
-            }
-        }
     }
 
     void LaunchCircle()
@@ -42,16 +27,24 @@ public class ObjectPlacement : MonoBehaviour
             spawnAreaSize.y,
             Random.Range(-spawnAreaSize.z / 2, spawnAreaSize.z / 2)
         );
-        /*GameObject bullet = ObjectPool.SharedInstance.GetPooledObject();
-        if (bullet != null)
-        {
-            bullet.transform.position = randomPosition;
-            bullet.transform.rotation = circle.transform.rotation;
-            bullet.SetActive(true);
-        }
-        */
-        // used to bring object back to the pool so they can be used again
-        //bullet.SetActive(false);
 
+        if (objectPlaced == ObjectPlaced.health)
+        {
+            // Check if the pool has been initialized
+            if (Health_ObjectPool.SharedInstance != null)
+            {
+                // Get a pooled object from the health pool
+                GameObject healthPickup = Health_ObjectPool.SharedInstance.GetPooledObject();
+
+                if (healthPickup != null)
+                {
+                    // Set the position and rotation for the object
+                    healthPickup.transform.position = randomPosition;
+                    healthPickup.transform.rotation = Quaternion.identity; // Or set to desired rotation
+                    healthPickup.SetActive(true); // Activate the pickup
+                }
+            }
+        }
+        // Similar logic can be applied for ammo and coin objects if needed
     }
 }

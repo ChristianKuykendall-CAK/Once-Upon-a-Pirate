@@ -46,7 +46,8 @@ public class GameManager : MonoBehaviour
         SaveManager theData = new SaveManager()
         {
             health = health,
-            ammo = ammo
+            ammo = ammo//,
+            //pickedUpItems = new List<string>(pickedUpItems)
         };
         //theData.currentRoom = NavigationManager.instance.currentRoom.name;
         theData.health = health; // health data
@@ -68,6 +69,8 @@ public class GameManager : MonoBehaviour
             SaveManager theData = (SaveManager)bf.Deserialize(fileStream);
             fileStream.Close();
 
+            //pickedUpItems = theData.pickedUpItems;
+
             //NavigationManager.instance.SetCurrentRoom(theData.currentRoom);
             health = theData.health;
             ammo = theData.ammo;
@@ -75,5 +78,14 @@ public class GameManager : MonoBehaviour
             HealthText.text = "Health: " + health;
             AmmoText.text = "Ammo: " + ammo;
         }
+    }
+    public void PickupItem(GameObject item)
+    {
+        //string itemId = item.name; // Use the item's name as a unique identifier
+        //if (!pickedUpItems.Contains(itemId))
+        //{
+            //pickedUpItems.Add(itemId); // Add the item to the list
+            //Destroy(item); // Remove the item from the scene immediately
+        //}
     }
 }
