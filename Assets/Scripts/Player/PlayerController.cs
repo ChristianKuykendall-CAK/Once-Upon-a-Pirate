@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,21 +25,12 @@ public class PlayerController : MonoBehaviour
     private bool isJumping = false;
     private bool Falling = false; // Helps toggle platform
     private bool noDamage = false; // Invicibility frames
-    private bool isDead = false;
 
-    //Text variables
-    public Text HealthText;
-    public Text AmmoText;
-    public Text CoinText;
-
-    public bool isPlayerDead()
-    { return isDead; }
 
     private TilemapCollider2D tilemapCollider;
 
     void Start()
     {
-        isDead = false;
         rend = GetComponent<SpriteRenderer>();
         rbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -57,74 +46,71 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isDead)
+
+        H = Input.GetAxis("Horizontal");
+        // left mouse button
+        if (Input.GetMouseButtonDown(0))
         {
-            H = Input.GetAxis("Horizontal");
-            // left mouse button
-            if (Input.GetMouseButtonDown(0))
-            {
-                //triggers the melee animation
-                anim.SetTrigger("isSlicing");
+            //triggers the melee animation
+            anim.SetTrigger("isSlicing");
 
-                GameObject playerAttackCollider = new GameObject("PlayerAttackCollider");
-                BoxCollider2D boxCollider = playerAttackCollider.AddComponent<BoxCollider2D>();
-                playerAttackCollider.gameObject.tag = "PlayerAttack";
-                boxCollider.isTrigger = true;
+            GameObject playerAttackCollider = new GameObject("PlayerAttackCollider");
+            BoxCollider2D boxCollider = playerAttackCollider.AddComponent<BoxCollider2D>();
+            playerAttackCollider.gameObject.tag = "PlayerAttack";
+            boxCollider.isTrigger = true;
 
-                if (facingDirection == Vector2.left)
-                    offset = -.25f;
-                else if (facingDirection == Vector2.right)
-                    offset = .25f;
+            if (facingDirection == Vector2.left)
+                offset = -.25f;
+            else if (facingDirection == Vector2.right)
+                offset = .25f;
 
-                playerAttackCollider.transform.position = transform.position + new Vector3(facingDirection.x + offset, facingDirection.y, 0);
-                boxCollider.size = new Vector2(1f, 1f);
+            playerAttackCollider.transform.position = transform.position + new Vector3(facingDirection.x + offset, facingDirection.y, 0);
+            boxCollider.size = new Vector2(1f, 1f);
 
-                Destroy(playerAttackCollider, 0.5f);
-            }
-            // right mouse button
-            if (Input.GetMouseButtonDown(1) && GameManager.instance.ammo > 0 && Time.time > nextTimeToFire)
-            {
-                //triggers the shooting animation
-                anim.SetTrigger("isShooting");
+            Destroy(playerAttackCollider, 0.5f);
+        }
+        // right mouse button
+        if (Input.GetMouseButtonDown(1) && GameManager.instance.ammo > 0 && Time.time > nextTimeToFire)
+        {
+            //triggers the shooting animation
+            anim.SetTrigger("isShooting");
 
-                //Summons bullet prefab, remove ammo!!!!!!!!11
-                Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
-                if (GameManager.instance != null)
-                    GameManager.instance.ammo -= 1;
+            //Summons bullet prefab, remove ammo!!!!!!!!11
+            Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
+            if(GameManager.instance != null)
+                GameManager.instance.ammo -= 1;
 
-                //bullet fire time, DELAY!
-                nextTimeToFire = Time.time + fireDelay;
+            //bullet fire time, DELAY!
+            nextTimeToFire = Time.time + fireDelay;
 
-
-            }
-
-            //if the player moves, trigger the walking animation
-            if (H > 0 || H < 0)
-            {
-                anim.SetBool("isWalking", true);
-            }
-            else
-            {
-                anim.SetBool("isWalking", false);
-            }
-
-            //Sprite flipping
-            if (H < 0 && facingDirection == Vector2.right)
-            {
-                FlipX();
-                facingDirection = Vector2.left;
-            }
-            else if (H > 0 && facingDirection == Vector2.left)
-            {
-                FlipX();
-                facingDirection = Vector2.right;
-            }
-
-            //Jumping
-            if (Input.GetKey(KeyCode.W) && !isJumping)
-                StartCoroutine(JumpPeriod());
 
         }
+
+        //if the player moves, trigger the walking animation
+        if (H > 0 || H < 0)
+        {
+            anim.SetBool("isWalking", true);
+        }
+        else 
+        {
+            anim.SetBool("isWalking", false);
+        }
+
+        //Sprite flipping
+        if (H < 0 && facingDirection == Vector2.right)
+        {
+            FlipX();
+            facingDirection = Vector2.left;
+        }
+        else if (H > 0 && facingDirection == Vector2.left)
+        {
+            FlipX();
+            facingDirection = Vector2.right;
+        }
+
+        //Jumping
+        if (Input.GetKey(KeyCode.W) && !isJumping)
+            StartCoroutine(JumpPeriod());
     }
 
     private void FixedUpdate()
@@ -151,18 +137,10 @@ public class PlayerController : MonoBehaviour
             tilemapCollider.isTrigger = true;
         }
 
-        //Updates the player's health, ammo, and coin count every frame
-        HealthText.text = "Health: " + GameManager.instance.health;
-        AmmoText.text = "Ammo: " + GameManager.instance.ammo;
-        CoinText.text = "Coins: " + GameManager.instance.coins;
-
         //Player death
         if (GameManager.instance.health <= 0)
         {
-            isDead = true;
-            anim.SetBool("isWalking", false);
-            anim.SetTrigger("isDead");
-            Invoke("Die", 3f);
+            Die();
         }
     }
     // Forces player to jump once
@@ -200,18 +178,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (!isDead)
+        //Enemy attack trigger 
+        if (collider.CompareTag("EnemyAttack"))
         {
-            //Enemy attack trigger 
-            if (collider.CompareTag("EnemyAttack"))
-            {
-                Vector2 directionAwayFromEnemy = (transform.position - collider.transform.position).normalized;
-                rbody.AddForce(directionAwayFromEnemy * (moveForce / 2), ForceMode2D.Impulse);
-                if (!noDamage)
-                    GameManager.instance.health -= 25;
-                StartCoroutine(Invicibility());
+            Vector2 directionAwayFromEnemy = (transform.position - collider.transform.position).normalized;
+            rbody.AddForce(directionAwayFromEnemy * (moveForce / 2), ForceMode2D.Impulse);
+            if (!noDamage)
+                GameManager.instance.health -= 25;
+            StartCoroutine(Invicibility());
 
-<<<<<<< HEAD
         }
         if (GameManager.instance != null) {
             //Item Pickup triggers
@@ -219,12 +194,9 @@ public class PlayerController : MonoBehaviour
             {
                 GameManager.instance.ammo += 2;
                 //Destroy(collider.gameObject);
-=======
->>>>>>> origin/TestingEnvironment
             }
-            if (GameManager.instance != null)
+            if (collider.CompareTag("Health"))
             {
-<<<<<<< HEAD
                 GameManager.instance.health += 50;
                 //Destroy(collider.gameObject);
             }
@@ -236,28 +208,6 @@ public class PlayerController : MonoBehaviour
             if (collider.CompareTag("CheckPoint"))
             {
                 GameManager.instance.Save();
-=======
-                //Item Pickup triggers
-                if (collider.CompareTag("Ammo"))
-                {
-                    GameManager.instance.ammo += 2;
-                    Destroy(collider.gameObject);
-                }
-                if (collider.CompareTag("Health"))
-                {
-                    GameManager.instance.health += 50;
-                    Destroy(collider.gameObject);
-                }
-                if (collider.CompareTag("Coin"))
-                {
-                    GameManager.instance.coins += 1;
-                    Destroy(collider.gameObject);
-                }
-                if (collider.CompareTag("CheckPoint"))
-                {
-                    GameManager.instance.Save();
-                }
->>>>>>> origin/TestingEnvironment
             }
         }
     }
@@ -272,6 +222,7 @@ public class PlayerController : MonoBehaviour
 
     private void Die()
     {
-        SceneManager.LoadScene("Death");
+        
+        Destroy(gameObject);
     }
 }

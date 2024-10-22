@@ -12,13 +12,9 @@ public class GameManager : MonoBehaviour
     public int ammo = 5;
     public int coin = 0;
 
-<<<<<<< HEAD
     public Text HealthText;
     public Text AmmoText;
     public Text CoinText;
-=======
-    
->>>>>>> origin/TestingEnvironment
 
     private HashSet<string> pickedUpItems = new HashSet<string>();
 
@@ -36,17 +32,10 @@ public class GameManager : MonoBehaviour
     {
         if (health > 100)
             health = 100;
-        //Prevents player health from going below 0
-        if (health < 0)
-            health = 0;
 
-<<<<<<< HEAD
         HealthText.text = "Health: " + health;
         AmmoText.text = "Ammo: " + ammo;
         CoinText.text = "Coins: " + coin;
-=======
-        
->>>>>>> origin/TestingEnvironment
     }
 
     public void Save()
@@ -80,7 +69,6 @@ public class GameManager : MonoBehaviour
             ammo = theData.ammo;
             coin = theData.coin;
 
-<<<<<<< HEAD
             pickedUpItems = new HashSet<string>(theData.pickedUpItems);
             Debug.Log("Save Path: " + Application.persistentDataPath);
             HealthText.text = "Health: " + health;
@@ -101,9 +89,6 @@ public class GameManager : MonoBehaviour
         if (!pickedUpItems.Contains(itemName))
         {
             pickedUpItems.Add(itemName);
-=======
-            
->>>>>>> origin/TestingEnvironment
         }
     }
 }
