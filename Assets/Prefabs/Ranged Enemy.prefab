@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 7253210572194756372}
   - component: {fileID: 5493670387528492296}
   - component: {fileID: 8762815806066434236}
-  - component: {fileID: 9213949394433844094}
   - component: {fileID: 4517015184330669897}
+  - component: {fileID: 9213949394433844094}
   m_Layer: 9
   m_Name: Ranged Enemy
   m_TagString: Enemy
@@ -77,8 +77,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 67ef6f2f1f4d4b048b6e56c4faef361f, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: -448523766, guid: d218df453a6de10438af9d48df38a358, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -127,35 +127,8 @@ MonoBehaviour:
   moveSpeed: 0
   bullet_prefab: {fileID: 3635994762763880266, guid: e24c8e7bca354fe499ada993a61c26bf, type: 3}
   firePoint: {fileID: 3407158602542822245}
-  playerTransform: {fileID: 0}
+  playerTransform: {fileID: 2153123421008969266, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
   facingDirection: {x: 1, y: 0}
---- !u!50 &9213949394433844094
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5063559350607872294}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!70 &4517015184330669897
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -188,9 +161,36 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.008718899, y: 0.0000001021794}
-  m_Size: {x: 0.38965622, y: 1}
+  m_Offset: {x: -0.017491579, y: -0.06433542}
+  m_Size: {x: 0.33723533, y: 0.8713314}
   m_Direction: 0
+--- !u!50 &9213949394433844094
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5063559350607872294}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 30
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &5257687333216450806
 GameObject:
   m_ObjectHideFlags: 0
@@ -216,7 +216,7 @@ Transform:
   m_GameObject: {fileID: 5257687333216450806}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.281, y: -0.15699999, z: 0}
+  m_LocalPosition: {x: 0.281, y: -0.138, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

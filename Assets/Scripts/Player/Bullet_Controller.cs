@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class Bullet_Controller : MonoBehaviour
 {
-    private int speed = 8;
+    private int speed = 16;
     private Vector2 direction = Vector2.right;
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("Destroy", 4f);
+        Invoke("Destroy", 3f);
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class Bullet_Controller : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("RangedEnemy") || collision.gameObject.CompareTag("MeleeEnemy"))
         {
             collision.gameObject.GetComponent<Script_EnemyMovement>();
             // health -= 25;
