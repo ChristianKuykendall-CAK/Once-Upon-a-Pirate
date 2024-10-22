@@ -29,6 +29,10 @@ public class Script_EnemyMovement : MonoBehaviour
 
     private float offset;
     private bool frozen = false;
+    private bool isDead = false;
+
+    public bool isPlayerDead()
+    { return isDead; }
 
     void Start()
     {
@@ -62,8 +66,20 @@ public class Script_EnemyMovement : MonoBehaviour
         //Debug.Log(hit.collider);
         if (health <= 0)
         {
-            //anim.SetTrigger("isDead");
-            Destroy(gameObject);
+            moveSpeed = 0;
+            moveForce = 0;
+
+            if(enemyType == EnemyType.Melee)
+            {
+                anim.ResetTrigger("isWalking");
+            }
+            
+            isDead = true;
+            frozen = true;
+            Freeze();
+
+            anim.SetTrigger("isDead");
+            Invoke("Die", 4f);
         }
         if (hit.collider == null && rbody.velocity.y == 0)
         {
@@ -88,84 +104,99 @@ public class Script_EnemyMovement : MonoBehaviour
 
         if (enemyType == EnemyType.Melee)
         {
+<<<<<<< HEAD
             
 
             Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
             RaycastHit2D hitWall= Physics2D.Raycast(lowerPosition, switchX, 1f, ~EnemyMask);
+=======
+            gameObject.tag = "MeleeEnemy";
 
-            if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
+            RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
+            RaycastHit2D hitWall = Physics2D.Raycast(transform.position, switchX, .8f, ~EnemyMask);
+>>>>>>> origin/TestingEnvironment
+
+            if (!isDead)
             {
-
-                GameObject EnemyattackCollider = new GameObject("EnemyAttackCollider");
-                EnemyattackCollider.gameObject.tag = "EnemyAttack";
-                BoxCollider2D boxCollider = EnemyattackCollider.AddComponent<BoxCollider2D>();
-                boxCollider.isTrigger = true;
-
-                if (switchX == Vector2.left)
-                    offset = -.25f;
-                else if (switchX == Vector2.right)
-                    offset = .25f;
-
-                Invoke("Freeze", 2f);
-                frozen = true;
-                
-                EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
-
-                boxCollider.size = new Vector2(.5f, .5f);
-
-                Destroy(EnemyattackCollider, 0.5f);
-                anim.SetBool("isSlicing", true);
-            } else if(hitWall.collider != null && (hitWall.collider.CompareTag("Ground") || hitWall.collider.CompareTag("RangedEnemy")))
-            {
-                if (switchX == Vector2.left)
+                if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
                 {
-                    //flips the sprite
-                    FlipX();
 
-                    switchX = Vector2.right;
+                    GameObject EnemyattackCollider = new GameObject("EnemyAttackCollider");
+                    EnemyattackCollider.gameObject.tag = "EnemyAttack";
+                    BoxCollider2D boxCollider = EnemyattackCollider.AddComponent<BoxCollider2D>();
+                    boxCollider.isTrigger = true;
+
+                    if (switchX == Vector2.left)
+                        offset = -.25f;
+                    else if (switchX == Vector2.right)
+                        offset = .25f;
+
+                    Invoke("Freeze", 2f);
+                    frozen = true;
+
+                    EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
+
+                    boxCollider.size = new Vector2(.5f, .5f);
+
+                    Destroy(EnemyattackCollider, 0.5f);
+                    anim.SetBool("isSlicing", true);
                 }
-                else
+                else if (hitWall.collider != null && (hitWall.collider.CompareTag("Ground") || hitWall.collider.CompareTag("RangedEnemy")))
                 {
-                    //flips the sprite
-                    FlipX();
+                    if (switchX == Vector2.left)
+                    {
+                        //flips the sprite
+                        FlipX();
 
-                    switchX = Vector2.left;
+                        switchX = Vector2.right;
+                    }
+                    else
+                    {
+                        //flips the sprite
+                        FlipX();
+
+                        switchX = Vector2.left;
+                    }
                 }
             }
         }
+        
         if (enemyType == EnemyType.Ranged)
         {
             
             //Begins firing when the player is within 20 distance
-            if (Vector2.Distance(playerTransform.position, transform.position) < 20f && Time.time > nextTimeToFire)
+            if (!isDead)
             {
-                if (playerTransform.position.x > transform.position.x)
+                if (Vector2.Distance(playerTransform.position, transform.position) < 20f && Time.time > nextTimeToFire)
                 {
-                    switchX = Vector2.right;
-                    facingDirection = Vector2.right;
-                    if (transform.localScale.x < 0) // If the sprite is flipped, flip it back
+                    if (playerTransform.position.x > transform.position.x)
                     {
-                        FlipX();
+                        switchX = Vector2.right;
+                        facingDirection = Vector2.right;
+                        if (transform.localScale.x < 0) // If the sprite is flipped, flip it back
+                        {
+                            FlipX();
+                        }
                     }
-                }
-                else if (playerTransform.position.x < transform.position.x)
-                {
-                    switchX = Vector2.left;
-                    facingDirection = Vector2.left;
-                    if (transform.localScale.x > 0) // If the sprite is not flipped, flip it
+                    else if (playerTransform.position.x < transform.position.x)
                     {
-                        FlipX();
+                        switchX = Vector2.left;
+                        facingDirection = Vector2.left;
+                        if (transform.localScale.x > 0) // If the sprite is not flipped, flip it
+                        {
+                            FlipX();
+                        }
                     }
+                    //trigger the shooting anim
+                    anim.SetTrigger("isShooting");
+
+                    //spawns bullet prefab in direction facing
+                    Instantiate(bullet_prefab, firePoint.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : firePoint.rotation);
+
+                    //bullet fire time, DELAY!
+                    nextTimeToFire = Time.time + fireDelay;
                 }
-                //trigger the shooting anim
-                anim.SetTrigger("isShooting");
-
-                //spawns bullet prefab in direction facing
-                Instantiate(bullet_prefab, firePoint.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : firePoint.rotation);
-
-                //bullet fire time, DELAY!
-                nextTimeToFire = Time.time + fireDelay;
             }
         }
     }
@@ -200,5 +231,10 @@ public class Script_EnemyMovement : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x = theScale.x * -1;
         transform.localScale = theScale;
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }
