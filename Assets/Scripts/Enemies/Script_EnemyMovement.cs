@@ -107,15 +107,33 @@ public class Script_EnemyMovement : MonoBehaviour
 
             
 
-            Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+            Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1.2f, transform.position.z);
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
-            RaycastHit2D hitWall = Physics2D.Raycast(transform.position, switchX, .8f, ~EnemyMask);
+            RaycastHit2D hitWall = Physics2D.Raycast(lowerPosition, switchX, .8f, ~EnemyMask);
 
 
 
             if (!isDead)
             {
-                if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
+                if (hitWall.collider != null && (hitWall.collider.CompareTag("Ground") || hitWall.collider.CompareTag("RangedEnemy")))
+                {
+                    Debug.Log(hitWall.collider);
+                    if (switchX == Vector2.left)
+                    {
+                        //flips the sprite
+                        FlipX();
+
+                        switchX = Vector2.right;
+                    }
+                    else
+                    {
+                        //flips the sprite
+                        FlipX();
+
+                        switchX = Vector2.left;
+                    }
+                }
+                else if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
                 {
 
                     GameObject EnemyattackCollider = new GameObject("EnemyAttackCollider");
@@ -137,23 +155,6 @@ public class Script_EnemyMovement : MonoBehaviour
 
                     Destroy(EnemyattackCollider, 0.5f);
                     anim.SetBool("isSlicing", true);
-                }
-                else if (hitWall.collider != null && (hitWall.collider.CompareTag("Ground") || hitWall.collider.CompareTag("RangedEnemy")))
-                {
-                    if (switchX == Vector2.left)
-                    {
-                        //flips the sprite
-                        FlipX();
-
-                        switchX = Vector2.right;
-                    }
-                    else
-                    {
-                        //flips the sprite
-                        FlipX();
-
-                        switchX = Vector2.left;
-                    }
                 }
             }
         }

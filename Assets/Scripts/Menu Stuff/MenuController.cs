@@ -25,6 +25,7 @@ public class MenuManager : MonoBehaviour
 
     public void StartGame() //starts game when the start button is pressed
     {
+        GameManager.instance.health = 100;
         SceneManager.LoadScene("LevelOne");
     }
 

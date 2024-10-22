@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public int health = 100;
     public int ammo = 5;
     public int coin = 0;
+    private Transform playerTransform;
 
     private HashSet<string> pickedUpItems = new HashSet<string>();
 
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
             health = health,
             ammo = ammo,
             coin = coin,
+            playerTransform = playerTransform,
             pickedUpItems = new List<string>(pickedUpItems)
         };
 
@@ -64,7 +66,7 @@ public class GameManager : MonoBehaviour
             health = theData.health;
             ammo = theData.ammo;
             coin = theData.coin;
-
+            playerTransform = theData.playerTransform;
 
             pickedUpItems = new HashSet<string>(theData.pickedUpItems);
             Debug.Log("Save Path: " + Application.persistentDataPath);
