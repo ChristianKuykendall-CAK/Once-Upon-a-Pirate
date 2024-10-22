@@ -9688,9 +9688,6 @@ MonoBehaviour:
   health: 100
   ammo: 5
   coin: 0
-  HealthText: {fileID: 1790123280}
-  AmmoText: {fileID: 630281505}
-  CoinText: {fileID: 851741601}
 --- !u!4 &550854097
 Transform:
   m_ObjectHideFlags: 0
@@ -46865,6 +46862,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1131873195664596396, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
+      propertyPath: AmmoText
+      value: 
+      objectReference: {fileID: 630281505}
+    - target: {fileID: 1131873195664596396, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
+      propertyPath: CoinText
+      value: 
+      objectReference: {fileID: 851741601}
+    - target: {fileID: 1131873195664596396, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
+      propertyPath: HealthText
+      value: 
+      objectReference: {fileID: 1790123280}
     - target: {fileID: 1131873195664596396, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
       propertyPath: bullet_point
       value: 

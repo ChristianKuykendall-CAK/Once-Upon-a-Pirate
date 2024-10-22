@@ -104,18 +104,14 @@ public class Script_EnemyMovement : MonoBehaviour
 
         if (enemyType == EnemyType.Melee)
         {
-<<<<<<< HEAD
+
             
 
             Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
-            RaycastHit2D hitWall= Physics2D.Raycast(lowerPosition, switchX, 1f, ~EnemyMask);
-=======
-            gameObject.tag = "MeleeEnemy";
-
-            RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
             RaycastHit2D hitWall = Physics2D.Raycast(transform.position, switchX, .8f, ~EnemyMask);
->>>>>>> origin/TestingEnvironment
+
+
 
             if (!isDead)
             {

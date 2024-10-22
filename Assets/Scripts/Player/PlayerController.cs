@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
         //Updates the player's health, ammo, and coin count every frame
         HealthText.text = "Health: " + GameManager.instance.health;
         AmmoText.text = "Ammo: " + GameManager.instance.ammo;
-        CoinText.text = "Coins: " + GameManager.instance.coins;
+        CoinText.text = "Coins: " + GameManager.instance.coin;
 
         //Player death
         if (GameManager.instance.health <= 0)
@@ -211,66 +211,39 @@ public class PlayerController : MonoBehaviour
                     GameManager.instance.health -= 25;
                 StartCoroutine(Invicibility());
 
-<<<<<<< HEAD
-        }
-        if (GameManager.instance != null) {
-            //Item Pickup triggers
-            if (collider.CompareTag("Ammo"))
-            {
-                GameManager.instance.ammo += 2;
-                //Destroy(collider.gameObject);
-=======
->>>>>>> origin/TestingEnvironment
             }
             if (GameManager.instance != null)
             {
-<<<<<<< HEAD
-                GameManager.instance.health += 50;
-                //Destroy(collider.gameObject);
-            }
-            if (collider.CompareTag("Coin"))
-            {
-                GameManager.instance.coin += 1;
-                //Destroy(collider.gameObject);
-            }
-            if (collider.CompareTag("CheckPoint"))
-            {
-                GameManager.instance.Save();
-=======
                 //Item Pickup triggers
                 if (collider.CompareTag("Ammo"))
                 {
                     GameManager.instance.ammo += 2;
-                    Destroy(collider.gameObject);
                 }
                 if (collider.CompareTag("Health"))
                 {
                     GameManager.instance.health += 50;
-                    Destroy(collider.gameObject);
                 }
                 if (collider.CompareTag("Coin"))
                 {
-                    GameManager.instance.coins += 1;
-                    Destroy(collider.gameObject);
+                    GameManager.instance.coin += 1;
                 }
                 if (collider.CompareTag("CheckPoint"))
                 {
                     GameManager.instance.Save();
                 }
->>>>>>> origin/TestingEnvironment
             }
         }
-    }
-    IEnumerator Invicibility()
-    {
-        //rend.color = Color.blue;
-        noDamage = true;
-        yield return new WaitForSeconds(2);
-        noDamage = false;
-        //rend.color = Color.red;
+        IEnumerator Invicibility()
+        {
+            //rend.color = Color.blue;
+            noDamage = true;
+            yield return new WaitForSeconds(2);
+            noDamage = false;
+            //rend.color = Color.red;
+        }
     }
 
-    private void Die()
+    void Die()
     {
         SceneManager.LoadScene("Death");
     }
