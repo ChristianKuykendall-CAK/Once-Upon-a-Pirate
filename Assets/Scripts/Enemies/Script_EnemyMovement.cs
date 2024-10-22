@@ -40,7 +40,17 @@ public class Script_EnemyMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         rbody = GetComponent<Rigidbody2D>();
         Vector2 switchX = Vector2.left;
+
+        if (enemyType == EnemyType.Melee)
+        {
+            gameObject.tag = "MeleeEnemy";
+        } else if (enemyType == EnemyType.Ranged)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Default");
+            gameObject.tag = "RangedEnemy";
+        }
     }
+
     void Update()
     {
         
@@ -94,10 +104,14 @@ public class Script_EnemyMovement : MonoBehaviour
 
         if (enemyType == EnemyType.Melee)
         {
-            gameObject.tag = "MeleeEnemy";
 
+            
+
+            Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
             RaycastHit2D hitWall = Physics2D.Raycast(transform.position, switchX, .8f, ~EnemyMask);
+
+
 
             if (!isDead)
             {
@@ -146,8 +160,7 @@ public class Script_EnemyMovement : MonoBehaviour
         
         if (enemyType == EnemyType.Ranged)
         {
-            gameObject.layer = LayerMask.NameToLayer("Default");
-            gameObject.tag = "RangedEnemy";
+            
             //Begins firing when the player is within 20 distance
             if (!isDead)
             {
@@ -181,7 +194,6 @@ public class Script_EnemyMovement : MonoBehaviour
                     nextTimeToFire = Time.time + fireDelay;
                 }
             }
-
         }
     }
     void Freeze()
