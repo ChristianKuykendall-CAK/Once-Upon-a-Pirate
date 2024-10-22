@@ -8,50 +8,45 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    //UI Variables
     public int health = 100;
     public int ammo = 5;
-    public int coins = 0;
+    public int coin = 0;
 
-    //Text variables
     public Text HealthText;
     public Text AmmoText;
     public Text CoinText;
 
+    private HashSet<string> pickedUpItems = new HashSet<string>();
+
     private void Awake()
     {
-
         if (instance == null)
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-
     }
 
     void FixedUpdate()
     {
-        //Prevents player health from going above 100
-        if(health > 100)
+        if (health > 100)
             health = 100;
 
-        //Updates the player's health, ammo, and coin count every frame
         HealthText.text = "Health: " + health;
         AmmoText.text = "Ammo: " + ammo;
-        CoinText.text = "Coins: " + coins;
+        CoinText.text = "Coins: " + coin;
     }
+
     public void Save()
     {
-        SaveManager theData = new SaveManager()
+        SaveManager theData = new SaveManager
         {
             health = health,
-            ammo = ammo//,
-            //pickedUpItems = new List<string>(pickedUpItems)
+            ammo = ammo,
+            coin = coin,
+            pickedUpItems = new List<string>(pickedUpItems)
         };
-        //theData.currentRoom = NavigationManager.instance.currentRoom.name;
-        theData.health = health; // health data
-        theData.ammo = ammo; // health data
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream fileStream = File.Create(Application.persistentDataPath + "/player.save");
@@ -60,6 +55,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Game saved successfully.");
     }
+
     public void Load()
     {
         if (File.Exists(Application.persistentDataPath + "/player.save"))
@@ -69,23 +65,30 @@ public class GameManager : MonoBehaviour
             SaveManager theData = (SaveManager)bf.Deserialize(fileStream);
             fileStream.Close();
 
-            //pickedUpItems = theData.pickedUpItems;
-
-            //NavigationManager.instance.SetCurrentRoom(theData.currentRoom);
             health = theData.health;
             ammo = theData.ammo;
+            coin = theData.coin;
 
+            pickedUpItems = new HashSet<string>(theData.pickedUpItems);
+            Debug.Log("Save Path: " + Application.persistentDataPath);
             HealthText.text = "Health: " + health;
             AmmoText.text = "Ammo: " + ammo;
+            CoinText.text = "Coins: " + coin;
+
+            Debug.Log("Game loaded successfully.");
         }
     }
-    public void PickupItem(GameObject item)
+
+    public bool HasItemBeenPickedUp(string itemName)
     {
-        //string itemId = item.name; // Use the item's name as a unique identifier
-        //if (!pickedUpItems.Contains(itemId))
-        //{
-            //pickedUpItems.Add(itemId); // Add the item to the list
-            //Destroy(item); // Remove the item from the scene immediately
-        //}
+        return pickedUpItems.Contains(itemName);
+    }
+
+    public void MarkItemAsPickedUp(string itemName)
+    {
+        if (!pickedUpItems.Contains(itemName))
+        {
+            pickedUpItems.Add(itemName);
+        }
     }
 }

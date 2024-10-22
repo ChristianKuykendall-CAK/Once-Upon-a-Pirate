@@ -193,17 +193,17 @@ public class PlayerController : MonoBehaviour
             if (collider.CompareTag("Ammo"))
             {
                 GameManager.instance.ammo += 2;
-                Destroy(collider.gameObject);
+                //Destroy(collider.gameObject);
             }
             if (collider.CompareTag("Health"))
             {
                 GameManager.instance.health += 50;
-                Destroy(collider.gameObject);
+                //Destroy(collider.gameObject);
             }
             if (collider.CompareTag("Coin"))
             {
-                GameManager.instance.coins += 1;
-                Destroy(collider.gameObject);
+                GameManager.instance.coin += 1;
+                //Destroy(collider.gameObject);
             }
             if (collider.CompareTag("CheckPoint"))
             {
