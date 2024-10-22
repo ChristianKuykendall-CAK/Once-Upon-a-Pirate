@@ -36,7 +36,17 @@ public class Script_EnemyMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         rbody = GetComponent<Rigidbody2D>();
         Vector2 switchX = Vector2.left;
+
+        if (enemyType == EnemyType.Melee)
+        {
+            gameObject.tag = "MeleeEnemy";
+        } else if (enemyType == EnemyType.Ranged)
+        {
+            gameObject.layer = LayerMask.NameToLayer("Default");
+            gameObject.tag = "RangedEnemy";
+        }
     }
+
     void Update()
     {
         
@@ -78,7 +88,7 @@ public class Script_EnemyMovement : MonoBehaviour
 
         if (enemyType == EnemyType.Melee)
         {
-            gameObject.tag = "MeleeEnemy";
+            
 
             Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
@@ -126,8 +136,7 @@ public class Script_EnemyMovement : MonoBehaviour
         }
         if (enemyType == EnemyType.Ranged)
         {
-            gameObject.layer = LayerMask.NameToLayer("Default");
-            gameObject.tag = "RangedEnemy";
+            
             //Begins firing when the player is within 20 distance
             if (Vector2.Distance(playerTransform.position, transform.position) < 20f && Time.time > nextTimeToFire)
             {
@@ -158,7 +167,6 @@ public class Script_EnemyMovement : MonoBehaviour
                 //bullet fire time, DELAY!
                 nextTimeToFire = Time.time + fireDelay;
             }
-
         }
     }
     void Freeze()

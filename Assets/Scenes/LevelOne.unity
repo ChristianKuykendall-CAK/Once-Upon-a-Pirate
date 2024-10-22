@@ -8269,7 +8269,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5376593917011236836, guid: ab681c8078e7ae94ebe15a89e83df5c9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 290.1
+      value: 290.04
       objectReference: {fileID: 0}
     - target: {fileID: 5376593917011236836, guid: ab681c8078e7ae94ebe15a89e83df5c9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9711,6 +9711,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2245298562330785055, guid: c0e90389b2f3e3f4da9bd0ca69d7bf6d, type: 3}
   m_PrefabInstance: {fileID: 669864396}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &600993468
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1810518415}
+    m_Modifications:
+    - target: {fileID: 76766691155841192, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 25.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 76766691155841192, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 76766691155841192, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.2925134
+      objectReference: {fileID: 0}
+    - target: {fileID: 76766691155841192, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 76766691155841192, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 76766691155841192, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 76766691155841192, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 76766691155841192, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 76766691155841192, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 76766691155841192, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8959451219900381598, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
+      propertyPath: m_Name
+      value: Melee Enemy (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
 --- !u!1 &630281503
 GameObject:
   m_ObjectHideFlags: 0
@@ -36186,13 +36243,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ranged Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8762815806066434236, guid: ccc22e2ebefc1c244ad705dede8b8ea4, type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 926461376}
     - target: {fileID: 9085122700523045776, guid: ccc22e2ebefc1c244ad705dede8b8ea4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.04
+      value: 22.46
       objectReference: {fileID: 0}
     - target: {fileID: 9085122700523045776, guid: ccc22e2ebefc1c244ad705dede8b8ea4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.89
+      value: -2.75
       objectReference: {fileID: 0}
     - target: {fileID: 9085122700523045776, guid: ccc22e2ebefc1c244ad705dede8b8ea4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -36248,6 +36309,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ranged Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8762815806066434236, guid: ccc22e2ebefc1c244ad705dede8b8ea4, type: 3}
+      propertyPath: playerTransform
+      value: 
+      objectReference: {fileID: 926461376}
     - target: {fileID: 9085122700523045776, guid: ccc22e2ebefc1c244ad705dede8b8ea4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 93.39704
@@ -44242,6 +44307,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1810646754}
+  - {fileID: 1937263453}
   - {fileID: 1400702044}
   - {fileID: 923705475}
   - {fileID: 1233883681}
@@ -46081,6 +46147,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!4 &1937263453 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 76766691155841192, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
+  m_PrefabInstance: {fileID: 600993468}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1944359670
 GameObject:
   m_ObjectHideFlags: 0
