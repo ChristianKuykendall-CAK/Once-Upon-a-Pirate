@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     public Text HealthText;
     public Text AmmoText;
     public Text CoinText;
+    public Text CheckText;
 
     public bool isPlayerDead()
     { return isDead; }
@@ -229,7 +230,9 @@ public class PlayerController : MonoBehaviour
                 }
                 if (collider.CompareTag("CheckPoint"))
                 {
+                    CheckText.enabled = true;
                     GameManager.instance.Save();
+                    Invoke("TextDisable", 2f);
                 }
             }
         }
@@ -246,5 +249,10 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         SceneManager.LoadScene("Death");
+    }
+
+    void TextDisable()
+    {
+        CheckText.enabled = false;
     }
 }
