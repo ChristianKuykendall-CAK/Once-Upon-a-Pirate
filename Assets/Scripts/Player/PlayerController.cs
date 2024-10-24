@@ -28,11 +28,16 @@ public class PlayerController : MonoBehaviour
     private bool Falling = false; // Helps toggle platform
     private bool noDamage = false; // Invicibility frames
     private bool isDead = false;
+    private bool isPaused = false;
 
     //Text variables
     public Text HealthText;
     public Text AmmoText;
     public Text CoinText;
+    public Text CheckText;
+
+    //pause image variable
+    public Image pause;
 
     public bool isPlayerDead()
     { return isDead; }
@@ -61,7 +66,7 @@ public class PlayerController : MonoBehaviour
         {
             H = Input.GetAxis("Horizontal");
             // left mouse button
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !isPaused)
             {
                 //triggers the melee animation
                 anim.SetTrigger("isSlicing");
@@ -82,7 +87,7 @@ public class PlayerController : MonoBehaviour
                 Destroy(playerAttackCollider, 0.5f);
             }
             // right mouse button
-            if (Input.GetMouseButtonDown(1) && GameManager.instance.ammo > 0 && Time.time > nextTimeToFire)
+            if (Input.GetMouseButtonDown(1) && GameManager.instance.ammo > 0 && Time.time > nextTimeToFire && !isPaused)
             {
                 //triggers the shooting animation
                 anim.SetTrigger("isShooting");
@@ -123,6 +128,20 @@ public class PlayerController : MonoBehaviour
             //Jumping
             if (Input.GetKey(KeyCode.W) && !isJumping)
                 StartCoroutine(JumpPeriod());
+
+            //Pause inputs
+            if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
+            {
+                Time.timeScale = 0;
+                pause.enabled = true;
+                isPaused = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
+            {
+                Time.timeScale = 1;
+                pause.enabled = false;
+                isPaused = false;
+            }
 
         }
     }
@@ -203,7 +222,7 @@ public class PlayerController : MonoBehaviour
         if (!isDead)
         {
             //Enemy attack trigger 
-            if (collider.CompareTag("EnemyAttack"))
+            if (collider.CompareTag("EnemyAttack") && !isPaused)
             {
                 Vector2 directionAwayFromEnemy = (transform.position - collider.transform.position).normalized;
                 rbody.AddForce(directionAwayFromEnemy * (moveForce / 2), ForceMode2D.Impulse);
@@ -229,7 +248,9 @@ public class PlayerController : MonoBehaviour
                 }
                 if (collider.CompareTag("CheckPoint"))
                 {
+                    CheckText.enabled = true;
                     GameManager.instance.Save();
+                    Invoke("TextDisable", 2f);
                 }
             }
         }
@@ -246,5 +267,10 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         SceneManager.LoadScene("Death");
+    }
+
+    void TextDisable()
+    {
+        CheckText.enabled = false;
     }
 }
