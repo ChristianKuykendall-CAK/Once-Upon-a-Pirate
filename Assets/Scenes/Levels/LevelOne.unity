@@ -47049,6 +47049,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1790123280}
     - target: {fileID: 1131873195664596396, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
+      propertyPath: ammoPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 57b4f73087db60242ae05cb01949bbe1, type: 3}
+    - target: {fileID: 1131873195664596396, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
+      propertyPath: checkPickup
+      value: 
+      objectReference: {fileID: 8300000, guid: 7c278374e89c4cc40bbaa248a3e2c6a0, type: 3}
+    - target: {fileID: 1131873195664596396, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
       propertyPath: bullet_point
       value: 
       objectReference: {fileID: 2092474961}

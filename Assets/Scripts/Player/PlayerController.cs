@@ -39,6 +39,12 @@ public class PlayerController : MonoBehaviour
     //pause image variable
     public Image pause;
 
+    //Audio
+    private AudioSource Audio;
+
+    public AudioClip ammoPickup;
+    public AudioClip checkPickup;
+
     public bool isPlayerDead()
     { return isDead; }
 
@@ -50,6 +56,7 @@ public class PlayerController : MonoBehaviour
         rend = GetComponent<SpriteRenderer>();
         rbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        Audio = GetComponent<AudioSource>();
         // Set up change tilemap collider to turn into trigger so player can drop through
         GameObject tilemapObject = GameObject.Find("Platform");
         if (tilemapObject != null)
@@ -237,6 +244,7 @@ public class PlayerController : MonoBehaviour
                 if (collider.CompareTag("Ammo"))
                 {
                     GameManager.instance.ammo += 2;
+                    GetComponent<AudioSource>().PlayOneShot(ammoPickup);
                 }
                 if (collider.CompareTag("Health"))
                 {
@@ -249,6 +257,7 @@ public class PlayerController : MonoBehaviour
                 if (collider.CompareTag("CheckPoint"))
                 {
                     CheckText.enabled = true;
+                    GetComponent<AudioSource>().PlayOneShot(checkPickup);
                     GameManager.instance.Save();
                     Invoke("TextDisable", 2f);
                 }
