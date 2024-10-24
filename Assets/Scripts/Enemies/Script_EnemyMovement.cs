@@ -15,6 +15,8 @@ public class Script_EnemyMovement : MonoBehaviour
     private int health = 100;
     private SpriteRenderer rend;
     private Animator anim;
+    private Rigidbody2D rbody;
+    private Collider2D coll;
 
     // for ranged enemy
     public GameObject bullet_prefab;
@@ -25,7 +27,7 @@ public class Script_EnemyMovement : MonoBehaviour
     public Vector2 facingDirection = Vector2.right;
 
     private Vector2 switchX = Vector2.right;
-    private Rigidbody2D rbody;
+    
 
     private float offset;
     private bool frozen = false;
@@ -39,6 +41,7 @@ public class Script_EnemyMovement : MonoBehaviour
         rend = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         rbody = GetComponent<Rigidbody2D>();
+        coll = GetComponent<Collider2D>();
         Vector2 switchX = Vector2.left;
 
         if (enemyType == EnemyType.Melee)
@@ -49,11 +52,6 @@ public class Script_EnemyMovement : MonoBehaviour
             gameObject.layer = LayerMask.NameToLayer("Default");
             gameObject.tag = "RangedEnemy";
         }
-    }
-
-    void Update()
-    {
-        
     }
 
     private void FixedUpdate()
@@ -79,7 +77,7 @@ public class Script_EnemyMovement : MonoBehaviour
             Freeze();
 
             anim.SetTrigger("isDead");
-            Invoke("Die", 4f);
+            Invoke("Die", 2f);
         }
         if (hit.collider == null && rbody.velocity.y == 0)
         {
