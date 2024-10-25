@@ -5,11 +5,15 @@ using UnityEngine.AI;
 
 public class Davy_Jones_Script : MonoBehaviour
 {
+    public enum EnemyType { DavyJones };
+    public EnemyType enemyType;
+
     public enum DavyState { Patrol, Chase, Attack };
     public float chaseDistance = 10f;
     public float shootDistance = 2f;
     public float sliceDistance = 1f;
     public float recoverTime = 2.5f;
+    public float speed = 10;
 
     public DavyState davyState;
 
@@ -36,16 +40,13 @@ public class Davy_Jones_Script : MonoBehaviour
         anim = GetComponent<Animator>();
         rbody = GetComponent<Rigidbody2D>();
         Vector2 switchX = Vector2.left;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+        ChangeState(davyState);
     }
 
     private void FixedUpdate()
     {
+
         if (moveSpeed > 0)
         {
             anim.SetTrigger("isWalking");
@@ -84,22 +85,13 @@ public class Davy_Jones_Script : MonoBehaviour
 
         while (true) // keep the object patrolling 
         {
-            playerTransform = GameObject.FindGameObjectWithTag("player").transform;
+            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
             // Are we close to the player -- if so, we need to chase
             if (Vector3.Distance(playerTransform.position, transform.position) < chaseDistance)
             {
                 ChangeState(DavyState.Chase);
+                transform.position += transform.forward * speed * Time.deltaTime;
                 yield break;
-            }
-            else // Keep patrolling
-            {
-                Vector3 randomPosition = Random.insideUnitSphere * chaseDistance;
-                randomPosition += transform.position;
-
-                NavMeshHit hit; //output variable 
-                NavMesh.SamplePosition(randomPosition, out hit, chaseDistance, NavMesh.AllAreas);
-
-                yield return new WaitForSeconds(3f);
             }
 
         }
@@ -111,7 +103,7 @@ public class Davy_Jones_Script : MonoBehaviour
 
         while (true) // keep the object patrolling 
         {
-            playerTransform = GameObject.FindGameObjectWithTag("player").transform;
+            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
             // Are we close to the player -- if so, we need to chase
             if (Vector3.Distance(playerTransform.position, transform.position) < sliceDistance)
@@ -136,7 +128,7 @@ public class Davy_Jones_Script : MonoBehaviour
 
         while (true)
         {
-            playerTransform = GameObject.FindGameObjectWithTag("player").transform;
+            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
             // Are we close to the player -- if so, we need to chase
             if (Vector3.Distance(playerTransform.position, transform.position) > shootDistance)

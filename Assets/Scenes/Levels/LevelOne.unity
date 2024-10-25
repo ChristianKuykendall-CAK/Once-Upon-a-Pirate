@@ -8226,6 +8226,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Davy Jones
       objectReference: {fileID: 0}
+    - target: {fileID: 1202103404320162553, guid: cb075d0ddb40a8f4fa9e733ff119a6c6, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1202103404320162553, guid: cb075d0ddb40a8f4fa9e733ff119a6c6, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 3321472743681912128, guid: cb075d0ddb40a8f4fa9e733ff119a6c6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 325.91
@@ -8266,13 +8274,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4028421723649778733, guid: cb075d0ddb40a8f4fa9e733ff119a6c6, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6997572637718995001, guid: cb075d0ddb40a8f4fa9e733ff119a6c6, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1202103404320162553, guid: cb075d0ddb40a8f4fa9e733ff119a6c6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 708514247}
+    - targetCorrespondingSourceObject: {fileID: 1202103404320162553, guid: cb075d0ddb40a8f4fa9e733ff119a6c6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 708514252}
   m_SourcePrefab: {fileID: 100100000, guid: cb075d0ddb40a8f4fa9e733ff119a6c6, type: 3}
 --- !u!1 &432814891
 GameObject:
@@ -9987,17 +10003,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440db3289c75e794aac0ccff1f589afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   chaseDistance: 10
   shootDistance: 2
   sliceDistance: 1
   recoverTime: 2.5
+  speed: 10
   davyState: 0
-  moveForce: 0
-  moveSpeed: 0
-  playerTransform: {fileID: 0}
-  bullet_prefab: {fileID: 0}
-  bulletPoint: {fileID: 0}
+  moveForce: 10
+  moveSpeed: 5
+  playerTransform: {fileID: 926461376}
+  bullet_prefab: {fileID: 3635994762763880266, guid: e24c8e7bca354fe499ada993a61c26bf, type: 3}
+  bulletPoint: {fileID: 1365994989}
   facingDirection: {x: 1, y: 0}
+--- !u!50 &708514252
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708514241}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 30
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!4 &713754667 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3809719579329222581, guid: cd42bc066633a9447bf664df45d17431, type: 3}
@@ -44644,6 +44689,11 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!4 &1365994989 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5646593647272409722, guid: cb075d0ddb40a8f4fa9e733ff119a6c6, type: 3}
+  m_PrefabInstance: {fileID: 378414433}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1400702044 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 76766691155841192, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
