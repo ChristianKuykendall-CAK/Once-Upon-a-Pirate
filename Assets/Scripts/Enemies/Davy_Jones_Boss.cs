@@ -9,7 +9,7 @@ public class Davy_Jones_Script : MonoBehaviour
     public EnemyType enemyType;
 
     public enum DavyState { Patrol, Chase, Attack };
-    public float chaseDistance = 1f;
+    public float chaseDistance = 10f;
     public float shootDistance = 2f;
     public float sliceDistance = 1f;
     public float recoverTime = 2.5f;
@@ -17,6 +17,7 @@ public class Davy_Jones_Script : MonoBehaviour
 
     public DavyState davyState;
 
+    private float distance;
     private int health = 500;
     private SpriteRenderer rend;
     private Animator anim;
@@ -41,17 +42,26 @@ public class Davy_Jones_Script : MonoBehaviour
         rbody = GetComponent<Rigidbody2D>();
         Vector2 switchX = Vector2.left;
 
-        ChangeState(davyState);
+        //ChangeState(davyState);
     }
 
+    void Update()
+    {
+        distance = Vector2.Distance(playerTransform.position, transform.position);
+        Vector2 direction = playerTransform.position - transform.position;
+
+        transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, speed * Time.deltaTime);
+    }
+
+    
     private void FixedUpdate()
     {
 
         if (moveSpeed > 0)
         {
             anim.SetTrigger("isWalking");
-            anim.SetBool("isSlicing", false);
-            anim.SetBool("isShooting", false);
+            //anim.SetBool("isSlicing", false);
+            //anim.SetBool("isShooting", false);
         }
 
         void OnCollisionEnter2D(Collision2D collision)
@@ -69,6 +79,8 @@ public class Davy_Jones_Script : MonoBehaviour
         }
 
     }
+
+    /*
     void ChangeState(DavyState newState)
     {
         StopAllCoroutines();
@@ -89,16 +101,23 @@ public class Davy_Jones_Script : MonoBehaviour
 
     IEnumerator AI_Patrol()
     {
+        anim.SetBool("IsIdle", true);
+        anim.SetBool("IsWalking", false);
 
         while (true) // keep the object patrolling 
         {
-            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
             // Are we close to the player -- if so, we need to chase
-            if (Vector3.Distance(playerTransform.position, transform.position) < chaseDistance)
+            if (Vector2.Distance(playerTransform.position, transform.position) < chaseDistance)
             {
-                ChangeState(DavyState.Chase);
-                transform.position += transform.forward * speed * Time.deltaTime;
+                ChangeState(EnemyState.Chase);
                 yield break;
+            }
+            else // Keep patrolling
+            {
+                Vector3 randomPosition = Random.insideUnitSphere * chaseDistance;
+                randomPosition += transform.position;
+
+                yield return new WaitForSeconds(3f);
             }
 
         }
@@ -106,62 +125,73 @@ public class Davy_Jones_Script : MonoBehaviour
 
     IEnumerator AI_Chase()
     {
-        anim.SetTrigger("isWalking");
+        anim.SetBool("IsWalking", true);
+        anim.SetBool("IsSlicing", false);
+        anim.SetBool("IsIdle", false);
+        billboard.enabled = true; //make face player
 
         while (true) // keep the object patrolling 
         {
-            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            //playerTransform = GameObject.FindGameObjectWithTag("player").transform;
 
             // Are we close to the player -- if so, we need to chase
-            if (Vector3.Distance(playerTransform.position, transform.position) <= sliceDistance)
+            if (Vector3.Distance(playerTransform.position, transform.position) < attackDistance)
             {
-                ChangeState(DavyState.Attack);  //updated state here!
+                ChangeState(EnemyState.Attack);  //updated state here!
                 yield break;
             }
             else if (Vector3.Distance(playerTransform.position, transform.position) > chaseDistance)
             {
-                ChangeState(DavyState.Patrol);
+                ChangeState(EnemyState.Patrol);
                 yield break;
             }
-
+            //playerTransform = GameObject.FindGameObjectWithTag("player").transform;
+            //agent.SetDestination(playerTransform.position); // the player's position
             yield return new WaitForSeconds(1f);
+
         }
     }
 
     IEnumerator AI_Attack()
     {
-        anim.SetTrigger("isShooting");
+        anim.SetBool("IsAttacking", true);
+        anim.SetBool("IsChasing", false);
         float elapsedTime = 3f;
 
         while (true)
         {
-            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            playerTransform = GameObject.FindGameObjectWithTag("player").transform;
 
             // Are we close to the player -- if so, we need to chase
-            if (Vector3.Distance(playerTransform.position, transform.position) > shootDistance)
+            if (Vector3.Distance(playerTransform.position, transform.position) > attackDistance)
             {
-                ChangeState(DavyState.Chase);  //updated state here!
+                ChangeState(EnemyState.Chase);  //updated state here!
                 yield break;
             }
             //Debug.Log(elapsedTime);
-            //elapsedTime += 1;
-            //if (elapsedTime >= recoverTime)
+            elapsedTime += 1;
+            if (elapsedTime >= recoverTime)
             {
-                //shooting stuff goes here
-
+                //PlayerController player_controller = GameObject.FindGameObjectWithTag("player").GetComponent<PlayerController>();
+                //player_controller.PlayerDamage(20);  // this is a bad way to do this; we'll update this later!
+                EventManager.TriggerEvent("PlayerDamage", 20);
+                Debug.Log("Damage player");
+                elapsedTime = 0f;
             }
+
+            yield return new WaitForSeconds(1f);
         }
-    }
 
-    /*
-    void Freeze()
-    {
-        frozen = false;
-        rbody.velocity = switchX * 0;
-    }
-    */
 
-    void OnTriggerEnter2D(Collider2D collider)
+        
+        void Freeze()
+        {
+            frozen = false;
+            rbody.velocity = switchX * 0;
+        }
+        */
+
+        void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.CompareTag("EnemyAttack") ||
             collider.CompareTag("Ammo") ||
