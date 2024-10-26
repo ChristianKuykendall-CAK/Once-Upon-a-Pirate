@@ -8236,11 +8236,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3321472743681912128, guid: cb075d0ddb40a8f4fa9e733ff119a6c6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 335.23
+      value: 335.21
       objectReference: {fileID: 0}
     - target: {fileID: 3321472743681912128, guid: cb075d0ddb40a8f4fa9e733ff119a6c6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.01
+      value: -2.13
       objectReference: {fileID: 0}
     - target: {fileID: 3321472743681912128, guid: cb075d0ddb40a8f4fa9e733ff119a6c6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10015,13 +10015,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440db3289c75e794aac0ccff1f589afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyType: 0
   chaseDistance: 10
   shootDistance: 2
   sliceDistance: 1
   recoverTime: 2.5
-  speed: 5
-  davyState: 0
+  speed: 3.5
+  jumpForce: 3
+  shipGround:
+    serializedVersion: 2
+    m_Bits: 0
   moveForce: 10
   moveSpeed: 5
   playerTransform: {fileID: 926461376}
