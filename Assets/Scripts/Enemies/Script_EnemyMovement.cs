@@ -15,6 +15,8 @@ public class Script_EnemyMovement : MonoBehaviour
     private int health = 100;
     private SpriteRenderer rend;
     private Animator anim;
+    private Rigidbody2D rbody;
+    private Collider2D coll;
 
     // for ranged enemy
     public GameObject bullet_prefab;
@@ -25,7 +27,7 @@ public class Script_EnemyMovement : MonoBehaviour
     public Vector2 facingDirection = Vector2.right;
 
     private Vector2 switchX = Vector2.right;
-    private Rigidbody2D rbody;
+    
 
     private float offset;
     private bool frozen = false;
@@ -39,6 +41,7 @@ public class Script_EnemyMovement : MonoBehaviour
         rend = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         rbody = GetComponent<Rigidbody2D>();
+        coll = GetComponent<Collider2D>();
         Vector2 switchX = Vector2.left;
 
         if (enemyType == EnemyType.Melee)
@@ -49,11 +52,6 @@ public class Script_EnemyMovement : MonoBehaviour
             gameObject.layer = LayerMask.NameToLayer("Default");
             gameObject.tag = "RangedEnemy";
         }
-    }
-
-    void Update()
-    {
-        
     }
 
     private void FixedUpdate()
@@ -79,7 +77,7 @@ public class Script_EnemyMovement : MonoBehaviour
             Freeze();
 
             anim.SetTrigger("isDead");
-            Invoke("Die", 4f);
+            Invoke("Die", 2f);
         }
         if (hit.collider == null && rbody.velocity.y == 0)
         {
@@ -107,15 +105,33 @@ public class Script_EnemyMovement : MonoBehaviour
 
             
 
-            Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+            Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1.2f, transform.position.z);
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
-            RaycastHit2D hitWall = Physics2D.Raycast(transform.position, switchX, .8f, ~EnemyMask);
+            RaycastHit2D hitWall = Physics2D.Raycast(lowerPosition, switchX, .8f, ~EnemyMask);
 
 
 
             if (!isDead)
             {
-                if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
+                if (hitWall.collider != null && (hitWall.collider.CompareTag("Ground") || hitWall.collider.CompareTag("RangedEnemy")))
+                {
+                    Debug.Log(hitWall.collider);
+                    if (switchX == Vector2.left)
+                    {
+                        //flips the sprite
+                        FlipX();
+
+                        switchX = Vector2.right;
+                    }
+                    else
+                    {
+                        //flips the sprite
+                        FlipX();
+
+                        switchX = Vector2.left;
+                    }
+                }
+                else if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
                 {
 
                     GameObject EnemyattackCollider = new GameObject("EnemyAttackCollider");
@@ -137,23 +153,6 @@ public class Script_EnemyMovement : MonoBehaviour
 
                     Destroy(EnemyattackCollider, 0.5f);
                     anim.SetBool("isSlicing", true);
-                }
-                else if (hitWall.collider != null && (hitWall.collider.CompareTag("Ground") || hitWall.collider.CompareTag("RangedEnemy")))
-                {
-                    if (switchX == Vector2.left)
-                    {
-                        //flips the sprite
-                        FlipX();
-
-                        switchX = Vector2.right;
-                    }
-                    else
-                    {
-                        //flips the sprite
-                        FlipX();
-
-                        switchX = Vector2.left;
-                    }
                 }
             }
         }
