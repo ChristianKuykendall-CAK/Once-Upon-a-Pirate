@@ -9,7 +9,7 @@ public class Davy_Jones_Script : MonoBehaviour
     public EnemyType enemyType;
 
     public enum DavyState { Patrol, Chase, Attack };
-    public float chaseDistance = 10f;
+    public float chaseDistance = 1f;
     public float shootDistance = 2f;
     public float sliceDistance = 1f;
     public float recoverTime = 2.5f;
@@ -92,7 +92,7 @@ public class Davy_Jones_Script : MonoBehaviour
 
         while (true) // keep the object patrolling 
         {
-            //playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
             // Are we close to the player -- if so, we need to chase
             if (Vector3.Distance(playerTransform.position, transform.position) < chaseDistance)
             {
