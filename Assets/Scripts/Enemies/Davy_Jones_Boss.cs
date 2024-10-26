@@ -61,6 +61,13 @@ public class Davy_Jones_Script : MonoBehaviour
                 health -= 25;
             }
         }
+
+        if (health <= 0)
+        {
+            anim.SetTrigger("isDead");
+            Invoke("Die", 4f);
+        }
+
     }
     void ChangeState(DavyState newState)
     {
@@ -85,7 +92,7 @@ public class Davy_Jones_Script : MonoBehaviour
 
         while (true) // keep the object patrolling 
         {
-            playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            //playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
             // Are we close to the player -- if so, we need to chase
             if (Vector3.Distance(playerTransform.position, transform.position) < chaseDistance)
             {
@@ -106,7 +113,7 @@ public class Davy_Jones_Script : MonoBehaviour
             playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
             // Are we close to the player -- if so, we need to chase
-            if (Vector3.Distance(playerTransform.position, transform.position) < sliceDistance)
+            if (Vector3.Distance(playerTransform.position, transform.position) <= sliceDistance)
             {
                 ChangeState(DavyState.Attack);  //updated state here!
                 yield break;
@@ -137,8 +144,8 @@ public class Davy_Jones_Script : MonoBehaviour
                 yield break;
             }
             //Debug.Log(elapsedTime);
-            elapsedTime += 1;
-            if (elapsedTime >= recoverTime)
+            //elapsedTime += 1;
+            //if (elapsedTime >= recoverTime)
             {
                 //shooting stuff goes here
 
@@ -165,5 +172,10 @@ public class Davy_Jones_Script : MonoBehaviour
             return;
         }
         health -= 20;
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }
