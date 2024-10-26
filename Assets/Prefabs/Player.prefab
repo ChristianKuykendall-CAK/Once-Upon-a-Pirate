@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 3677918510076021916}
   - component: {fileID: 2827244986475380643}
   - component: {fileID: 4051648160180127804}
-  - component: {fileID: -7332051218599878022}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -134,8 +133,13 @@ MonoBehaviour:
   CoinText: {fileID: 0}
   CheckText: {fileID: 0}
   pause: {fileID: 0}
-  ammoPickup: {fileID: 0}
-  checkPickup: {fileID: 0}
+  ammoPickup: {fileID: 8300000, guid: 57b4f73087db60242ae05cb01949bbe1, type: 3}
+  checkPickup: {fileID: 8300000, guid: 7c278374e89c4cc40bbaa248a3e2c6a0, type: 3}
+  coinPickup: {fileID: 8300000, guid: 55ba11bc0d217b041841d4d58173a9f7, type: 3}
+  healthPickup: {fileID: 8300000, guid: d401af04206d56e40bdc4095c28ca96b, type: 3}
+  swordAttack: {fileID: 8300000, guid: 76066d4a9c9a2b5449b618c8a1343f13, type: 3}
+  rangedAttack: {fileID: 8300000, guid: 64e4121159860c943b061901ec57e648, type: 3}
+  deathSound: {fileID: 8300000, guid: 3a3b5140276ce8744ac65fd183fcfa5e, type: 3}
 --- !u!50 &3677918510076021916
 Rigidbody2D:
   serializedVersion: 4
@@ -294,14 +298,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!81 &-7332051218599878022
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6277861766990974929}
-  m_Enabled: 1
 --- !u!1 &8881961231410396284
 GameObject:
   m_ObjectHideFlags: 0

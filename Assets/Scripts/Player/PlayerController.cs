@@ -44,6 +44,11 @@ public class PlayerController : MonoBehaviour
 
     public AudioClip ammoPickup;
     public AudioClip checkPickup;
+    public AudioClip coinPickup;
+    public AudioClip healthPickup;
+    public AudioClip swordAttack;
+    public AudioClip rangedAttack;
+    public AudioClip deathSound;
 
     public bool isPlayerDead()
     { return isDead; }
@@ -73,10 +78,11 @@ public class PlayerController : MonoBehaviour
         {
             H = Input.GetAxis("Horizontal");
             // left mouse button
-            if (Input.GetMouseButtonDown(0) && !isPaused)
+            if (Input.GetMouseButtonDown(0) && Time.time > nextTimeToFire && !isPaused)
             {
                 //triggers the melee animation
                 anim.SetTrigger("isSlicing");
+                Audio.PlayOneShot(swordAttack);
 
                 GameObject playerAttackCollider = new GameObject("PlayerAttackCollider");
                 BoxCollider2D boxCollider = playerAttackCollider.AddComponent<BoxCollider2D>();
@@ -92,12 +98,16 @@ public class PlayerController : MonoBehaviour
                 boxCollider.size = new Vector2(1f, 1f);
 
                 Destroy(playerAttackCollider, 0.5f);
+
+                //swing delay
+                nextTimeToFire = Time.time + fireDelay;
             }
             // right mouse button
             if (Input.GetMouseButtonDown(1) && GameManager.instance.ammo > 0 && Time.time > nextTimeToFire && !isPaused)
             {
                 //triggers the shooting animation
                 anim.SetTrigger("isShooting");
+                Audio.PlayOneShot(rangedAttack);
 
                 //Summons bullet prefab, remove ammo!!!!!!!!11
                 Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
@@ -183,9 +193,10 @@ public class PlayerController : MonoBehaviour
         CoinText.text = "Coins: " + GameManager.instance.coin;
 
         //Player death
-        if (GameManager.instance.health <= 0)
+        if (GameManager.instance.health <= 0 && !isDead)
         {
             isDead = true;
+            Audio.PlayOneShot(deathSound);
             anim.SetBool("isWalking", false);
             anim.SetTrigger("isDead");
             Invoke("Die", 3f);
@@ -244,22 +255,24 @@ public class PlayerController : MonoBehaviour
                 if (collider.CompareTag("Ammo"))
                 {
                     GameManager.instance.ammo += 2;
-                    GetComponent<AudioSource>().PlayOneShot(ammoPickup);
+                    Audio.PlayOneShot(ammoPickup);
                 }
                 if (collider.CompareTag("Health"))
                 {
                     GameManager.instance.health += 50;
+                    Audio.PlayOneShot(healthPickup);
                 }
                 if (collider.CompareTag("Coin"))
                 {
                     GameManager.instance.coin += 1;
+                    Audio.PlayOneShot(coinPickup);
                 }
                 if (collider.CompareTag("CheckPoint"))
                 {
                     CheckText.enabled = true;
-                    GetComponent<AudioSource>().PlayOneShot(checkPickup);
-                    GameManager.instance.Save();
+                    Audio.PlayOneShot(checkPickup);
                     Invoke("TextDisable", 2f);
+                    GameManager.instance.Save();                   
                 }
             }
         }
