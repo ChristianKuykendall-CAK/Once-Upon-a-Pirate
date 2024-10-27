@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class Davy_Jones_Script : MonoBehaviour
 {
@@ -16,9 +18,13 @@ public class Davy_Jones_Script : MonoBehaviour
     public float speed = 10;
     public float jumpForce = 3f;
     
+    private bool isDead = false;
+    private bool frozen = false;
+
     public LayerMask shipGround;
     private bool isGrounded;
     private bool shouldJump;
+    private bool isShooting;
 
     private float offset;
     private float distance;
@@ -34,7 +40,7 @@ public class Davy_Jones_Script : MonoBehaviour
     public Transform playerTransform;
     public GameObject bullet_prefab;
     public Transform bulletPoint;
-    private float fireDelay = 2f;
+    private float fireDelay = 3.5f;
     private float nextTimeToFire = 0;
     public Vector2 facingDirection = Vector2.right;
 
@@ -49,12 +55,103 @@ public class Davy_Jones_Script : MonoBehaviour
 
     void Update()
     {
+        //layermasks for melee attacks and jumping
+        LayerMask EnemyMask = LayerMask.GetMask("enemyLayer");
+        LayerMask PlatformMask = LayerMask.GetMask("groundLayer");
+        RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
+        RaycastHit2D hitPlatform = Physics2D.Raycast(transform.position, -Vector2.up, 5f, ~PlatformMask);
 
-        //gets player transform and makes davy follow that
-        distance = Vector2.Distance(playerTransform.position, transform.position);
-        Vector2 direction = playerTransform.position - transform.position;
+        //makes davy move
+        if (moveForce > 0 && moveSpeed > 0)
+        {
+            //gets player transform and makes davy follow that
+            distance = Vector2.Distance(playerTransform.position, transform.position);
+            Vector2 direction = playerTransform.position - transform.position;
 
-        transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, speed * Time.deltaTime);
+            Debug.Log("Hit Platform");
+        }
+
+        /* TODO JUMP
+        if(playerTransform.position.y > transform.position.y && hitPlatform)
+        {
+            frozen = true;
+            Freeze();
+
+            transform.position += Vector3.up * Time.deltaTime;
+        }
+        else if(playerTransform.position.y < transform.position.y)
+        {
+            frozen = true;
+            Freeze();
+
+            transform.position += Vector3.down * Time.deltaTime;
+        }
+        */
+
+        //Shooting attacks and Melee attacks
+        if (!isDead)
+        {
+            if (Vector2.Distance(playerTransform.position, transform.position) < 20f && Time.time > nextTimeToFire)
+            {
+                //makes him stop moving while shooting
+                moveSpeed = 0;
+                moveForce = 0;
+
+                isShooting = true;
+                //trigger the shooting anim
+                frozen = true;
+                Freeze();
+                anim.ResetTrigger("isWalking");
+                anim.SetTrigger("isShooting");
+
+                //spawns bullet prefab in direction facing
+                Instantiate(bullet_prefab, bulletPoint.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bulletPoint.rotation);
+
+                //bullet fire time, DELAY!
+                nextTimeToFire = Time.time + fireDelay;
+                frozen = false;
+                isShooting = false;
+                //moveSpeed = 5;
+            }
+            else if(Vector2.Distance(playerTransform.position, transform.position) > 20f && Time.time < nextTimeToFire)
+            {
+                //makes him move again
+                moveSpeed = 5;
+                moveForce = 10;
+            }
+
+            if (Vector2.Distance(playerTransform.position, transform.position) < 5f)
+            {
+                //makes him speed up and hit the player when close enough
+                transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, speed * Time.deltaTime);
+
+                //melee attack
+                if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
+                {
+
+                    GameObject EnemyattackCollider = new GameObject("EnemyAttackCollider");
+                    EnemyattackCollider.gameObject.tag = "EnemyAttack";
+                    BoxCollider2D boxCollider = EnemyattackCollider.AddComponent<BoxCollider2D>();
+                    boxCollider.isTrigger = true;
+
+                    if (switchX == Vector2.left)
+                        offset = -.25f;
+                    else if (switchX == Vector2.right)
+                        offset = .25f;
+
+                    Invoke("Freeze", 2f);
+                    frozen = true;
+
+                    EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
+
+                    boxCollider.size = new Vector2(.5f, .5f);
+
+                    Destroy(EnemyattackCollider, 0.5f);
+                    anim.SetTrigger("isSlicing");
+                }
+            }
+        }
     }
 
     
@@ -101,6 +198,10 @@ public class Davy_Jones_Script : MonoBehaviour
         //kills davy if health runs out
         if (health <= 0)
         {
+            isDead = true;
+            frozen = true;
+            Freeze();
+
             anim.SetTrigger("isDead");
             Invoke("Die", 4f);
         }
@@ -127,6 +228,11 @@ public class Davy_Jones_Script : MonoBehaviour
         transform.localScale = theScale;
     }
 
+    void Freeze()
+    {
+        frozen = false;
+        rbody.velocity = switchX * 0;
+    }
     void Die()
     {
         Destroy(gameObject);
