@@ -223,7 +223,9 @@ public class Script_EnemyMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
-            health -= 25;
+            rend.color = Color.red;
+            health -= 50;
+            Invoke("ColorDelay", .5f);
         }
     }
     void OnTriggerEnter2D(Collider2D collider)
@@ -236,7 +238,9 @@ public class Script_EnemyMovement : MonoBehaviour
         {
             return;
         }
-        health -= 20;
+        rend.color = Color.red;
+        health -= 50;
+        Invoke("ColorDelay", .5f);
     }
 
     //flips the sprite 
@@ -246,6 +250,12 @@ public class Script_EnemyMovement : MonoBehaviour
         theScale.x = theScale.x * -1;
         transform.localScale = theScale;
     }
+
+    void ColorDelay()
+    {
+        rend.color = Color.white;
+    }
+
 
     void Die()
     {

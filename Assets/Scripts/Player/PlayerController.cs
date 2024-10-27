@@ -249,12 +249,16 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(Invicibility());
 
             }
+            if(collider.CompareTag("EnemyBullet") && !isPaused)
+            {
+                StartCoroutine(Invicibility());
+            }
             if (GameManager.instance != null)
             {
                 //Item Pickup triggers
                 if (collider.CompareTag("Ammo"))
                 {
-                    GameManager.instance.ammo += 2;
+                    GameManager.instance.ammo += 3;
                     Audio.PlayOneShot(ammoPickup);
                 }
                 if (collider.CompareTag("Health"))
@@ -278,11 +282,11 @@ public class PlayerController : MonoBehaviour
         }
         IEnumerator Invicibility()
         {
-            //rend.color = Color.blue;
+            rend.color = Color.red;
             noDamage = true;
             yield return new WaitForSeconds(2);
             noDamage = false;
-            //rend.color = Color.red;
+            rend.color = Color.white;
         }
     }
 
