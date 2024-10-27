@@ -10015,17 +10015,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440db3289c75e794aac0ccff1f589afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseDistance: 10
+  player: {fileID: 1456849303}
+  platform: {fileID: 1080591051}
+  chaseDistance: 25
   shootDistance: 2
   sliceDistance: 1
   recoverTime: 2.5
   speed: 3.5
   jumpForce: 3
-  shipGround:
-    serializedVersion: 2
-    m_Bits: 0
-  moveForce: 10
-  moveSpeed: 5
+  moveForce: 65
+  moveSpeed: 10
   playerTransform: {fileID: 926461376}
   bullet_prefab: {fileID: 3635994762763880266, guid: e24c8e7bca354fe499ada993a61c26bf, type: 3}
   bulletPoint: {fileID: 1365994989}
@@ -10045,7 +10044,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 30
+  m_GravityScale: 12
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -15105,6 +15104,37 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1080591051
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1080591052}
+  m_Layer: 0
+  m_Name: platform1
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1080591052
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080591051}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 330.5, y: 6.89, z: 0.04810933}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1169394204
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44753,6 +44783,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 76766691155841192, guid: 52f2857dd5086a8408664014f3f635dd, type: 3}
   m_PrefabInstance: {fileID: 1684595208}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1456849303 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6277861766990974929, guid: fa6a10c5bbf841b48bbe8345c9b7ccf2, type: 3}
+  m_PrefabInstance: {fileID: 7908682607762367836}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1467918192 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9085122700523045776, guid: ccc22e2ebefc1c244ad705dede8b8ea4, type: 3}
@@ -47942,3 +47977,4 @@ SceneRoots:
   - {fileID: 1780674595}
   - {fileID: 1810518415}
   - {fileID: 378414433}
+  - {fileID: 1080591052}

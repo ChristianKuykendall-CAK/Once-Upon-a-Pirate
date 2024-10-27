@@ -11,20 +11,25 @@ public class Davy_Jones_Script : MonoBehaviour
     //public EnemyType enemyType;
 
     //public enum DavyState { Patrol, Chase, Attack };
+    public GameObject player;
+    public GameObject platform;
     public float chaseDistance = 10f;
     public float shootDistance = 2f;
     public float sliceDistance = 1f;
     public float recoverTime = 2.5f;
-    public float speed = 10;
-    public float jumpForce = 3f;
+    public float speed = 10f;
+    public float jumpForce = 2f;
     
     private bool isDead = false;
     private bool frozen = false;
 
-    public LayerMask shipGround;
-    private bool isGrounded;
-    private bool shouldJump;
+    //public LayerMask shipGround;
+    //private bool isGrounded;
+    //private bool shouldJump;
     private bool isShooting;
+    private float delay = .8f;
+
+    //private bool isJumping = false;
 
     private float offset;
     private float distance;
@@ -33,6 +38,7 @@ public class Davy_Jones_Script : MonoBehaviour
     private Animator anim;
     private Vector2 switchX = Vector2.right;
     private Rigidbody2D rbody;
+    //private TilemapCollider2D tilemapCollider;
 
     public float moveForce;
     public float moveSpeed;
@@ -57,9 +63,9 @@ public class Davy_Jones_Script : MonoBehaviour
     {
         //layermasks for melee attacks and jumping
         LayerMask EnemyMask = LayerMask.GetMask("enemyLayer");
-        LayerMask PlatformMask = LayerMask.GetMask("groundLayer");
+        //LayerMask PlatformMask = LayerMask.GetMask("groundLayer");
         RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
-        RaycastHit2D hitPlatform = Physics2D.Raycast(transform.position, -Vector2.up, 5f, ~PlatformMask);
+        //RaycastHit2D hitPlatform = Physics2D.Raycast(transform.position, -Vector2.up, 5f, ~PlatformMask);
 
         //makes davy move
         if (moveForce > 0 && moveSpeed > 0)
@@ -68,17 +74,20 @@ public class Davy_Jones_Script : MonoBehaviour
             distance = Vector2.Distance(playerTransform.position, transform.position);
             Vector2 direction = playerTransform.position - transform.position;
 
-            transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, jumpForce * Time.deltaTime);
             Debug.Log("Hit Platform");
         }
 
-        /* TODO JUMP
-        if(playerTransform.position.y > transform.position.y && hitPlatform)
+        /*
+        if(playerTransform.position.y > transform.position.y)
         {
+            anim.SetTrigger("isJumping");
             frozen = true;
             Freeze();
+            
+            Vector3 upDirection = new Vector3(platform.transform.position.x - transform.position.x, platform.transform.position.y - transform.position.y, 0);
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + upDirection, speed * Time.deltaTime);
 
-            transform.position += Vector3.up * Time.deltaTime;
         }
         else if(playerTransform.position.y < transform.position.y)
         {
@@ -189,6 +198,7 @@ public class Davy_Jones_Script : MonoBehaviour
         //remove davy health if the player shoots him
         void OnCollisionEnter2D(Collision2D collision)
         {
+            
             if (collision.gameObject.CompareTag("Bullet"))
             {
                 health -= 25;
