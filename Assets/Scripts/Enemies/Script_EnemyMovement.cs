@@ -99,10 +99,12 @@ public class Script_EnemyMovement : MonoBehaviour
         {
             if (switchX == Vector2.left)
             {
+                FlipX();
                 switchX = Vector2.right;
             }
             else
             {
+                FlipX();
                 switchX = Vector2.left;
             }
         }
@@ -221,8 +223,10 @@ public class Script_EnemyMovement : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+
+            if (collision.gameObject.CompareTag("Bullet"))
         {
+            Debug.Log(collision.gameObject);
             rend.color = Color.red;
             health -= 50;
             Invoke("ColorDelay", .5f);
@@ -234,10 +238,12 @@ public class Script_EnemyMovement : MonoBehaviour
             collider.CompareTag("Ammo") || 
             collider.CompareTag("Health") || 
             collider.CompareTag("Coin") ||
-            collider.CompareTag("EnemyBullet"))
+            collider.CompareTag("EnemyBullet") ||
+            collider.CompareTag("Platform"))
         {
             return;
         }
+        Debug.Log(collider);
         rend.color = Color.red;
         health -= 50;
         Invoke("ColorDelay", .5f);

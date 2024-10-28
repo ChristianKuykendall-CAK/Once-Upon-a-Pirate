@@ -34,6 +34,13 @@ public class DeathScreen : MonoBehaviour
         if (scene.name == "LevelOne" && GameManager.instance != null)
         {
             GameManager.instance.Load();
+
+            GameManager.instance.health = GameManager.instance.lasthealth;
+
+            //GameManager.instance.playerPosX = playerPosition.x;
+            //GameManager.instance.playerPosY = playerPosition.y;
+            //GameManager.instance.playerPosZ = playerPosition.z;
+
             SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
         }
     }

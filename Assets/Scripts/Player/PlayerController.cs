@@ -276,6 +276,13 @@ public class PlayerController : MonoBehaviour
                     CheckText.enabled = true;
                     Audio.PlayOneShot(checkPickup);
                     Invoke("TextDisable", 2f);
+
+                    GameManager.instance.lasthealth = GameManager.instance.health;
+
+                    //GameManager.instance.playerPosX = playerPosition.x;
+                    //GameManager.instance.playerPosY = playerPosition.y;
+                    //GameManager.instance.playerPosZ = playerPosition.z;
+
                     GameManager.instance.Save();                   
                 }
             }

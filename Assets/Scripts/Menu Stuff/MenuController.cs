@@ -12,8 +12,6 @@ public class MenuManager : MonoBehaviour
     public Button controlsButton;
     public Button endButton;
 
-
-
     void Start()
     {
         //create on click listeners for start and end buttons
@@ -41,6 +39,13 @@ public class MenuManager : MonoBehaviour
         if (scene.name == "LevelOne" && GameManager.instance != null)
         {
             GameManager.instance.Load();
+
+            GameManager.instance.health = GameManager.instance.lasthealth;
+
+            //GameManager.instance.playerPosition.x = GameManager.instance.playerPosX;
+            //GameManager.instance.playerPosition.y = GameManager.instance.playerPosY;
+            //GameManager.instance.playerPosition.z = GameManager.instance.playerPosZ;
+
             SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
         }
     }

@@ -11,6 +11,13 @@ public class GameManager : MonoBehaviour
     public int health = 100;
     public int ammo = 5;
     public int coin = 0;
+
+    public int lasthealth;
+
+    public float playerPosX;
+    public float playerPosY;
+    public float playerPosZ;
+
     private Transform playerTransform;
 
     private HashSet<string> pickedUpItems = new HashSet<string>();
@@ -23,6 +30,14 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+    }
+    void Start()
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            playerTransform = player.transform;
+        }
     }
 
     void FixedUpdate()
@@ -37,12 +52,16 @@ public class GameManager : MonoBehaviour
 
     public void Save()
     {
+        Vector3 playerPosition = playerTransform.position;
+
         SaveManager theData = new SaveManager
         {
             health = health,
             ammo = ammo,
             coin = coin,
-            playerTransform = playerTransform,
+            playerPosX = playerPosition.x,
+            playerPosY = playerPosition.y,
+            playerPosZ = playerPosition.z,
             pickedUpItems = new List<string>(pickedUpItems)
         };
 
@@ -65,8 +84,12 @@ public class GameManager : MonoBehaviour
 
             health = theData.health;
             ammo = theData.ammo;
-            coin = theData.coin;
-            playerTransform = theData.playerTransform;
+            coin = theData.coin; 
+            
+            if (playerTransform != null)
+            {
+                playerTransform.position = new Vector3(theData.playerPosX, theData.playerPosY, theData.playerPosZ);
+            }
 
             pickedUpItems = new HashSet<string>(theData.pickedUpItems);
             Debug.Log("Save Path: " + Application.persistentDataPath);
