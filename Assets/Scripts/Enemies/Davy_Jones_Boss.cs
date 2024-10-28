@@ -64,7 +64,7 @@ public class Davy_Jones_Script : MonoBehaviour
         //layermasks for melee attacks and jumping
         LayerMask EnemyMask = LayerMask.GetMask("enemyLayer");
         //LayerMask PlatformMask = LayerMask.GetMask("groundLayer");
-        RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
+        RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 4f, ~EnemyMask);
         //RaycastHit2D hitPlatform = Physics2D.Raycast(transform.position, -Vector2.up, 5f, ~PlatformMask);
 
         //makes davy move

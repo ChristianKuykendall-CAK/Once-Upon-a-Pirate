@@ -39,6 +39,11 @@ public class MenuManager : MonoBehaviour
 
     public void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (this == null) // Check if MenuManager has been destroyed
+        {
+            SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent potential null reference calls
+            return;
+        }
         GameObject player = GameObject.FindWithTag("Player");
         if (player != null)
         {
@@ -52,17 +57,27 @@ public class MenuManager : MonoBehaviour
 
             if (GameManager.instance.playerTransform != null)
             {
-                GameManager.instance.playerTransform.position = new Vector3(
+                // Start coroutine to set the player's position after the scene has fully loaded
+                StartCoroutine(SetPlayerPositionAfterLoad(new Vector3(
                     GameManager.instance.playerPosX,
                     GameManager.instance.playerPosY,
                     GameManager.instance.playerPosZ
-                );
+                )));
             }
 
             SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
         }
     }
+    private IEnumerator SetPlayerPositionAfterLoad(Vector3 position)
+    {
+        // Wait for one frame to ensure everything loads
+        yield return null;
 
+        if (GameManager.instance.playerTransform != null)
+        {
+            GameManager.instance.playerTransform.position = position;
+        }
+    }
 
     public void ControlsScreen() //opens the controls view screen when the controls button is pressed
     {

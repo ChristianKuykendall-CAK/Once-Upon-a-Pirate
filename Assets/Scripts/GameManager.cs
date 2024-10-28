@@ -83,18 +83,19 @@ public class GameManager : MonoBehaviour
             SaveManager theData = (SaveManager)bf.Deserialize(fileStream);
             fileStream.Close();
 
+            lasthealth = theData.lasthealth;
             health = lasthealth;
 
-            health = theData.health;
             ammo = theData.ammo;
             coin = theData.coin;
 
             GameObject player = GameObject.FindWithTag("Player");
-            if (playerTransform != null)
+            if (player != null)
             {
                 playerTransform = player.transform;
                 playerTransform.position = new Vector3(theData.playerPosX, theData.playerPosY, theData.playerPosZ);
             }
+
 
             pickedUpItems = new HashSet<string>(theData.pickedUpItems);
             Debug.Log("Save Path: " + Application.persistentDataPath);
@@ -115,4 +116,6 @@ public class GameManager : MonoBehaviour
             pickedUpItems.Add(itemName);
         }
     }
+    
+
 }
