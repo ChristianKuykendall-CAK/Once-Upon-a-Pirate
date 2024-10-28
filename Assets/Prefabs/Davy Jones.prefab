@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3321472743681912128}
   - component: {fileID: 3446341639382454079}
   - component: {fileID: 5304784059020878816}
+  - component: {fileID: 5910625930613391529}
   m_Layer: 0
   m_Name: Davy Jones
   m_TagString: Untagged
@@ -106,3 +107,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5910625930613391529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202103404320162553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440db3289c75e794aac0ccff1f589afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  platform: {fileID: 0}
+  chaseDistance: 10
+  shootDistance: 2
+  sliceDistance: 1
+  recoverTime: 2.5
+  speed: 10
+  jumpForce: 2
+  moveForce: 0
+  moveSpeed: 0
+  playerTransform: {fileID: 0}
+  bullet_prefab: {fileID: 0}
+  bulletPoint: {fileID: 0}
+  facingDirection: {x: 1, y: 0}
