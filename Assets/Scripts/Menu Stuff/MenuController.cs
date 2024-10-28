@@ -23,7 +23,10 @@ public class MenuManager : MonoBehaviour
 
     public void StartGame() //starts game when the start button is pressed
     {
-        GameManager.instance.health = 100;
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.health = 100;
+        }
         SceneManager.LoadScene("LevelOne");
     }
 
@@ -34,17 +37,27 @@ public class MenuManager : MonoBehaviour
         SceneManager.sceneLoaded += OnGameSceneLoaded;
     }
 
-    private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            GameManager.instance.playerTransform = player.transform;
+        }
         if (scene.name == "LevelOne" && GameManager.instance != null)
         {
             GameManager.instance.Load();
 
             GameManager.instance.health = GameManager.instance.lasthealth;
 
-            //GameManager.instance.playerPosition.x = GameManager.instance.playerPosX;
-            //GameManager.instance.playerPosition.y = GameManager.instance.playerPosY;
-            //GameManager.instance.playerPosition.z = GameManager.instance.playerPosZ;
+            if (GameManager.instance.playerTransform != null)
+            {
+                GameManager.instance.playerTransform.position = new Vector3(
+                    GameManager.instance.playerPosX,
+                    GameManager.instance.playerPosY,
+                    GameManager.instance.playerPosZ
+                );
+            }
 
             SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
         }

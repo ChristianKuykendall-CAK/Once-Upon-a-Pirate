@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public float playerPosY;
     public float playerPosZ;
 
-    private Transform playerTransform;
+    public Transform playerTransform;
 
     private HashSet<string> pickedUpItems = new HashSet<string>();
 
@@ -53,10 +53,11 @@ public class GameManager : MonoBehaviour
     public void Save()
     {
         Vector3 playerPosition = playerTransform.position;
-
+        lasthealth = health;
         SaveManager theData = new SaveManager
         {
             health = health,
+            lasthealth = lasthealth,
             ammo = ammo,
             coin = coin,
             playerPosX = playerPosition.x,
@@ -82,12 +83,16 @@ public class GameManager : MonoBehaviour
             SaveManager theData = (SaveManager)bf.Deserialize(fileStream);
             fileStream.Close();
 
+            health = lasthealth;
+
             health = theData.health;
             ammo = theData.ammo;
-            coin = theData.coin; 
-            
+            coin = theData.coin;
+
+            GameObject player = GameObject.FindWithTag("Player");
             if (playerTransform != null)
             {
+                playerTransform = player.transform;
                 playerTransform.position = new Vector3(theData.playerPosX, theData.playerPosY, theData.playerPosZ);
             }
 
