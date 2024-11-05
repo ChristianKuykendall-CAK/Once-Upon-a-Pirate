@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     public int health = 100;
     public int ammo = 5;
     public int coin = 0;
-    private Transform playerTransform;
+    public Vector3 playerTransform;
+    public Vector3 playerTransformBarrier;
 
     private HashSet<string> pickedUpItems = new HashSet<string>();
 
@@ -24,6 +25,10 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
+    private void Start()
+    {
+        //playerTransform = GameObject.FindWithTag("Player").transform;
+    }
 
     void FixedUpdate()
     {
@@ -32,17 +37,21 @@ public class GameManager : MonoBehaviour
         //Prevents player health from going below 0
         if (health < 0)
             health = 0;
-
+        
     }
 
     public void Save()
     {
+        playerTransform = GameObject.FindWithTag("Player").transform.position; // Used for putting back to checkpoint. VERY IMPORTANT
+
         SaveManager theData = new SaveManager
         {
             health = health,
             ammo = ammo,
             coin = coin,
-            playerTransform = playerTransform,
+            playerPosX = playerTransform.x,
+            playerPosY = playerTransform.y,
+            playerPosZ = playerTransform.z,
             pickedUpItems = new List<string>(pickedUpItems)
         };
 
@@ -66,9 +75,11 @@ public class GameManager : MonoBehaviour
             health = theData.health;
             ammo = theData.ammo;
             coin = theData.coin;
-            playerTransform = theData.playerTransform;
+            playerTransform = new Vector3(theData.playerPosX, theData.playerPosY, theData.playerPosZ);
+            playerTransformBarrier = playerTransform + new Vector3(5f,0,0);
 
             pickedUpItems = new HashSet<string>(theData.pickedUpItems);
+
             Debug.Log("Save Path: " + Application.persistentDataPath);
 
             Debug.Log("Game loaded successfully.");

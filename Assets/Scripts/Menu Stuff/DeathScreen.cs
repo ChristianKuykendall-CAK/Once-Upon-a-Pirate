@@ -34,6 +34,17 @@ public class DeathScreen : MonoBehaviour
         if (scene.name == "LevelOne" && GameManager.instance != null)
         {
             GameManager.instance.Load();
+            GameObject player = GameObject.FindWithTag("Player");
+
+            if (player != null)
+            {
+                // Set the player's position to the saved position in GameManager
+                player.transform.position = GameManager.instance.playerTransform;
+            }
+            else
+            {
+                Debug.LogError("Player object not found in the scene!");
+            }
             SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
         }
     }

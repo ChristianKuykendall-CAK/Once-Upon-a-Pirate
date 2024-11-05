@@ -221,6 +221,10 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDead)
         {
+            if (collider.CompareTag("Barrier"))
+            {
+                transform.position = GameManager.instance.playerTransformBarrier;
+            }
             //Enemy attack trigger 
             if (collider.CompareTag("EnemyAttack") && !isPaused)
             {

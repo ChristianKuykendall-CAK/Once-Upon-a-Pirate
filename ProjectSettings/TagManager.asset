@@ -17,6 +17,7 @@ TagManager:
   - RangedEnemy
   - MeleeEnemy
   - CheckPoint
+  - Barrier
   layers:
   - Default
   - TransparentFX
