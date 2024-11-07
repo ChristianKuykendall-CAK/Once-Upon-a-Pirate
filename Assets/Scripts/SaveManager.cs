@@ -8,7 +8,10 @@ public class SaveManager
 {
     public int ammo;
     public int health;
+    public int lasthealth;
     public int coin;
-    public float playerPosX, playerPosY, playerPosZ;
+    public float playerPosX;
+    public float playerPosY;
+    public float playerPosZ;
     public List<string> pickedUpItems;
 }

@@ -33,6 +33,13 @@ public class Script_EnemyMovement : MonoBehaviour
     private bool frozen = false;
     private bool isDead = false;
 
+    //Audio
+    private AudioSource Audio;
+
+    public AudioClip swordAttack;
+    public AudioClip rangedAttack;
+    public AudioClip deathSound;
+
     public bool isPlayerDead()
     { return isDead; }
 
@@ -42,6 +49,7 @@ public class Script_EnemyMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         rbody = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
+        Audio = GetComponent<AudioSource>();
         Vector2 switchX = Vector2.left;
 
         if (enemyType == EnemyType.Melee)
@@ -62,8 +70,13 @@ public class Script_EnemyMovement : MonoBehaviour
 
         //Debug.DrawRay(transform.position, Vector2.down, Color.red);
         //Debug.Log(hit.collider);
-        if (health <= 0)
+
+
+        //enemy die
+        if (health <= 0 && !isDead) 
         {
+            isDead = true;
+
             moveSpeed = 0;
             moveForce = 0;
 
@@ -71,22 +84,27 @@ public class Script_EnemyMovement : MonoBehaviour
             {
                 anim.ResetTrigger("isWalking");
             }
+
+            Audio.PlayOneShot(deathSound);
             
-            isDead = true;
             frozen = true;
             Freeze();
 
             anim.SetTrigger("isDead");
             Invoke("Die", 2f);
         }
+
+
         if (hit.collider == null && rbody.velocity.y == 0)
         {
             if (switchX == Vector2.left)
             {
+                FlipX();
                 switchX = Vector2.right;
             }
             else
             {
+                FlipX();
                 switchX = Vector2.left;
             }
         }
@@ -149,6 +167,8 @@ public class Script_EnemyMovement : MonoBehaviour
 
                     EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
 
+                    Audio.PlayOneShot(swordAttack);
+
                     boxCollider.size = new Vector2(.5f, .5f);
 
                     Destroy(EnemyattackCollider, 0.5f);
@@ -188,6 +208,7 @@ public class Script_EnemyMovement : MonoBehaviour
 
                     //spawns bullet prefab in direction facing
                     Instantiate(bullet_prefab, firePoint.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : firePoint.rotation);
+                    Audio.PlayOneShot(rangedAttack);
 
                     //bullet fire time, DELAY!
                     nextTimeToFire = Time.time + fireDelay;
@@ -202,9 +223,13 @@ public class Script_EnemyMovement : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+
+            if (collision.gameObject.CompareTag("Bullet"))
         {
-            health -= 25;
+            Debug.Log(collision.gameObject);
+            rend.color = Color.red;
+            health -= 50;
+            Invoke("ColorDelay", .5f);
         }
     }
     void OnTriggerEnter2D(Collider2D collider)
@@ -213,11 +238,15 @@ public class Script_EnemyMovement : MonoBehaviour
             collider.CompareTag("Ammo") || 
             collider.CompareTag("Health") || 
             collider.CompareTag("Coin") ||
-            collider.CompareTag("EnemyBullet"))
+            collider.CompareTag("EnemyBullet") ||
+            collider.CompareTag("Platform"))
         {
             return;
         }
-        health -= 20;
+        Debug.Log(collider);
+        rend.color = Color.red;
+        health -= 50;
+        Invoke("ColorDelay", .5f);
     }
 
     //flips the sprite 
@@ -227,6 +256,12 @@ public class Script_EnemyMovement : MonoBehaviour
         theScale.x = theScale.x * -1;
         transform.localScale = theScale;
     }
+
+    void ColorDelay()
+    {
+        rend.color = Color.white;
+    }
+
 
     void Die()
     {
