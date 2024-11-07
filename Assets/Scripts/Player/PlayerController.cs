@@ -223,6 +223,7 @@ public class PlayerController : MonoBehaviour
         {
             if (collider.CompareTag("Barrier"))
             {
+                GameManager.instance.Load();
                 transform.position = GameManager.instance.playerTransformBarrier;
             }
             //Enemy attack trigger 

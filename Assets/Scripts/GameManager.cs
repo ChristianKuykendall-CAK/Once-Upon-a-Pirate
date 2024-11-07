@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
             health = theData.health;
             ammo = theData.ammo;
             coin = theData.coin;
+            //pickedUpItems = theData.pickedUpItems;
             playerTransform = new Vector3(theData.playerPosX, theData.playerPosY, theData.playerPosZ);
             playerTransformBarrier = playerTransform + new Vector3(5f,0,0);
 

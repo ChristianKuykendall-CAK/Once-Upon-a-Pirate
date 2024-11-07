@@ -115,7 +115,7 @@ public class Script_EnemyMovement : MonoBehaviour
             {
                 if (hitWall.collider != null && (hitWall.collider.CompareTag("Ground") || hitWall.collider.CompareTag("RangedEnemy")))
                 {
-                    Debug.Log(hitWall.collider);
+                    //Debug.Log(hitWall.collider);
                     if (switchX == Vector2.left)
                     {
                         //flips the sprite
