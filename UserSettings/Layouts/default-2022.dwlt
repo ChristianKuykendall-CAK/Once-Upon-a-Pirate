@@ -14,10 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 0
     y: 83
     width: 1920
     height: 997
+=======
+    x: 1600
+    y: 43
+    width: 1600
+    height: 809
+>>>>>>> origin/TestingEnvironment
   m_ShowMode: 4
   m_Title: Scene
   m_RootView: {fileID: 2}
@@ -44,8 +51,13 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1920
     height: 997
+=======
+    width: 1600
+    height: 809
+>>>>>>> origin/TestingEnvironment
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
@@ -69,7 +81,11 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1920
+=======
+    width: 1600
+>>>>>>> origin/TestingEnvironment
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -90,8 +106,13 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
+<<<<<<< HEAD
     y: 977
     width: 1920
+=======
+    y: 789
+    width: 1600
+>>>>>>> origin/TestingEnvironment
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
@@ -113,6 +134,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 30
+<<<<<<< HEAD
     width: 1920
     height: 947
   m_MinSize: {x: 300, y: 100}
@@ -123,6 +145,14 @@ MonoBehaviour:
 =======
   controlID: 50
 >>>>>>> main
+=======
+    width: 1600
+    height: 759
+  m_MinSize: {x: 300, y: 100}
+  m_MaxSize: {x: 24288, y: 16192}
+  vertical: 1
+  controlID: 19
+>>>>>>> origin/TestingEnvironment
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -142,6 +172,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1920
     height: 947
   m_MinSize: {x: 300, y: 100}
@@ -152,6 +183,14 @@ MonoBehaviour:
 =======
   controlID: 51
 >>>>>>> main
+=======
+    width: 1600
+    height: 759
+  m_MinSize: {x: 300, y: 100}
+  m_MaxSize: {x: 24288, y: 16192}
+  vertical: 0
+  controlID: 20
+>>>>>>> origin/TestingEnvironment
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -171,6 +210,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
+<<<<<<< HEAD
     width: 1559
     height: 947
   m_MinSize: {x: 200, y: 100}
@@ -181,6 +221,14 @@ MonoBehaviour:
 =======
   controlID: 52
 >>>>>>> main
+=======
+    width: 1299
+    height: 759
+  m_MinSize: {x: 200, y: 100}
+  m_MaxSize: {x: 16192, y: 16192}
+  vertical: 1
+  controlID: 21
+>>>>>>> origin/TestingEnvironment
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -201,6 +249,7 @@ MonoBehaviour:
     x: 0
     y: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 1289
     height: 545
   m_MinSize: {x: 200, y: 50}
@@ -215,6 +264,14 @@ MonoBehaviour:
   vertical: 0
   controlID: 53
 >>>>>>> main
+=======
+    width: 1299
+    height: 529
+  m_MinSize: {x: 200, y: 50}
+  m_MaxSize: {x: 16192, y: 8096}
+  vertical: 0
+  controlID: 22
+>>>>>>> origin/TestingEnvironment
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -233,6 +290,7 @@ MonoBehaviour:
     x: 0
     y: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     width: 301
     height: 545
   m_MinSize: {x: 200, y: 200}
@@ -241,6 +299,10 @@ MonoBehaviour:
 =======
     width: 368
     height: 660
+=======
+    width: 306
+    height: 529
+>>>>>>> origin/TestingEnvironment
   m_MinSize: {x: 201, y: 221}
   m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 14}
@@ -264,6 +326,7 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 368
     y: 0
 <<<<<<< HEAD
@@ -273,6 +336,12 @@ MonoBehaviour:
     width: 1191
     height: 660
 >>>>>>> main
+=======
+    x: 306
+    y: 0
+    width: 993
+    height: 529
+>>>>>>> origin/TestingEnvironment
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 13}
@@ -299,6 +368,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     y: 545
     width: 1289
     height: 214
@@ -307,6 +377,11 @@ MonoBehaviour:
     width: 1559
     height: 287
 >>>>>>> main
+=======
+    y: 529
+    width: 1299
+    height: 230
+>>>>>>> origin/TestingEnvironment
   m_MinSize: {x: 231, y: 271}
   m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 17}
@@ -325,11 +400,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: InspectorWindow
+  m_Name: GridPaintPaletteWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1559
     y: 0
 <<<<<<< HEAD
@@ -344,12 +420,26 @@ MonoBehaviour:
   m_MaxSize: {x: 4001, y: 4021}
 >>>>>>> main
   m_ActualView: {fileID: 19}
+=======
+    x: 1299
+    y: 0
+    width: 301
+    height: 759
+  m_MinSize: {x: 241, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 21}
+>>>>>>> origin/TestingEnvironment
   m_Panes:
   - {fileID: 19}
   - {fileID: 20}
   - {fileID: 21}
+<<<<<<< HEAD
   m_Selected: 0
   m_LastSelected: 2
+=======
+  m_Selected: 2
+  m_LastSelected: 0
+>>>>>>> origin/TestingEnvironment
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -609,6 +699,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     x: 301
     y: 73
     width: 986
@@ -619,6 +710,12 @@ MonoBehaviour:
     width: 1189
     height: 639
 >>>>>>> main
+=======
+    x: 1906
+    y: 73
+    width: 991
+    height: 508
+>>>>>>> origin/TestingEnvironment
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -905,7 +1002,7 @@ MonoBehaviour:
       containerId: overlay-container--right
       floating: 0
       collapsed: 0
-      displayed: 0
+      displayed: 1
       snapOffset: {x: 48, y: 48}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
@@ -978,6 +1075,7 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_Position:
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: {x: 88.77838, y: 7.3626924, z: 0.047644414}
     speed: 2
     m_Value: {x: 88.77838, y: 7.3626924, z: 0.047644414}
@@ -986,6 +1084,11 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 549.49994, y: 308.99997, z: 0.0000003364007}
 >>>>>>> main
+=======
+    m_Target: {x: 440.6956, y: 23.206873, z: -2.291312}
+    speed: 2
+    m_Value: {x: 433.21487, y: 26.844902, z: -2.1817157}
+>>>>>>> origin/TestingEnvironment
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1036,6 +1139,7 @@ MonoBehaviour:
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_Target: 22.214369
     speed: 2
     m_Value: 22.214369
@@ -1044,6 +1148,11 @@ MonoBehaviour:
     speed: 2
     m_Value: 640.2811
 >>>>>>> main
+=======
+    m_Target: 254.5053
+    speed: 2
+    m_Value: 243.54573
+>>>>>>> origin/TestingEnvironment
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1088,10 +1197,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 0
     y: 113
     width: 367
     height: 639
+=======
+    x: 1600
+    y: 73
+    width: 305
+    height: 508
+>>>>>>> origin/TestingEnvironment
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1105,9 +1221,15 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
       m_SelectedIDs: 
       m_LastClickedID: 0
       m_ExpandedIDs: c845ffffdafaffff28640000
+=======
+      m_SelectedIDs: ce84feff
+      m_LastClickedID: 0
+      m_ExpandedIDs: aec4feff16b10000
+>>>>>>> origin/TestingEnvironment
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: Davy Jones
@@ -1198,6 +1320,7 @@ MonoBehaviour:
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_HBaseRangeMin: -447
     m_HBaseRangeMax: 447
     m_VBaseRangeMin: -251.5
@@ -1208,6 +1331,12 @@ MonoBehaviour:
     m_VBaseRangeMin: -309
     m_VBaseRangeMax: 309
 >>>>>>> main
+=======
+    m_HBaseRangeMin: -528.3333
+    m_HBaseRangeMax: 528.3333
+    m_VBaseRangeMin: -297
+    m_VBaseRangeMax: 297
+>>>>>>> origin/TestingEnvironment
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -1249,6 +1378,7 @@ MonoBehaviour:
       height: 503
     m_MinimalGUI: 1
   m_defaultScale: 1
+<<<<<<< HEAD
   m_LastWindowPixelSize: {x: 986, y: 524}
 =======
       x: -594.5
@@ -1259,6 +1389,9 @@ MonoBehaviour:
   m_defaultScale: 1
   m_LastWindowPixelSize: {x: 1189, y: 639}
 >>>>>>> main
+=======
+  m_LastWindowPixelSize: {x: 1056.6666, y: 623.6667}
+>>>>>>> origin/TestingEnvironment
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -1422,6 +1555,7 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 0
 <<<<<<< HEAD
     y: 618
@@ -1432,6 +1566,12 @@ MonoBehaviour:
     width: 1558
     height: 266
 >>>>>>> main
+=======
+    x: 1600
+    y: 602
+    width: 1298
+    height: 209
+>>>>>>> origin/TestingEnvironment
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1454,10 +1594,14 @@ MonoBehaviour:
     m_SearchArea: 1
     m_Folders:
 <<<<<<< HEAD
+<<<<<<< HEAD
     - Assets/Scenes/Levels
 =======
     - Assets/Scenes/Menu Screens
 >>>>>>> main
+=======
+    - Assets/Sprites/Island Tiles/Objects
+>>>>>>> origin/TestingEnvironment
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1465,6 +1609,7 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
+<<<<<<< HEAD
 <<<<<<< HEAD
   - Assets/Scenes/Levels
 =======
@@ -1486,6 +1631,18 @@ MonoBehaviour:
     m_LastClickedID: 102500
     m_ExpandedIDs: 000000008868000000ca9a3bffffff7f
 >>>>>>> main
+=======
+  - Assets/Sprites/Island Tiles/Objects
+  m_LastFoldersGridSize: -1
+  m_LastProjectPath: C:\Users\cjl35\Documents\GitHub\Once-Upon-a-Pirate
+  m_LockTracker:
+    m_IsLocked: 0
+  m_FolderTreeState:
+    scrollPos: {x: 0, y: 275}
+    m_SelectedIDs: 32ba0000
+    m_LastClickedID: 47666
+    m_ExpandedIDs: 0000000006060000e206000026b2000006ba000032ba000000ca9a3bffffff7f
+>>>>>>> origin/TestingEnvironment
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1514,10 +1671,14 @@ MonoBehaviour:
     m_SelectedIDs: 
     m_LastClickedID: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_ExpandedIDs: 
 =======
     m_ExpandedIDs: 0000000088680000
 >>>>>>> main
+=======
+    m_ExpandedIDs: 
+>>>>>>> origin/TestingEnvironment
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1593,10 +1754,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 0
     y: 773
     width: 1558
     height: 266
+=======
+    x: 1600
+    y: 602
+    width: 1298
+    height: 209
+>>>>>>> origin/TestingEnvironment
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1627,10 +1795,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1559
     y: 113
     width: 360
     height: 926
+=======
+    x: 2899
+    y: 73
+    width: 300
+    height: 738
+>>>>>>> origin/TestingEnvironment
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1708,10 +1883,17 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
+<<<<<<< HEAD
     x: 1559
     y: 113
     width: 360
     height: 926
+=======
+    x: 2899
+    y: 73
+    width: 300
+    height: 738
+>>>>>>> origin/TestingEnvironment
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
