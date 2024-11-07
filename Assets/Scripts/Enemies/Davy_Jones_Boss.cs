@@ -4,6 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
+using UnityEngine.SceneManagement;
 
 public class Davy_Jones_Script : MonoBehaviour
 {
@@ -50,12 +51,19 @@ public class Davy_Jones_Script : MonoBehaviour
     private float nextTimeToFire = 0;
     public Vector2 facingDirection = Vector2.right;
 
+    private AudioSource Audio;
+
+    public AudioClip swordAttack;
+    public AudioClip rangedAttack;
+    public AudioClip deathSound;
+
     // Start is called before the first frame update
     void Start()
     {
         rend = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         rbody = GetComponent<Rigidbody2D>();
+        Audio = GetComponent<AudioSource>();
         Vector2 switchX = Vector2.left;
     }
 
@@ -117,6 +125,8 @@ public class Davy_Jones_Script : MonoBehaviour
                 //spawns bullet prefab in direction facing
                 Instantiate(bullet_prefab, bulletPoint.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bulletPoint.rotation);
 
+                Audio.PlayOneShot(rangedAttack);
+
                 //bullet fire time, DELAY!
                 nextTimeToFire = Time.time + fireDelay;
                 frozen = false;
@@ -129,8 +139,8 @@ public class Davy_Jones_Script : MonoBehaviour
                 moveSpeed = 5;
                 moveForce = 10;
             }
-
-            if (Vector2.Distance(playerTransform.position, transform.position) < 5f)
+           
+            if (Vector2.Distance(playerTransform.position, transform.position) < 5f && !frozen)
             {
                 //makes him speed up and hit the player when close enough
                 transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, speed * Time.deltaTime);
@@ -149,10 +159,13 @@ public class Davy_Jones_Script : MonoBehaviour
                     else if (switchX == Vector2.right)
                         offset = .25f;
 
-                    Invoke("Freeze", 2f);
                     frozen = true;
+                    Invoke("Freeze", 2f);
+                    
 
                     EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
+
+                    Audio.PlayOneShot(swordAttack);
 
                     boxCollider.size = new Vector2(.5f, .5f);
 
@@ -176,7 +189,7 @@ public class Davy_Jones_Script : MonoBehaviour
         }
 
         //if player is to the right, face right and vice versa
-        if (playerTransform.position.x > transform.position.x)
+        if (playerTransform.position.x > transform.position.x && !isDead)
         {
             switchX = Vector2.right;
             facingDirection = Vector2.right;
@@ -185,7 +198,7 @@ public class Davy_Jones_Script : MonoBehaviour
                 FlipX();
             }
         }
-        else if (playerTransform.position.x < transform.position.x)
+        else if (playerTransform.position.x < transform.position.x && !isDead)
         {
             switchX = Vector2.left;
             facingDirection = Vector2.left;
@@ -195,27 +208,32 @@ public class Davy_Jones_Script : MonoBehaviour
             }
         }
 
-        //remove davy health if the player shoots him
-        void OnCollisionEnter2D(Collision2D collision)
-        {
-            
-            if (collision.gameObject.CompareTag("Bullet"))
-            {
-                health -= 25;
-            }
-        }
-
         //kills davy if health runs out
-        if (health <= 0)
+        if (health <= 0 && !isDead)
         {
             isDead = true;
+
+            Audio.PlayOneShot(deathSound);
+
             frozen = true;
             Freeze();
 
             anim.SetTrigger("isDead");
-            Invoke("Die", 4f);
+            Invoke("Die", 3f);
         }
 
+    }
+    
+    //remove davy health if the player shoots him
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            rend.color = Color.red;
+            health -= 50;
+            Invoke("ColorDelay", .5f);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -224,11 +242,14 @@ public class Davy_Jones_Script : MonoBehaviour
             collider.CompareTag("Ammo") ||
             collider.CompareTag("Health") ||
             collider.CompareTag("Coin") ||
-            collider.CompareTag("EnemyBullet"))
+            collider.CompareTag("EnemyBullet") ||
+            collider.CompareTag("Platform"))
         {
             return;
         }
-        health -= 20;
+        rend.color = Color.red;
+        health -= 50;
+        Invoke("ColorDelay", .5f);
     }
 
     void FlipX()
@@ -240,11 +261,17 @@ public class Davy_Jones_Script : MonoBehaviour
 
     void Freeze()
     {
-        frozen = false;
         rbody.velocity = switchX * 0;
+        frozen = false;
     }
+
     void Die()
     {
-        Destroy(gameObject);
+        SceneManager.LoadScene("Level Change");
+    }
+
+    void ColorDelay()
+    {
+        rend.color = Color.white;
     }
 }
