@@ -39,6 +39,10 @@ public class PlayerController : MonoBehaviour
     //pause image variable
     public Image pause;
 
+    //pause button variables
+    public Button Load;
+    public Button Menu;
+
     //Audio
     private AudioSource Audio;
 
@@ -151,12 +155,20 @@ public class PlayerController : MonoBehaviour
             {
                 Time.timeScale = 0;
                 pause.enabled = true;
+                Load.image.enabled = true;
+                Load.enabled = true;
+                Menu.image.enabled = true;
+                Menu.enabled = true;
                 isPaused = true;
             }
             else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
             {
                 Time.timeScale = 1;
                 pause.enabled = false;
+                Load.image.enabled = false;
+                Load.enabled = false;
+                Menu.image.enabled = false;
+                Menu.enabled = false;
                 isPaused = false;
             }
 
@@ -305,5 +317,59 @@ public class PlayerController : MonoBehaviour
     void TextDisable()
     {
         CheckText.enabled = false;
+    }
+
+    //Load menu function for the pause screen
+    public void LoadMenu()
+    {
+        SceneManager.LoadScene("Menu");
+        Time.timeScale = 1;
+        isPaused = false;
+    }
+
+    //Load save function for the pause screen
+    public void LoadSave()
+    {
+        SceneManager.LoadScene("LevelOne");
+        SceneManager.sceneLoaded += OnGameSceneLoaded;
+        Time.timeScale = 1;
+        isPaused = false;
+    }
+
+    public void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            GameManager.instance.playerTransform = player.transform;
+        }
+        if (scene.name == "LevelOne" && GameManager.instance != null)
+        {
+            GameManager.instance.Load();
+
+            GameManager.instance.health = GameManager.instance.lasthealth;
+
+            if (GameManager.instance.playerTransform != null)
+            {
+                // Start coroutine to set the player's position after the scene has fully loaded
+                StartCoroutine(SetPlayerPositionAfterLoad(new Vector3(
+                    GameManager.instance.playerPosX,
+                    GameManager.instance.playerPosY,
+                    GameManager.instance.playerPosZ
+                )));
+            }
+
+            SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
+        }
+    }
+    private IEnumerator SetPlayerPositionAfterLoad(Vector3 position)
+    {
+        // Wait for one frame to ensure everything loads
+        yield return null;
+
+        if (GameManager.instance.playerTransform != null)
+        {
+            GameManager.instance.playerTransform.position = position;
+        }
     }
 }
