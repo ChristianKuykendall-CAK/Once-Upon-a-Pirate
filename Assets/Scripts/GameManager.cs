@@ -11,14 +11,8 @@ public class GameManager : MonoBehaviour
     public int health = 100;
     public int ammo = 5;
     public int coin = 0;
-
-    public int lasthealth;
-
-    public float playerPosX;
-    public float playerPosY;
-    public float playerPosZ;
-
-    public Transform playerTransform;
+    public Vector3 playerTransform;
+    public Vector3 playerTransformBarrier;
 
     private HashSet<string> pickedUpItems = new HashSet<string>();
 
@@ -31,13 +25,9 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
-    void Start()
+    private void Start()
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null)
-        {
-            playerTransform = player.transform;
-        }
+        //playerTransform = GameObject.FindWithTag("Player").transform;
     }
 
     void FixedUpdate()
@@ -47,22 +37,21 @@ public class GameManager : MonoBehaviour
         //Prevents player health from going below 0
         if (health < 0)
             health = 0;
-
+        
     }
 
     public void Save()
     {
-        Vector3 playerPosition = playerTransform.position;
-        lasthealth = health;
+        playerTransform = GameObject.FindWithTag("Player").transform.position; // Used for putting back to checkpoint. VERY IMPORTANT
+
         SaveManager theData = new SaveManager
         {
             health = health,
-            lasthealth = lasthealth,
             ammo = ammo,
             coin = coin,
-            playerPosX = playerPosition.x,
-            playerPosY = playerPosition.y,
-            playerPosZ = playerPosition.z,
+            playerPosX = playerTransform.x,
+            playerPosY = playerTransform.y,
+            playerPosZ = playerTransform.z,
             pickedUpItems = new List<string>(pickedUpItems)
         };
 
@@ -83,21 +72,14 @@ public class GameManager : MonoBehaviour
             SaveManager theData = (SaveManager)bf.Deserialize(fileStream);
             fileStream.Close();
 
-            lasthealth = theData.lasthealth;
-            health = lasthealth;
-
+            health = theData.health;
             ammo = theData.ammo;
             coin = theData.coin;
-
-            GameObject player = GameObject.FindWithTag("Player");
-            if (player != null)
-            {
-                playerTransform = player.transform;
-                playerTransform.position = new Vector3(theData.playerPosX, theData.playerPosY, theData.playerPosZ);
-            }
-
+            playerTransform = new Vector3(theData.playerPosX, theData.playerPosY, theData.playerPosZ);
+            playerTransformBarrier = playerTransform + new Vector3(5f,0,0);
 
             pickedUpItems = new HashSet<string>(theData.pickedUpItems);
+
             Debug.Log("Save Path: " + Application.persistentDataPath);
 
             Debug.Log("Game loaded successfully.");
@@ -116,6 +98,4 @@ public class GameManager : MonoBehaviour
             pickedUpItems.Add(itemName);
         }
     }
-    
-
 }

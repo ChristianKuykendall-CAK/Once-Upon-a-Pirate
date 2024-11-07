@@ -17,51 +17,36 @@ public class DeathScreen : MonoBehaviour
         menuButton.onClick.AddListener(LoadMenu);
     }
 
-    public void LoadGame()
+    public void LoadGame() //clicking the load button will load saved data
     {
         SceneManager.LoadScene("LevelOne");
+        // Ensure we load the game after the scene has fully loaded
         SceneManager.sceneLoaded += OnGameSceneLoaded;
     }
 
-    public void LoadMenu()
+    public void LoadMenu() //clicking the menu button will load the main menu
     {
         SceneManager.LoadScene("Menu");
     }
 
-    public void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null)
-        {
-            GameManager.instance.playerTransform = player.transform;
-        }
         if (scene.name == "LevelOne" && GameManager.instance != null)
         {
             GameManager.instance.Load();
+            GameObject player = GameObject.FindWithTag("Player");
 
-            GameManager.instance.health = GameManager.instance.lasthealth;
-
-            if (GameManager.instance.playerTransform != null)
+            if (player != null)
             {
-                // Start coroutine to set the player's position after the scene has fully loaded
-                StartCoroutine(SetPlayerPositionAfterLoad(new Vector3(
-                    GameManager.instance.playerPosX,
-                    GameManager.instance.playerPosY,
-                    GameManager.instance.playerPosZ
-                )));
+                // Set the player's position to the saved position in GameManager
+                player.transform.position = GameManager.instance.playerTransform;
             }
-
+            else
+            {
+                Debug.LogError("Player object not found in the scene!");
+            }
             SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
         }
     }
-    private IEnumerator SetPlayerPositionAfterLoad(Vector3 position)
-    {
-        // Wait for one frame to ensure everything loads
-        yield return null;
 
-        if (GameManager.instance.playerTransform != null)
-        {
-            GameManager.instance.playerTransform.position = position;
-        }
-    }
 }
