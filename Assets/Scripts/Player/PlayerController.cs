@@ -39,17 +39,6 @@ public class PlayerController : MonoBehaviour
     //pause image variable
     public Image pause;
 
-    //Audio
-    private AudioSource Audio;
-
-    public AudioClip ammoPickup;
-    public AudioClip checkPickup;
-    public AudioClip coinPickup;
-    public AudioClip healthPickup;
-    public AudioClip swordAttack;
-    public AudioClip rangedAttack;
-    public AudioClip deathSound;
-
     public bool isPlayerDead()
     { return isDead; }
 
@@ -61,7 +50,6 @@ public class PlayerController : MonoBehaviour
         rend = GetComponent<SpriteRenderer>();
         rbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        Audio = GetComponent<AudioSource>();
         // Set up change tilemap collider to turn into trigger so player can drop through
         GameObject tilemapObject = GameObject.Find("Platform");
         if (tilemapObject != null)
@@ -78,11 +66,10 @@ public class PlayerController : MonoBehaviour
         {
             H = Input.GetAxis("Horizontal");
             // left mouse button
-            if (Input.GetMouseButtonDown(0) && Time.time > nextTimeToFire && !isPaused)
+            if (Input.GetMouseButtonDown(0) && !isPaused)
             {
                 //triggers the melee animation
                 anim.SetTrigger("isSlicing");
-                Audio.PlayOneShot(swordAttack);
 
                 GameObject playerAttackCollider = new GameObject("PlayerAttackCollider");
                 BoxCollider2D boxCollider = playerAttackCollider.AddComponent<BoxCollider2D>();
@@ -98,16 +85,12 @@ public class PlayerController : MonoBehaviour
                 boxCollider.size = new Vector2(1f, 1f);
 
                 Destroy(playerAttackCollider, 0.5f);
-
-                //swing delay
-                nextTimeToFire = Time.time + fireDelay;
             }
             // right mouse button
             if (Input.GetMouseButtonDown(1) && GameManager.instance.ammo > 0 && Time.time > nextTimeToFire && !isPaused)
             {
                 //triggers the shooting animation
                 anim.SetTrigger("isShooting");
-                Audio.PlayOneShot(rangedAttack);
 
                 //Summons bullet prefab, remove ammo!!!!!!!!11
                 Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
@@ -193,10 +176,9 @@ public class PlayerController : MonoBehaviour
         CoinText.text = "Coins: " + GameManager.instance.coin;
 
         //Player death
-        if (GameManager.instance.health <= 0 && !isDead)
+        if (GameManager.instance.health <= 0)
         {
             isDead = true;
-            Audio.PlayOneShot(deathSound);
             anim.SetBool("isWalking", false);
             anim.SetTrigger("isDead");
             Invoke("Die", 3f);
@@ -254,51 +236,36 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(Invicibility());
 
             }
-            if(collider.CompareTag("EnemyBullet") && !isPaused)
-            {
-                StartCoroutine(Invicibility());
-            }
             if (GameManager.instance != null)
             {
                 //Item Pickup triggers
                 if (collider.CompareTag("Ammo"))
                 {
-                    GameManager.instance.ammo += 3;
-                    Audio.PlayOneShot(ammoPickup);
+                    GameManager.instance.ammo += 2;
                 }
                 if (collider.CompareTag("Health"))
                 {
                     GameManager.instance.health += 50;
-                    Audio.PlayOneShot(healthPickup);
                 }
                 if (collider.CompareTag("Coin"))
                 {
                     GameManager.instance.coin += 1;
-                    Audio.PlayOneShot(coinPickup);
                 }
                 if (collider.CompareTag("CheckPoint"))
                 {
                     CheckText.enabled = true;
-                    Audio.PlayOneShot(checkPickup);
+                    GameManager.instance.Save();
                     Invoke("TextDisable", 2f);
-
-                    GameManager.instance.lasthealth = GameManager.instance.health;
-
-                    //GameManager.instance.playerPosX = playerPosition.x;
-                    //GameManager.instance.playerPosY = playerPosition.y;
-                    //GameManager.instance.playerPosZ = playerPosition.z;
-
-                    GameManager.instance.Save();                   
                 }
             }
         }
         IEnumerator Invicibility()
         {
-            rend.color = Color.red;
+            //rend.color = Color.blue;
             noDamage = true;
             yield return new WaitForSeconds(2);
             noDamage = false;
-            rend.color = Color.white;
+            //rend.color = Color.red;
         }
     }
 
