@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     public Vector3 playerTransformBarrier;
 
     private HashSet<string> pickedUpItems = new HashSet<string>();
-    private HashSet<string> currentEnemies = new HashSet<string>();
 
     private void Awake()
     {
@@ -25,6 +24,10 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+    }
+    private void Start()
+    {
+        //playerTransform = GameObject.FindWithTag("Player").transform;
     }
 
     void FixedUpdate()
@@ -41,7 +44,6 @@ public class GameManager : MonoBehaviour
     {
         playerTransform = GameObject.FindWithTag("Player").transform.position; // Used for putting back to checkpoint. VERY IMPORTANT
 
-        // pulled all data that needs to be saved from the SaveManager script. 
         SaveManager theData = new SaveManager
         {
             health = health,
@@ -50,17 +52,15 @@ public class GameManager : MonoBehaviour
             playerPosX = playerTransform.x,
             playerPosY = playerTransform.y,
             playerPosZ = playerTransform.z,
-            pickedUpItems = new List<string>(pickedUpItems),
-            currentEnemies = new List<string>(currentEnemies)
+            pickedUpItems = new List<string>(pickedUpItems)
         };
 
-        // Saving stuff to a file
         BinaryFormatter bf = new BinaryFormatter();
         FileStream fileStream = File.Create(Application.persistentDataPath + "/player.save");
         bf.Serialize(fileStream, theData);
         fileStream.Close();
 
-        //Debug.Log("Game saved successfully.");
+        Debug.Log("Game saved successfully.");
     }
 
     public void Load()
@@ -75,25 +75,17 @@ public class GameManager : MonoBehaviour
             health = theData.health;
             ammo = theData.ammo;
             coin = theData.coin;
-
+            //pickedUpItems = theData.pickedUpItems;
             playerTransform = new Vector3(theData.playerPosX, theData.playerPosY, theData.playerPosZ);
+            playerTransformBarrier = playerTransform + new Vector3(5f,0,0);
 
-            playerTransformBarrier = playerTransform + new Vector3(5f,0,0); // Used to put the player 5 units to the right of the checkpoint when loading in
-
-            // Below are the HashSets that get the data of the items and enemies
             pickedUpItems = new HashSet<string>(theData.pickedUpItems);
-            currentEnemies = new HashSet<string>(theData.currentEnemies);
 
-            DisableDefeatedEnemies(); // used to get each enemy
+            Debug.Log("Save Path: " + Application.persistentDataPath);
 
-
-            //Debug.Log("Save Path: " + Application.persistentDataPath);
-            //Debug.Log("Game loaded successfully.");
+            Debug.Log("Game loaded successfully.");
         }
     }
-
-
-    // Below code is used to save items and enemies to the hashsets individually
 
     public bool HasItemBeenPickedUp(string itemName)
     {
@@ -105,26 +97,6 @@ public class GameManager : MonoBehaviour
         if (!pickedUpItems.Contains(itemName))
         {
             pickedUpItems.Add(itemName);
-        }
-    }
-
-    // This finds each enemy with their unique gameobject name
-    private void DisableDefeatedEnemies()
-    {
-        foreach (string enemyName in currentEnemies)
-        {
-            GameObject enemy = GameObject.Find(enemyName);
-            if (enemy != null)
-            {
-                enemy.SetActive(false);
-            }
-        }
-    }
-    public void MarkEnemyAsDefeated(string enemyName)
-    {
-        if (!currentEnemies.Contains(enemyName))
-        {
-            currentEnemies.Add(enemyName);
         }
     }
 }
