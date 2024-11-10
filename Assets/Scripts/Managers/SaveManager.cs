@@ -11,4 +11,5 @@ public class SaveManager
     public int coin;
     public float playerPosX, playerPosY, playerPosZ;
     public List<string> pickedUpItems;
+    public List<string> currentEnemies;
 }
