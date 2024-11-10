@@ -12,8 +12,6 @@ public class MenuManager : MonoBehaviour
     public Button controlsButton;
     public Button endButton;
 
-
-
     void Start()
     {
         //create on click listeners for start and end buttons
@@ -25,7 +23,10 @@ public class MenuManager : MonoBehaviour
 
     public void StartGame() //starts game when the start button is pressed
     {
-        //GameManager.instance.health = 100;
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.health = 100;
+        }
         SceneManager.LoadScene("LevelOne");
     }
 
@@ -36,8 +37,18 @@ public class MenuManager : MonoBehaviour
         SceneManager.sceneLoaded += OnGameSceneLoaded;
     }
 
-    private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (this == null) // Check if MenuManager has been destroyed
+        {
+            SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent potential null reference calls
+            return;
+        }
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            GameManager.instance.playerTransform = player.transform;
+        }
         if (scene.name == "LevelOne" && GameManager.instance != null)
         {
             SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
