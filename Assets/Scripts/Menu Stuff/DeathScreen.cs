@@ -17,24 +17,27 @@ public class DeathScreen : MonoBehaviour
         menuButton.onClick.AddListener(LoadMenu);
     }
 
-    public void LoadGame() //clicking the load button will load saved data
+    public void LoadGame()
     {
         SceneManager.LoadScene("LevelOne");
-        // Ensure we load the game after the scene has fully loaded
         SceneManager.sceneLoaded += OnGameSceneLoaded;
     }
 
-    public void LoadMenu() //clicking the menu button will load the main menu
+    public void LoadMenu()
     {
         SceneManager.LoadScene("Menu");
     }
 
-    private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            GameManager.instance.playerTransform = player.transform;
+        }
         if (scene.name == "LevelOne" && GameManager.instance != null)
         {
             GameManager.instance.Load();
-            GameObject player = GameObject.FindWithTag("Player");
 
             if (player != null)
             {
@@ -45,6 +48,7 @@ public class DeathScreen : MonoBehaviour
             {
                 Debug.LogError("Player object not found in the scene!");
             }
+
             SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
         }
     }
