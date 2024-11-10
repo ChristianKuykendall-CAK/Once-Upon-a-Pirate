@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,7 +15,6 @@ public class GameManager : MonoBehaviour
     public Vector3 playerTransformBarrier;
 
     private HashSet<string> pickedUpItems = new HashSet<string>();
-    private HashSet<string> currentEnemies = new HashSet<string>();
 
     private void Awake()
     {
@@ -25,18 +25,24 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
+    private void Start()
+    {
+        //playerTransform = GameObject.FindWithTag("Player").transform;
+    }
 
     void FixedUpdate()
     {
         if (health > 100)
             health = 100;
+        //Prevents player health from going below 0
         if (health < 0)
             health = 0;
+        
     }
 
     public void Save()
     {
-        playerTransform = GameObject.FindWithTag("Player").transform.position;
+        playerTransform = GameObject.FindWithTag("Player").transform.position; // Used for putting back to checkpoint. VERY IMPORTANT
 
         SaveManager theData = new SaveManager
         {
@@ -46,14 +52,15 @@ public class GameManager : MonoBehaviour
             playerPosX = playerTransform.x,
             playerPosY = playerTransform.y,
             playerPosZ = playerTransform.z,
-            pickedUpItems = new List<string>(pickedUpItems),
-            currentEnemies = new List<string>(currentEnemies)
+            pickedUpItems = new List<string>(pickedUpItems)
         };
 
         BinaryFormatter bf = new BinaryFormatter();
         FileStream fileStream = File.Create(Application.persistentDataPath + "/player.save");
         bf.Serialize(fileStream, theData);
         fileStream.Close();
+
+        Debug.Log("Game saved successfully.");
     }
 
     public void Load()
@@ -68,47 +75,28 @@ public class GameManager : MonoBehaviour
             health = theData.health;
             ammo = theData.ammo;
             coin = theData.coin;
-
+            //pickedUpItems = theData.pickedUpItems;
             playerTransform = new Vector3(theData.playerPosX, theData.playerPosY, theData.playerPosZ);
-            playerTransformBarrier = playerTransform + new Vector3(5f, 0, 0);
+            playerTransformBarrier = playerTransform + new Vector3(5f,0,0);
 
             pickedUpItems = new HashSet<string>(theData.pickedUpItems);
-            currentEnemies = new HashSet<string>(theData.currentEnemies);
 
-            DisableDefeatedEnemies();
+            Debug.Log("Save Path: " + Application.persistentDataPath);
+
+            Debug.Log("Game loaded successfully.");
         }
     }
 
-    public bool HasItemBeenPickedUp(string itemID)
+    public bool HasItemBeenPickedUp(string itemName)
     {
-        return pickedUpItems.Contains(itemID);
+        return pickedUpItems.Contains(itemName);
     }
 
-    public void MarkItemAsPickedUp(string itemID)
+    public void MarkItemAsPickedUp(string itemName)
     {
-        if (!pickedUpItems.Contains(itemID))
+        if (!pickedUpItems.Contains(itemName))
         {
-            pickedUpItems.Add(itemID);
-        }
-    }
-
-    private void DisableDefeatedEnemies()
-    {
-        foreach (string enemyName in currentEnemies)
-        {
-            GameObject enemy = GameObject.Find(enemyName);
-            if (enemy != null)
-            {
-                enemy.SetActive(false);
-            }
-        }
-    }
-
-    public void MarkEnemyAsDefeated(string enemyName)
-    {
-        if (!currentEnemies.Contains(enemyName))
-        {
-            currentEnemies.Add(enemyName);
+            pickedUpItems.Add(itemName);
         }
     }
 }
