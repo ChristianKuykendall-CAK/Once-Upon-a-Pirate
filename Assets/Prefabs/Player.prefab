@@ -132,6 +132,13 @@ MonoBehaviour:
   CoinText: {fileID: 0}
   CheckText: {fileID: 0}
   pause: {fileID: 0}
+  ammoPickup: {fileID: 8300000, guid: 57b4f73087db60242ae05cb01949bbe1, type: 3}
+  checkPickup: {fileID: 8300000, guid: 7c278374e89c4cc40bbaa248a3e2c6a0, type: 3}
+  coinPickup: {fileID: 8300000, guid: 55ba11bc0d217b041841d4d58173a9f7, type: 3}
+  healthPickup: {fileID: 8300000, guid: d401af04206d56e40bdc4095c28ca96b, type: 3}
+  swordAttack: {fileID: 8300000, guid: 76066d4a9c9a2b5449b618c8a1343f13, type: 3}
+  rangedAttack: {fileID: 8300000, guid: 64e4121159860c943b061901ec57e648, type: 3}
+  deathSound: {fileID: 8300000, guid: 3a3b5140276ce8744ac65fd183fcfa5e, type: 3}
 --- !u!50 &3677918510076021916
 Rigidbody2D:
   serializedVersion: 4
