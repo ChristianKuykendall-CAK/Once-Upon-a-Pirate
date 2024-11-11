@@ -286,7 +286,7 @@ public class PlayerController : MonoBehaviour
         }
         IEnumerator Invicibility()
         {
-            //rend.color = Color.blue;
+            rend.color = Color.red;
             noDamage = true;
             yield return new WaitForSeconds(2);
             noDamage = false;
