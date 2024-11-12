@@ -320,6 +320,7 @@ public class PlayerController : MonoBehaviour
     void LoadMenu() //clicking the menu button will load the main menu
     {
         SceneManager.LoadScene("Menu");
+        Time.timeScale = 1;
     }
 
     void LoadSave() //load saved data
@@ -327,6 +328,7 @@ public class PlayerController : MonoBehaviour
         SceneManager.LoadScene("LevelOne");
         // Ensure we load the game after the scene has fully loaded
         SceneManager.sceneLoaded += OnGameSceneLoaded;
+        Time.timeScale = 1;
     }
 
     private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
