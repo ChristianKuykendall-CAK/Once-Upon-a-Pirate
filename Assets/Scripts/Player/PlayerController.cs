@@ -248,6 +248,7 @@ public class PlayerController : MonoBehaviour
             if (collider.CompareTag("EnemyAttack") && !isPaused)
             {
                 Vector2 directionAwayFromEnemy = (transform.position - collider.transform.position).normalized;
+                directionAwayFromEnemy.y = 0;
                 rbody.AddForce(directionAwayFromEnemy * (moveForce / 2), ForceMode2D.Impulse);
                 if (!noDamage)
                     GameManager.instance.health -= 25;
