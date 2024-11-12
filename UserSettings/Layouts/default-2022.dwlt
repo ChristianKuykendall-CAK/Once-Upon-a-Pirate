@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1600
     height: 809
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Scene
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -48,11 +48,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-<<<<<<< HEAD
-  controlID: 46
-=======
-  controlID: 107
->>>>>>> origin/Christian's-branch
+  controlID: 112
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -63,35 +59,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: GridPaintPaletteWindow
+  m_Name: 
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
     serializedVersion: 2
-<<<<<<< HEAD
     x: 1222
     y: 0
     width: 378
     height: 759
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
   m_Selected: 0
-=======
-    x: 1161
-    y: 0
-    width: 439
-    height: 759
-  m_MinSize: {x: 240, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 12}
-  m_Panes:
-  - {fileID: 14}
-  - {fileID: 12}
-  m_Selected: 1
->>>>>>> origin/Christian's-branch
   m_LastSelected: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -110,17 +92,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-<<<<<<< HEAD
     width: 302
-    height: 452
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
-=======
-    width: 282
-    height: 450
+    height: 518
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
->>>>>>> origin/Christian's-branch
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -142,15 +117,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-<<<<<<< HEAD
-    y: 452
+    y: 518
     width: 1222
-    height: 307
-=======
-    y: 450
-    width: 1161
-    height: 309
->>>>>>> origin/Christian's-branch
+    height: 241
   m_MinSize: {x: 231, y: 271}
   m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 13}
@@ -249,20 +218,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-<<<<<<< HEAD
     width: 1222
-=======
-    width: 1161
->>>>>>> origin/Christian's-branch
     height: 759
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-<<<<<<< HEAD
-  controlID: 47
-=======
-  controlID: 51
->>>>>>> origin/Christian's-branch
+  controlID: 49
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -282,17 +243,12 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-<<<<<<< HEAD
     width: 1222
-    height: 452
-=======
-    width: 1161
-    height: 450
->>>>>>> origin/Christian's-branch
+    height: 518
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 52
+  controlID: 50
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -308,27 +264,17 @@ MonoBehaviour:
   m_Children: []
   m_Position:
     serializedVersion: 2
-<<<<<<< HEAD
     x: 302
     y: 0
     width: 920
-    height: 452
-=======
-    x: 282
-    y: 0
-    width: 879
-    height: 450
->>>>>>> origin/Christian's-branch
+    height: 518
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
   - {fileID: 17}
-<<<<<<< HEAD
   - {fileID: 12}
-=======
->>>>>>> origin/Christian's-branch
   m_Selected: 0
   m_LastSelected: 1
 --- !u!114 &12
@@ -340,7 +286,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-<<<<<<< HEAD
   m_Script: {fileID: 12914, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -356,23 +301,6 @@ MonoBehaviour:
     y: 73
     width: 918
     height: 429
-=======
-  m_Script: {fileID: 11500000, guid: 3f683d99f24875748a6656966ca9cea0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 240, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: Tile Palette
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 1161
-    y: 73
-    width: 438
-    height: 738
->>>>>>> origin/Christian's-branch
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -383,7 +311,6 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
     m_OverlaysVisible: 1
-<<<<<<< HEAD
   m_ViewTransforms:
     m_KeySerializationHelper:
     - {fileID: -280486490618702352, guid: 5a5ee48e57e8fb543a1cf5b0d9af1ef1, type: 2}
@@ -420,8 +347,6 @@ MonoBehaviour:
   m_CurrentEditor: 0
   m_LayerEditor:
     m_SelectedLayerIndex: 0
-=======
->>>>>>> origin/Christian's-branch
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -443,15 +368,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-<<<<<<< HEAD
-    y: 525
+    y: 591
     width: 1221
-    height: 286
-=======
-    y: 523
-    width: 1160
-    height: 288
->>>>>>> origin/Christian's-branch
+    height: 220
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -473,11 +392,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-<<<<<<< HEAD
     - Assets/Scenes/Menu Screens
-=======
-    - Assets/Scripts/Enemies
->>>>>>> origin/Christian's-branch
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -485,7 +400,6 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-<<<<<<< HEAD
   - Assets/Scenes/Menu Screens
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\cjl35\Documents\GitHub\Once-Upon-a-Pirate
@@ -493,21 +407,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: ca070000
-    m_LastClickedID: 1994
-    m_ExpandedIDs: 00000000060600003e060000e20600002207000000ca9a3bffffff7f
-=======
-  - Assets/Scripts/Enemies
-  m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\cak44\Documents\GitHub\Once-Upon-a-Pirate
-  m_LockTracker:
-    m_IsLocked: 0
-  m_FolderTreeState:
-    scrollPos: {x: 0, y: 52}
-    m_SelectedIDs: 166d0000
-    m_LastClickedID: 27926
-    m_ExpandedIDs: 00000000c86c0000e66c000000ca9a3bffffff7f
->>>>>>> origin/Christian's-branch
+    m_SelectedIDs: 086b0000
+    m_LastClickedID: 27400
+    m_ExpandedIDs: 00000000ba6a0000d66a0000d86a000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -535,11 +437,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-<<<<<<< HEAD
-    m_ExpandedIDs: 
-=======
-    m_ExpandedIDs: 00000000c86c0000
->>>>>>> origin/Christian's-branch
+    m_ExpandedIDs: 00000000ba6a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -615,15 +513,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-<<<<<<< HEAD
     x: 1222
     y: 73
     width: 377
-=======
-    x: 1161
-    y: 73
-    width: 438
->>>>>>> origin/Christian's-branch
     height: 738
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -641,11 +533,7 @@ MonoBehaviour:
     m_CachedPref: 160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-<<<<<<< HEAD
   m_LastInspectedObjectInstanceID: -1
-=======
-  m_LastInspectedObjectInstanceID: 26366
->>>>>>> origin/Christian's-branch
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
@@ -674,13 +562,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-<<<<<<< HEAD
     width: 301
-    height: 431
-=======
-    width: 281
-    height: 429
->>>>>>> origin/Christian's-branch
+    height: 497
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -694,15 +577,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-<<<<<<< HEAD
-      m_SelectedIDs: ceaf0000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 70b7fdffb8b7fdff06b8fdff3eb9fdff60bffdffa2c7fdffc4f3fdff0224feff4a24feff9224feffce30feff104ffeff3c69feffc66dfefffc93feffac94feff6eb5feff56b80000a4b8000094f70000ccf70000def70000f8f700002e03010074040100900401009a040100a4040100ae040100620b01005216010064160100ac1f0100c81f0100d21f0100dc1f0100e61f01008c2601009e2601007e2a0100
-=======
-      m_SelectedIDs: fe660000
-      m_LastClickedID: 26366
-      m_ExpandedIDs: 1afbffff
->>>>>>> origin/Christian's-branch
+      m_ExpandedIDs: a465ffffa271ffff9c80ffff3081ffff949cffff34a9ffff76b8ffff62b9ffff92faffffe066000036000100da000100f0080100c4090100be0a0100fe0a0100340c0100
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -746,17 +623,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-<<<<<<< HEAD
     x: 302
     y: 73
     width: 918
-    height: 431
-=======
-    x: 282
-    y: 73
-    width: 877
-    height: 429
->>>>>>> origin/Christian's-branch
+    height: 497
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -771,11 +641,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-<<<<<<< HEAD
       snapOffset: {x: -166, y: -26}
-=======
-      snapOffset: {x: -166, y: -26.666656}
->>>>>>> origin/Christian's-branch
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 3
       id: Tool Settings
@@ -1047,7 +913,7 @@ MonoBehaviour:
       containerId: overlay-container--right
       floating: 0
       collapsed: 0
-      displayed: 1
+      displayed: 0
       snapOffset: {x: 48, y: 48}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
@@ -1113,11 +979,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-<<<<<<< HEAD
       snapOffset: {x: 48, y: 10}
-=======
-      snapOffset: {x: 48, y: 10.666687}
->>>>>>> origin/Christian's-branch
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: UnityEditor.SceneViewCameraOverlay
@@ -1136,15 +998,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-<<<<<<< HEAD
-    m_Target: {x: 289.19592, y: 172.17783, z: 1.6015997}
+    m_Target: {x: 442.42404, y: 195.97662, z: 1.314098}
     speed: 2
-    m_Value: {x: 289.19592, y: 172.17783, z: 1.6015997}
-=======
-    m_Target: {x: 78.61118, y: 4.775668, z: -1.0511771}
-    speed: 2
-    m_Value: {x: 78.61118, y: 4.775668, z: -1.0511771}
->>>>>>> origin/Christian's-branch
+    m_Value: {x: 434.1399, y: 198.54872, z: 1.4714308}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1194,15 +1050,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-<<<<<<< HEAD
-    m_Target: 336.61115
+    m_Target: 365.35934
     speed: 2
-    m_Value: 336.61115
-=======
-    m_Target: 17.242054
-    speed: 2
-    m_Value: 17.242054
->>>>>>> origin/Christian's-branch
+    m_Value: 349.62616
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1247,17 +1097,10 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-<<<<<<< HEAD
     x: 302
     y: 73
     width: 918
-    height: 431
-=======
-    x: 282
-    y: 73
-    width: 877
-    height: 429
->>>>>>> origin/Christian's-branch
+    height: 497
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1274,11 +1117,7 @@ MonoBehaviour:
   m_ShowGizmos: 0
   m_TargetDisplay: 0
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
-<<<<<<< HEAD
-  m_TargetSize: {x: 729, y: 410}
-=======
-  m_TargetSize: {x: 877, y: 408}
->>>>>>> origin/Christian's-branch
+  m_TargetSize: {x: 846, y: 476}
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
@@ -1293,17 +1132,10 @@ MonoBehaviour:
     m_VRangeLocked: 0
     hZoomLockedByDefault: 0
     vZoomLockedByDefault: 0
-<<<<<<< HEAD
-    m_HBaseRangeMin: -364.5
-    m_HBaseRangeMax: 364.5
-    m_VBaseRangeMin: -205
-    m_VBaseRangeMax: 205
-=======
-    m_HBaseRangeMin: -438.5
-    m_HBaseRangeMax: 438.5
-    m_VBaseRangeMin: -204
-    m_VBaseRangeMax: 204
->>>>>>> origin/Christian's-branch
+    m_HBaseRangeMin: -423
+    m_HBaseRangeMax: 423
+    m_VBaseRangeMin: -238
+    m_VBaseRangeMax: 238
     m_HAllowExceedBaseRangeMin: 1
     m_HAllowExceedBaseRangeMax: 1
     m_VAllowExceedBaseRangeMin: 1
@@ -1321,40 +1153,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-<<<<<<< HEAD
       width: 918
-      height: 410
+      height: 476
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 459, y: 205}
-=======
-      width: 877
-      height: 408
-    m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 438.5, y: 204}
->>>>>>> origin/Christian's-branch
+    m_Translation: {x: 459, y: 238}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-<<<<<<< HEAD
       x: -459
-      y: -205
+      y: -238
       width: 918
-      height: 410
+      height: 476
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 918, y: 431}
-=======
-      x: -438.5
-      y: -204
-      width: 877
-      height: 408
-    m_MinimalGUI: 1
-  m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 877, y: 429}
->>>>>>> origin/Christian's-branch
+  m_LastWindowPixelSize: {x: 918, y: 497}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -1381,9 +1196,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 523
-    width: 1160
-    height: 288
+    y: 621.3334
+    width: 1302.3334
+    height: 356.3333
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
