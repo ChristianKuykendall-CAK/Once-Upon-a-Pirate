@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public float H;
     public Vector2 facingDirection = Vector2.right;
     public float moveForce;
-    
+
     //Bullet stuff
     public GameObject bullet;
     private float fireDelay = 1f;
@@ -38,6 +38,9 @@ public class PlayerController : MonoBehaviour
 
     //pause image variable
     public Image pause;
+
+    public Button Load;
+    public Button Menu;
 
     //Audio
     private AudioSource Audio;
@@ -150,12 +153,20 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
             {
                 Time.timeScale = 0;
+                Menu.image.enabled = true;
+                Menu.enabled = true;
+                Load.image.enabled = true;
+                Load.enabled = true;
                 pause.enabled = true;
                 isPaused = true;
             }
             else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
             {
                 Time.timeScale = 1;
+                Menu.image.enabled = false;
+                Menu.enabled = false;
+                Load.image.enabled = false;
+                Load.enabled = false;
                 pause.enabled = false;
                 isPaused = false;
             }
@@ -248,13 +259,14 @@ public class PlayerController : MonoBehaviour
             if (collider.CompareTag("EnemyAttack") && !isPaused)
             {
                 Vector2 directionAwayFromEnemy = (transform.position - collider.transform.position).normalized;
+                directionAwayFromEnemy.y = 0;
                 rbody.AddForce(directionAwayFromEnemy * (moveForce / 2), ForceMode2D.Impulse);
                 if (!noDamage)
                     GameManager.instance.health -= 25;
                 StartCoroutine(Invicibility());
 
             }
-            if(collider.CompareTag("EnemyBullet") && !isPaused)
+            if (collider.CompareTag("EnemyBullet") && !isPaused)
             {
                 StartCoroutine(Invicibility());
             }
@@ -278,6 +290,7 @@ public class PlayerController : MonoBehaviour
                 }
                 if (collider.CompareTag("CheckPoint"))
                 {
+                    GameManager.instance.Save();
                     CheckText.enabled = true;
                     Audio.PlayOneShot(checkPickup);
                     Invoke("TextDisable", 2f);
@@ -302,5 +315,37 @@ public class PlayerController : MonoBehaviour
     void TextDisable()
     {
         CheckText.enabled = false;
+    }
+
+    void LoadMenu() //clicking the menu button will load the main menu
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    void LoadSave() //load saved data
+    {
+        SceneManager.LoadScene("LevelOne");
+        // Ensure we load the game after the scene has fully loaded
+        SceneManager.sceneLoaded += OnGameSceneLoaded;
+    }
+
+    private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "LevelOne" && GameManager.instance != null)
+        {
+            GameManager.instance.Load();
+            GameObject player = GameObject.FindWithTag("Player");
+
+            if (player != null)
+            {
+                // Set the player's position to the saved position in GameManager
+                player.transform.position = GameManager.instance.playerTransform;
+            }
+            else
+            {
+                Debug.LogError("Player object not found in the scene!");
+            }
+            SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
+        }
     }
 }
