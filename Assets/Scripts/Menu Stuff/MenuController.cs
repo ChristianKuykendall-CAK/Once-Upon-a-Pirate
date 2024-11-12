@@ -40,9 +40,10 @@ public class MenuManager : MonoBehaviour
     {
         if (scene.name == "LevelOne" && GameManager.instance != null)
         {
-            GameManager.instance.Load();
             SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
+            GameManager.instance.Load();
         }
+
     }
 
 
