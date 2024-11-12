@@ -9,6 +9,8 @@ public class ObjectPlacement : MonoBehaviour
 
     private GameManager gameManager;
 
+    private string uniqueItemID;
+
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -19,10 +21,17 @@ public class ObjectPlacement : MonoBehaviour
             return;
         }
 
-        // Check if this item has been picked up
-        if (gameManager.HasItemBeenPickedUp(objectPlaced.ToString()))
+        // Use the object's name to create a unique ID, or you could use a custom ID field
+        uniqueItemID = objectPlaced.ToString() + "_" + gameObject.name; // Name should be unique for each object
+
+        // Check if this specific item has been picked up on game load
+        if (gameManager.HasItemBeenPickedUp(uniqueItemID))
         {
-            gameObject.SetActive(false);
+            gameObject.SetActive(false); // Item has been picked up, so disable it
+        }
+        else
+        {
+            gameObject.SetActive(true); // Item has not been picked up, so ensure it is active
         }
     }
 
@@ -30,9 +39,8 @@ public class ObjectPlacement : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gameManager.MarkItemAsPickedUp(objectPlaced.ToString());
+            gameManager.MarkItemAsPickedUp(uniqueItemID);
             gameObject.SetActive(false); // Makes item disappear
         }
     }
 }
-

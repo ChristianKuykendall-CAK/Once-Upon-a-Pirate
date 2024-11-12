@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
                 anim.SetTrigger("isShooting");
                 Audio.PlayOneShot(rangedAttack);
 
-                //Summons bullet prefab, remove ammo!!!!!!!!11
+                //Summons bullet prefab, remove ammo!!!!!!!!
                 Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
                 if (GameManager.instance != null)
                     GameManager.instance.ammo -= 1;
@@ -278,6 +278,7 @@ public class PlayerController : MonoBehaviour
                 }
                 if (collider.CompareTag("CheckPoint"))
                 {
+                    GameManager.instance.Save();
                     CheckText.enabled = true;
                     Audio.PlayOneShot(checkPickup);
                     Invoke("TextDisable", 2f);
