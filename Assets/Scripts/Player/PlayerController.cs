@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     private bool isDead = false;
     private bool isPaused = false;
 
+    //health bar slider variable
+    public Slider HealthBar;
+
     //Text variables
     public Text HealthText;
     public Text AmmoText;
@@ -65,6 +68,7 @@ public class PlayerController : MonoBehaviour
         rbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         Audio = GetComponent<AudioSource>();
+        HealthBar.maxValue = 100;
         // Set up change tilemap collider to turn into trigger so player can drop through
         GameObject tilemapObject = GameObject.Find("Platform");
         if (tilemapObject != null)
@@ -199,6 +203,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Updates the player's health, ammo, and coin count every frame
+        HealthBar.value = GameManager.instance.health;
         HealthText.text = "Health: " + GameManager.instance.health;
         AmmoText.text = "Ammo: " + GameManager.instance.ammo;
         CoinText.text = "Coins: " + GameManager.instance.coin;
