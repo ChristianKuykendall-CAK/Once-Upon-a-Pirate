@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public float H;
     public Vector2 facingDirection = Vector2.right;
     public float moveForce;
-    
+
     //Bullet stuff
     public GameObject bullet;
     private float fireDelay = 1f;
@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     private bool isDead = false;
     private bool isPaused = false;
 
+    //health bar slider variable
+    public Slider HealthBar;
+
     //Text variables
     public Text HealthText;
     public Text AmmoText;
@@ -38,6 +41,9 @@ public class PlayerController : MonoBehaviour
 
     //pause image variable
     public Image pause;
+
+    public Button Load;
+    public Button Menu;
 
     //Audio
     private AudioSource Audio;
@@ -62,6 +68,7 @@ public class PlayerController : MonoBehaviour
         rbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         Audio = GetComponent<AudioSource>();
+        HealthBar.maxValue = 100;
         // Set up change tilemap collider to turn into trigger so player can drop through
         GameObject tilemapObject = GameObject.Find("Platform");
         if (tilemapObject != null)
@@ -150,12 +157,20 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape) && !isPaused)
             {
                 Time.timeScale = 0;
+                Menu.image.enabled = true;
+                Menu.enabled = true;
+                Load.image.enabled = true;
+                Load.enabled = true;
                 pause.enabled = true;
                 isPaused = true;
             }
             else if (Input.GetKeyDown(KeyCode.Escape) && isPaused)
             {
                 Time.timeScale = 1;
+                Menu.image.enabled = false;
+                Menu.enabled = false;
+                Load.image.enabled = false;
+                Load.enabled = false;
                 pause.enabled = false;
                 isPaused = false;
             }
@@ -188,6 +203,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Updates the player's health, ammo, and coin count every frame
+        HealthBar.value = GameManager.instance.health;
         HealthText.text = "Health: " + GameManager.instance.health;
         AmmoText.text = "Ammo: " + GameManager.instance.ammo;
         CoinText.text = "Coins: " + GameManager.instance.coin;
@@ -255,7 +271,7 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(Invicibility());
 
             }
-            if(collider.CompareTag("EnemyBullet") && !isPaused)
+            if (collider.CompareTag("EnemyBullet") && !isPaused)
             {
                 StartCoroutine(Invicibility());
             }
@@ -304,5 +320,39 @@ public class PlayerController : MonoBehaviour
     void TextDisable()
     {
         CheckText.enabled = false;
+    }
+
+    void LoadMenu() //clicking the menu button will load the main menu
+    {
+        SceneManager.LoadScene("Menu");
+        Time.timeScale = 1;
+    }
+
+    void LoadSave() //load saved data
+    {
+        SceneManager.LoadScene("LevelOne");
+        // Ensure we load the game after the scene has fully loaded
+        SceneManager.sceneLoaded += OnGameSceneLoaded;
+        Time.timeScale = 1;
+    }
+
+    private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "LevelOne" && GameManager.instance != null)
+        {
+            GameManager.instance.Load();
+            GameObject player = GameObject.FindWithTag("Player");
+
+            if (player != null)
+            {
+                // Set the player's position to the saved position in GameManager
+                player.transform.position = GameManager.instance.playerTransform;
+            }
+            else
+            {
+                Debug.LogError("Player object not found in the scene!");
+            }
+            SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
+        }
     }
 }
