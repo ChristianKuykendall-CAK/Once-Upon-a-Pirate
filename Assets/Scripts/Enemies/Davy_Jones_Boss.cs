@@ -7,8 +7,8 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Davy_Jones_Script : MonoBehaviour
 {
-    //public enum EnemyType { DavyJones };
-    //public EnemyType enemyType;
+    public enum EnemyType { DavyJones, DavyBones };
+    public EnemyType enemyType;
 
     //public enum DavyState { Patrol, Chase, Attack };
     public GameObject player;
@@ -57,6 +57,15 @@ public class Davy_Jones_Script : MonoBehaviour
         anim = GetComponent<Animator>();
         rbody = GetComponent<Rigidbody2D>();
         Vector2 switchX = Vector2.left;
+
+        if (enemyType == EnemyType.DavyJones)
+        {
+            gameObject.tag = "DavyJones";
+        }
+        else if (enemyType == EnemyType.DavyBones)
+        {
+            gameObject.tag = "DavyJones";
+        }
     }
 
     void Update()
@@ -99,7 +108,7 @@ public class Davy_Jones_Script : MonoBehaviour
         */
 
         //Shooting attacks and Melee attacks
-        if (!isDead)
+        if (!isDead && enemyType == EnemyType.DavyJones)
         {
             if (Vector2.Distance(playerTransform.position, transform.position) < 20f && Time.time > nextTimeToFire)
             {
