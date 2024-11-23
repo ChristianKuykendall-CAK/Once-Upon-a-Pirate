@@ -122,19 +122,15 @@ public class Script_EnemyMovement : MonoBehaviour
         if (enemyType == EnemyType.Melee)
         {
 
-            
-
-            Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1.2f, transform.position.z);
+            Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1.5f, transform.position.z);
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
-            RaycastHit2D hitWall = Physics2D.Raycast(lowerPosition, switchX, .8f, ~EnemyMask);
-
-
+            RaycastHit2D hitWall = Physics2D.Raycast(lowerPosition, switchX, 1f, ~EnemyMask);
 
             if (!isDead)
             {
                 if (hitWall.collider != null && (hitWall.collider.CompareTag("Ground") || hitWall.collider.CompareTag("RangedEnemy")))
                 {
-                    Debug.Log(hitWall.collider);
+                    //Debug.Log(hitWall.collider);
                     if (switchX == Vector2.left)
                     {
                         //flips the sprite
@@ -152,7 +148,7 @@ public class Script_EnemyMovement : MonoBehaviour
                 }
                 else if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
                 {
-
+                    // creates an invisible collider that damages the player
                     GameObject EnemyattackCollider = new GameObject("EnemyAttackCollider");
                     EnemyattackCollider.gameObject.tag = "EnemyAttack";
                     BoxCollider2D boxCollider = EnemyattackCollider.AddComponent<BoxCollider2D>();
@@ -163,6 +159,7 @@ public class Script_EnemyMovement : MonoBehaviour
                     else if (switchX == Vector2.right)
                         offset = .25f;
 
+                    // freezes enemy after attack
                     Invoke("Freeze", 2f);
                     frozen = true;
                     anim.ResetTrigger("isWalking");
@@ -242,12 +239,14 @@ public class Script_EnemyMovement : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collider)
     {
+        // If the enemy touches any of these listed tags then it should be ignored
         if (collider.CompareTag("EnemyAttack") || 
             collider.CompareTag("Ammo") || 
             collider.CompareTag("Health") || 
             collider.CompareTag("Coin") ||
             collider.CompareTag("EnemyBullet") ||
-            collider.CompareTag("Platform"))
+            collider.CompareTag("Platform") ||
+            collider.CompareTag("CheckPoint"))
         {
             return;
         }
@@ -273,6 +272,7 @@ public class Script_EnemyMovement : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
+        GameManager.instance.MarkEnemyAsDefeated(gameObject.name); // Ensure each enemy has a unique name
+        gameObject.SetActive(false);
     }
 }
