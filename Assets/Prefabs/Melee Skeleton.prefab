@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3188988636388509519}
   - component: {fileID: 7302674529529424655}
   - component: {fileID: 3886425693201122552}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Melee Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
