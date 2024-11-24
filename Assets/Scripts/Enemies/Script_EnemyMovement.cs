@@ -32,6 +32,7 @@ public class Script_EnemyMovement : MonoBehaviour
     private float offset;
     private bool frozen = false;
     private bool isDead = false;
+    private bool isSlicing = false;
 
     //Audio
     private AudioSource Audio;
@@ -112,18 +113,18 @@ public class Script_EnemyMovement : MonoBehaviour
             rbody.velocity = switchX * moveSpeed;
 
         //triggers the walking animation
-        if(moveSpeed > 0)
+        if(moveSpeed > 0 && isSlicing == false)
         {
             anim.SetTrigger("isWalking");
-            anim.SetBool("isSlicing", false);
+            //anim.SetBool("isSlicing", false);
         }
 
         if (enemyType == EnemyType.Melee)
         {
 
-            Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1.2f, transform.position.z);
+            Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1.5f, transform.position.z);
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
-            RaycastHit2D hitWall = Physics2D.Raycast(lowerPosition, switchX, .8f, ~EnemyMask);
+            RaycastHit2D hitWall = Physics2D.Raycast(lowerPosition, switchX, 1f, ~EnemyMask);
 
             if (!isDead)
             {
@@ -161,6 +162,7 @@ public class Script_EnemyMovement : MonoBehaviour
                     // freezes enemy after attack
                     Invoke("Freeze", 2f);
                     frozen = true;
+                    anim.ResetTrigger("isWalking");
 
                     EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
 
@@ -169,7 +171,13 @@ public class Script_EnemyMovement : MonoBehaviour
                     boxCollider.size = new Vector2(.5f, .5f);
 
                     Destroy(EnemyattackCollider, 0.5f);
+                    moveSpeed = 0;
                     anim.SetBool("isSlicing", true);
+                    
+                } else if (hitPlayer.collider == null)
+                {
+                    moveSpeed = 5;
+                    anim.SetBool("isSlicing", false);
                 }
             }
         }
@@ -237,7 +245,8 @@ public class Script_EnemyMovement : MonoBehaviour
             collider.CompareTag("Health") || 
             collider.CompareTag("Coin") ||
             collider.CompareTag("EnemyBullet") ||
-            collider.CompareTag("Platform"))
+            collider.CompareTag("Platform") ||
+            collider.CompareTag("CheckPoint"))
         {
             return;
         }

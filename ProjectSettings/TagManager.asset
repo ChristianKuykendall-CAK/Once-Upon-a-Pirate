@@ -18,6 +18,7 @@ TagManager:
   - MeleeEnemy
   - CheckPoint
   - Barrier
+  - DavyJones
   layers:
   - Default
   - TransparentFX
