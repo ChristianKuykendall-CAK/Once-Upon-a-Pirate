@@ -97,9 +97,9 @@ public class PlayerController : MonoBehaviour
                 boxCollider.isTrigger = true;
 
                 if (facingDirection == Vector2.left)
-                    offset = -.25f;
+                    offset = -.75f;
                 else if (facingDirection == Vector2.right)
-                    offset = .25f;
+                    offset = .75f;
 
                 playerAttackCollider.transform.position = transform.position + new Vector3(facingDirection.x + offset, facingDirection.y, 0);
                 boxCollider.size = new Vector2(1f, 1f);
@@ -265,7 +265,7 @@ public class PlayerController : MonoBehaviour
             {
                 Vector2 directionAwayFromEnemy = (transform.position - collider.transform.position).normalized;
                 directionAwayFromEnemy.y = 0;
-                rbody.AddForce(directionAwayFromEnemy * (moveForce / 2), ForceMode2D.Impulse);
+                rbody.AddForce(directionAwayFromEnemy * (moveForce / 4), ForceMode2D.Impulse);
                 if (!noDamage)
                     GameManager.instance.health -= 25;
                 StartCoroutine(Invicibility());
