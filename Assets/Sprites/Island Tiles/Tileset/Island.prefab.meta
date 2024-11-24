@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Sprites/Island Tiles/Tileset/Island.prefab.meta
 guid: 7562691aa96d1174ea4ee904c5d4f473
+========
+guid: 62f2c209c85772742a91c7cc07942078
+>>>>>>>> ca20e2a54dac72d0488e27262dac94f0674fccfa:Assets/Prefabs/Davy Bones.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 
