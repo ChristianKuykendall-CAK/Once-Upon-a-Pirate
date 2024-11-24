@@ -25,9 +25,12 @@ public class MenuManager : MonoBehaviour
 
     public void StartGame() //starts game when the start button is pressed
     {
-        //GameManager.instance.health = 100;
-        //GameManager.instance.ammo = 5;
-        //GameManager.instance.coin = 0;
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.health = 100;
+            GameManager.instance.ammo = 5;
+            GameManager.instance.coin = 0;
+        }
         SceneManager.LoadScene("LevelOne");
     }
 
