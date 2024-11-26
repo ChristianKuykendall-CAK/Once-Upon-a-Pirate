@@ -19,6 +19,7 @@ TagManager:
   - CheckPoint
   - Barrier
   - DavyJones
+  - DavyBones
   layers:
   - Default
   - TransparentFX

@@ -72,7 +72,7 @@ public class Davy_Jones_Script : MonoBehaviour
         }
         else if (enemyType == EnemyType.DavyBones)
         {
-            gameObject.tag = "DavyJones";
+            gameObject.tag = "DavyBones";
         }
     }
 
@@ -92,7 +92,7 @@ public class Davy_Jones_Script : MonoBehaviour
             Vector2 direction = playerTransform.position - transform.position;
 
             transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, jumpForce * Time.deltaTime);
-            Debug.Log("Hit Platform");
+            //Debug.Log("Hit Platform");
         }
 
         /*
@@ -142,17 +142,17 @@ public class Davy_Jones_Script : MonoBehaviour
                 isShooting = false;
                 //moveSpeed = 5;
             }
-            else if(Vector2.Distance(playerTransform.position, transform.position) > 20f && Time.time < nextTimeToFire)
+            else if (Vector2.Distance(playerTransform.position, transform.position) > 20f && Time.time < nextTimeToFire)
             {
                 //makes him move again
                 moveSpeed = 5;
                 moveForce = 10;
             }
-           
+
             if (Vector2.Distance(playerTransform.position, transform.position) < 5f && !frozen)
             {
                 //makes him speed up and hit the player when close enough
-                transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, speed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, 2 * Time.deltaTime);
 
                 //melee attack
                 if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
@@ -170,7 +170,7 @@ public class Davy_Jones_Script : MonoBehaviour
 
                     frozen = true;
                     Invoke("Freeze", 2f);
-                    
+
 
                     EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
 
@@ -182,23 +182,26 @@ public class Davy_Jones_Script : MonoBehaviour
                     anim.SetTrigger("isSlicing");
                 }
             }
-        }else if(!isDead && enemyType == EnemyType.DavyBones)
+        }
+        else if (!isDead && enemyType == EnemyType.DavyBones)
         {
             if (Vector2.Distance(playerTransform.position, transform.position) > 20f /*&& Time.time < nextTimeToFire*/)
             {
-                //makes him move again
+                //makes him move
                 moveSpeed = 10;
                 moveForce = 12;
             }
+
+            //coffin slam attack
             if (Vector2.Distance(playerTransform.position, transform.position) < 5f && !frozen)
             {
                 //makes him speed up and hit the player when close enough
-                transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, speed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, 2 * Time.deltaTime);
 
                 //slam attack
                 if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
                 {
-
+                    anim.SetTrigger("isSlammingCoffin");
                     GameObject EnemyattackCollider = new GameObject("EnemyAttackCollider");
                     EnemyattackCollider.gameObject.tag = "EnemyAttack";
                     BoxCollider2D boxCollider = EnemyattackCollider.AddComponent<BoxCollider2D>();
@@ -210,19 +213,20 @@ public class Davy_Jones_Script : MonoBehaviour
                         offset = .25f;
 
                     frozen = true;
-                    Invoke("Freeze", 2f);
+                    Invoke("Freeze", 1f);
 
 
                     EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
 
-                    Audio.PlayOneShot(swordAttack);
+                    //Audio.PlayOneShot(swordAttack);
 
                     boxCollider.size = new Vector2(.5f, .5f);
 
                     Destroy(EnemyattackCollider, 0.5f);
-                    anim.SetTrigger("is");
+                    //anim.ResetTrigger("isWalking");
                 }
             }
+        }
     }
 
     
