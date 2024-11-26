@@ -182,7 +182,47 @@ public class Davy_Jones_Script : MonoBehaviour
                     anim.SetTrigger("isSlicing");
                 }
             }
-        }
+        }else if(!isDead && enemyType == EnemyType.DavyBones)
+        {
+            if (Vector2.Distance(playerTransform.position, transform.position) > 20f /*&& Time.time < nextTimeToFire*/)
+            {
+                //makes him move again
+                moveSpeed = 10;
+                moveForce = 12;
+            }
+            if (Vector2.Distance(playerTransform.position, transform.position) < 5f && !frozen)
+            {
+                //makes him speed up and hit the player when close enough
+                transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, speed * Time.deltaTime);
+
+                //slam attack
+                if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
+                {
+
+                    GameObject EnemyattackCollider = new GameObject("EnemyAttackCollider");
+                    EnemyattackCollider.gameObject.tag = "EnemyAttack";
+                    BoxCollider2D boxCollider = EnemyattackCollider.AddComponent<BoxCollider2D>();
+                    boxCollider.isTrigger = true;
+
+                    if (switchX == Vector2.left)
+                        offset = -.25f;
+                    else if (switchX == Vector2.right)
+                        offset = .25f;
+
+                    frozen = true;
+                    Invoke("Freeze", 2f);
+
+
+                    EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
+
+                    Audio.PlayOneShot(swordAttack);
+
+                    boxCollider.size = new Vector2(.5f, .5f);
+
+                    Destroy(EnemyattackCollider, 0.5f);
+                    anim.SetTrigger("is");
+                }
+            }
     }
 
     
@@ -228,7 +268,13 @@ public class Davy_Jones_Script : MonoBehaviour
             Freeze();
 
             anim.SetTrigger("isDead");
-            Invoke("Die", 3f);
+            if(enemyType == EnemyType.DavyJones)
+            {
+                Invoke("Die", 3f);
+            }else if(enemyType == EnemyType.DavyBones)
+            {
+                Invoke("Die2", 3f);
+            }
         }
 
     }
@@ -277,6 +323,11 @@ public class Davy_Jones_Script : MonoBehaviour
     void Die()
     {
         SceneManager.LoadScene("Level Change");
+    }
+
+    void Die2()
+    {
+        SceneManager.LoadScene("Credits");
     }
 
     void ColorDelay()
