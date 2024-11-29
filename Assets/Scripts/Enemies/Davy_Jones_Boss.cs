@@ -23,6 +23,7 @@ public class Davy_Jones_Script : MonoBehaviour
     
     private bool isDead = false;
     private bool frozen = false;
+    private bool isAttacking = false;
 
     //public LayerMask shipGround;
     //private bool isGrounded;
@@ -44,6 +45,7 @@ public class Davy_Jones_Script : MonoBehaviour
     public float moveForce;
     public float moveSpeed;
 
+    public GameObject tentacle;
     public Transform playerTransform;
     public GameObject bullet_prefab;
     public Transform bulletPoint;
@@ -185,6 +187,7 @@ public class Davy_Jones_Script : MonoBehaviour
         }
         else if (!isDead && enemyType == EnemyType.DavyBones)
         {
+            isAttacking = false;
             if (Vector2.Distance(playerTransform.position, transform.position) > 20f /*&& Time.time < nextTimeToFire*/)
             {
                 //makes him move
@@ -224,6 +227,20 @@ public class Davy_Jones_Script : MonoBehaviour
 
                     Destroy(EnemyattackCollider, 0.5f);
                     //anim.ResetTrigger("isWalking");
+                    isAttacking = true;
+                }
+            //AOE tentacle attack!
+            }else if(Vector2.Distance(playerTransform.position, transform.position) > 10f && Vector2.Distance(playerTransform.position, transform.position) < 20f && !frozen)
+            {
+                float spawnX = playerTransform.position.x; // Use the player's X position
+                float spawnY = transform.position.y;      // Use the Davy Bones' current Y position
+                Vector3 spawnPosition = new Vector3(spawnX, spawnY, 0); // Spawn position with adjusted Y
+
+                //if there is no tentacle spawned, spawn one in
+                if (GameObject.Find("Tentacle(Clone)") == null)
+                {
+                    Instantiate(tentacle, spawnPosition, Quaternion.identity);
+                    Destroy(GameObject.Find("Tentacle(Clone)"), 5f);
                 }
             }
         }
