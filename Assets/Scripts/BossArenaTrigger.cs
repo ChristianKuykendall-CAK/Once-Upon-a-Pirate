@@ -6,6 +6,7 @@ public class BossArenaTrigger : MonoBehaviour
 {
 
     public GameObject wall;
+    public GameObject bosswall;
     public GameObject camera;
 
     private Rigidbody2D rbofy;
@@ -19,6 +20,7 @@ public class BossArenaTrigger : MonoBehaviour
     void Start()
     {
         wall.SetActive(false);
+        bosswall.SetActive(true);
         cameraPosition.Set(cameraTransform.position.x, cameraTransform.position.y, cameraTransform.position.z);
     }
 
@@ -27,6 +29,7 @@ public class BossArenaTrigger : MonoBehaviour
         if (collider.CompareTag("Player"))
         {
             wall.SetActive(true);
+            bosswall.SetActive(false);
             camera.transform.SetParent(null);
             camera.transform.position = cameraPosition;
             Camera.main.orthographicSize = cameraOrthographic;

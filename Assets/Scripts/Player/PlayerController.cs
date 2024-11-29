@@ -57,7 +57,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip deathSound;
 
     public bool isPlayerDead()
-    { return isDead; }
+    { 
+        return isDead; 
+    }
 
     private TilemapCollider2D tilemapCollider;
 
@@ -238,7 +240,7 @@ public class PlayerController : MonoBehaviour
         Falling = true;
         tilemapCollider.isTrigger = true;
         // Debug.Log("Is working");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.8f);
         Falling = false;
 
     }
