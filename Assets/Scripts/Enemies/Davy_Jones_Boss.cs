@@ -26,7 +26,6 @@ public class Davy_Jones_Script : MonoBehaviour
 
     //public LayerMask shipGround;
     //private bool isGrounded;
-    //private bool shouldJump;
     private bool isShooting;
     private float delay = .8f;
 
@@ -34,7 +33,7 @@ public class Davy_Jones_Script : MonoBehaviour
 
     private float offset;
     private float distance;
-    private int health = 500;
+    public int health = 500;
     private SpriteRenderer rend;
     private Animator anim;
     private Vector2 switchX = Vector2.right;
@@ -78,16 +77,16 @@ public class Davy_Jones_Script : MonoBehaviour
 
     void Update()
     {
-        //layermasks for melee attacks and jumping
-        LayerMask EnemyMask = LayerMask.GetMask("enemyLayer");
+
+            //layermasks for melee attacks and jumping
+            LayerMask EnemyMask = LayerMask.GetMask("enemyLayer");
 
         RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 4f, ~EnemyMask);
 
-        RaycastHit2D hitPlayerJump = Physics2D.Raycast(transform.position, switchX, 20f, ~EnemyMask);
+        //RaycastHit2D hitPlayerJump = Physics2D.Raycast(transform.position, switchX, 20f, ~EnemyMask);
 
         // Debug Raycast for hitPlayer
         Debug.DrawRay(transform.position, switchX * 4f, Color.red);
-
         // Debug Raycast for hitPlayerJump
         Debug.DrawRay(transform.position, switchX * 20f, Color.blue);
 
@@ -102,19 +101,19 @@ public class Davy_Jones_Script : MonoBehaviour
             transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, jumpForce * Time.deltaTime);
             Debug.Log("Hit Platform");
         }
-
-        if (!isDead && !hitPlayerJump.collider?.CompareTag("Player") == true && shouldJump)
+        /*
+        if (!isDead && !hitPlayerJump.collider.CompareTag("Player") == true && shouldJump)
         {
             // Trigger the jump
             rbody.velocity = new Vector2(rbody.velocity.x, jumpForce);
             anim.SetTrigger("isJumping");
             shouldJump = false; // Reset shouldJump after jumping
         }
-
+        */
 
         if (!isDead && enemyType == EnemyType.DavyJones)
         {
-            if (Vector2.Distance(playerTransform.position, transform.position) < 20f && Time.time > nextTimeToFire)
+            if (Vector2.Distance(playerTransform.position, transform.position) < 12f && Time.time > nextTimeToFire)
             {
                 //makes him stop moving while shooting
                 moveSpeed = 0;
@@ -138,7 +137,7 @@ public class Davy_Jones_Script : MonoBehaviour
                 isShooting = false;
                 //moveSpeed = 5;
             }
-            else if(Vector2.Distance(playerTransform.position, transform.position) > 20f && Time.time < nextTimeToFire)
+            else if(Vector2.Distance(playerTransform.position, transform.position) > 12f && Time.time < nextTimeToFire)
             {
                 //makes him move again
                 moveSpeed = 5;
@@ -246,7 +245,13 @@ public class Davy_Jones_Script : MonoBehaviour
             shouldJump = true;
             return;
         }
-        if (collider.CompareTag("Platform"))
+        if (collider.CompareTag("EnemyAttack") ||
+            collider.CompareTag("Ammo") ||
+            collider.CompareTag("Health") ||
+            collider.CompareTag("Coin") ||
+            collider.CompareTag("EnemyBullet") ||
+            collider.CompareTag("Platform") ||
+            collider.CompareTag("CheckPoint"))
         {
             return;
         }

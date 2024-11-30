@@ -19,7 +19,10 @@ public class DeathScreen : MonoBehaviour
 
     public void LoadGame() //clicking the load button will load saved data
     {
-        SceneManager.LoadScene("LevelOne");
+        if (GameManager.instance.LevelNum == GameManager.Level.LevelOne)
+            SceneManager.LoadScene("LevelOne");
+        else
+            SceneManager.LoadScene("LevelTwo");
         // Ensure we load the game after the scene has fully loaded
         SceneManager.sceneLoaded += OnGameSceneLoaded;
     }
