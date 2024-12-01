@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 440db3289c75e794aac0ccff1f589afe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
   player: {fileID: 0}
   platform: {fileID: 0}
   chaseDistance: 10
