@@ -17,8 +17,6 @@ public class LevelChange : MonoBehaviour
     public void StartGame() //starts LEVEL 2 when the start button is pressed
     {
         SceneManager.LoadScene("LevelTwo");
-        if (GameManager.instance != null)
-            GameManager.instance.LevelNum = GameManager.Level.LevelTwo;
     }
 
 

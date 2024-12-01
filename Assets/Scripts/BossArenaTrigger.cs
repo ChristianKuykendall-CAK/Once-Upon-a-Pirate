@@ -6,22 +6,18 @@ public class BossArenaTrigger : MonoBehaviour
 {
 
     public GameObject wall;
-    public GameObject bosswall;
     public GameObject camera;
-
-    private Rigidbody2D rbofy;
-
-    public int cameraOrthographic;
-
-    Vector3 cameraPosition;
-    public Transform cameraTransform;
 
     // Start is called before the first frame update
     void Start()
     {
         wall.SetActive(false);
-        bosswall.SetActive(true);
-        cameraPosition.Set(cameraTransform.position.x, cameraTransform.position.y, cameraTransform.position.z);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -29,10 +25,9 @@ public class BossArenaTrigger : MonoBehaviour
         if (collider.CompareTag("Player"))
         {
             wall.SetActive(true);
-            bosswall.SetActive(false);
             camera.transform.SetParent(null);
-            camera.transform.position = cameraPosition;
-            Camera.main.orthographicSize = cameraOrthographic;
+            camera.transform.position = new Vector3(698.5f, 21f, -1f);
+            Camera.main.orthographicSize = 8;
         }
     }
 }

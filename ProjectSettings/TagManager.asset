@@ -19,7 +19,6 @@ TagManager:
   - CheckPoint
   - Barrier
   - DavyJones
-  - JumpPoint
   layers:
   - Default
   - TransparentFX

@@ -19,10 +19,7 @@ public class DeathScreen : MonoBehaviour
 
     public void LoadGame() //clicking the load button will load saved data
     {
-        if (GameManager.instance.LevelNum == GameManager.Level.LevelOne)
-            SceneManager.LoadScene("LevelOne");
-        else
-            SceneManager.LoadScene("LevelTwo");
+        SceneManager.LoadScene("LevelOne");
         // Ensure we load the game after the scene has fully loaded
         SceneManager.sceneLoaded += OnGameSceneLoaded;
     }
@@ -36,7 +33,7 @@ public class DeathScreen : MonoBehaviour
     {
         if (scene.name == "LevelOne" && GameManager.instance != null)
         {
-            SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
+            GameManager.instance.Load();
             GameObject player = GameObject.FindWithTag("Player");
 
             if (player != null)
@@ -48,7 +45,7 @@ public class DeathScreen : MonoBehaviour
             {
                 Debug.LogError("Player object not found in the scene!");
             }
-            GameManager.instance.Load();
+            SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
         }
     }
 
