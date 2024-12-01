@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,7 +56,8 @@ public class GameManager : MonoBehaviour
             playerPosY = playerTransform.y,
             playerPosZ = playerTransform.z,
             pickedUpItems = new List<string>(pickedUpItems),
-            currentEnemies = new List<string>(currentEnemies)
+            currentEnemies = new List<string>(currentEnemies),
+            level = LevelNum.ToString()
         };
 
         BinaryFormatter bf = new BinaryFormatter();
@@ -82,6 +84,12 @@ public class GameManager : MonoBehaviour
 
             pickedUpItems = new HashSet<string>(theData.pickedUpItems);
             currentEnemies = new HashSet<string>(theData.currentEnemies);
+
+            // Restore the level
+            if (Enum.TryParse(theData.level, out Level loadedLevel))
+            {
+                LevelNum = loadedLevel;
+            }
 
             DisableDefeatedEnemies();
         }

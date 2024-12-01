@@ -19,10 +19,9 @@ public class DeathScreen : MonoBehaviour
 
     public void LoadGame() //clicking the load button will load saved data
     {
-        if (GameManager.instance.LevelNum == GameManager.Level.LevelOne)
-            SceneManager.LoadScene("LevelOne");
-        else
-            SceneManager.LoadScene("LevelTwo");
+        string sceneName = GameManager.instance.LevelNum == GameManager.Level.LevelOne ? "LevelOne" : "LevelTwo";
+        SceneManager.LoadScene(sceneName);
+
         // Ensure we load the game after the scene has fully loaded
         SceneManager.sceneLoaded += OnGameSceneLoaded;
     }
@@ -34,7 +33,7 @@ public class DeathScreen : MonoBehaviour
 
     private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "LevelOne" && GameManager.instance != null)
+        if ((scene.name == "LevelOne" || scene.name == "LeveTwo") && GameManager.instance != null)
         {
             SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
             GameObject player = GameObject.FindWithTag("Player");

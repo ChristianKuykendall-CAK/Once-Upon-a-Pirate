@@ -31,21 +31,23 @@ public class MenuManager : MonoBehaviour
             GameManager.instance.ammo = 5;
             GameManager.instance.coin = 0;
         }
-        SceneManager.LoadScene("LevelOne");
+        string sceneName = GameManager.instance.LevelNum == GameManager.Level.LevelOne ? "LevelOne" : "LevelTwo";
+        SceneManager.LoadScene(sceneName);
     }
 
     public void LoadGame()
     {
-        SceneManager.LoadScene("LevelOne");
+        string sceneName = GameManager.instance.LevelNum == GameManager.Level.LevelOne ? "LevelOne" : "LevelTwo";
+        SceneManager.LoadScene(sceneName);
         // Ensure we load the game after the scene has fully loaded
         SceneManager.sceneLoaded += OnGameSceneLoaded;
     }
 
     private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "LevelOne" && GameManager.instance != null)
+        if ((scene.name == "LevelOne" || scene.name == "LeveTwo") && GameManager.instance != null)
         {
-            GameManager.instance.Load();
+            SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
             GameObject player = GameObject.FindWithTag("Player");
 
             if (player != null)
@@ -57,7 +59,7 @@ public class MenuManager : MonoBehaviour
             {
                 Debug.LogError("Player object not found in the scene!");
             }
-            SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
+            GameManager.instance.Load();
         }
     }
 
