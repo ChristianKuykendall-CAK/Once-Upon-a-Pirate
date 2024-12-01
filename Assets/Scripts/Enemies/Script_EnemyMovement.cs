@@ -159,6 +159,8 @@ public class Script_EnemyMovement : MonoBehaviour
                     else if (switchX == Vector2.right)
                         offset = .25f;
 
+                    Audio.PlayOneShot(swordAttack);
+
                     // freezes enemy after attack
                     Invoke("Freeze", 2f);
                     frozen = true;
@@ -166,7 +168,7 @@ public class Script_EnemyMovement : MonoBehaviour
 
                     EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
 
-                    Audio.PlayOneShot(swordAttack);
+                    
 
                     boxCollider.size = new Vector2(.5f, .5f);
 
