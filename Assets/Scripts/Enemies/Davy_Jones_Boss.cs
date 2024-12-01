@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.GraphicsBuffer;
@@ -22,10 +23,10 @@ public class Davy_Jones_Script : MonoBehaviour
     
     private bool isDead = false;
     private bool frozen = false;
-    public bool shouldJump = false;
 
     //public LayerMask shipGround;
     //private bool isGrounded;
+    //private bool shouldJump;
     private bool isShooting;
     private float delay = .8f;
 
@@ -33,7 +34,7 @@ public class Davy_Jones_Script : MonoBehaviour
 
     private float offset;
     private float distance;
-    public int health = 500;
+    private int health = 500;
     private SpriteRenderer rend;
     private Animator anim;
     private Vector2 switchX = Vector2.right;
@@ -77,19 +78,11 @@ public class Davy_Jones_Script : MonoBehaviour
 
     void Update()
     {
-
-            //layermasks for melee attacks and jumping
-            LayerMask EnemyMask = LayerMask.GetMask("enemyLayer");
-
+        //layermasks for melee attacks and jumping
+        LayerMask EnemyMask = LayerMask.GetMask("enemyLayer");
+        //LayerMask PlatformMask = LayerMask.GetMask("groundLayer");
         RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 4f, ~EnemyMask);
-
-        //RaycastHit2D hitPlayerJump = Physics2D.Raycast(transform.position, switchX, 20f, ~EnemyMask);
-
-        // Debug Raycast for hitPlayer
-        Debug.DrawRay(transform.position, switchX * 4f, Color.red);
-        // Debug Raycast for hitPlayerJump
-        Debug.DrawRay(transform.position, switchX * 20f, Color.blue);
-
+        //RaycastHit2D hitPlatform = Physics2D.Raycast(transform.position, -Vector2.up, 5f, ~PlatformMask);
 
         //makes davy move
         if (moveForce > 0 && moveSpeed > 0)
@@ -101,19 +94,31 @@ public class Davy_Jones_Script : MonoBehaviour
             transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, jumpForce * Time.deltaTime);
             Debug.Log("Hit Platform");
         }
+
         /*
-        if (!isDead && !hitPlayerJump.collider.CompareTag("Player") == true && shouldJump)
+        if(playerTransform.position.y > transform.position.y)
         {
-            // Trigger the jump
-            rbody.velocity = new Vector2(rbody.velocity.x, jumpForce);
             anim.SetTrigger("isJumping");
-            shouldJump = false; // Reset shouldJump after jumping
+            frozen = true;
+            Freeze();
+            
+            Vector3 upDirection = new Vector3(platform.transform.position.x - transform.position.x, platform.transform.position.y - transform.position.y, 0);
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + upDirection, speed * Time.deltaTime);
+
+        }
+        else if(playerTransform.position.y < transform.position.y)
+        {
+            frozen = true;
+            Freeze();
+
+            transform.position += Vector3.down * Time.deltaTime;
         }
         */
 
+        //Shooting attacks and Melee attacks
         if (!isDead && enemyType == EnemyType.DavyJones)
         {
-            if (Vector2.Distance(playerTransform.position, transform.position) < 12f && Time.time > nextTimeToFire)
+            if (Vector2.Distance(playerTransform.position, transform.position) < 20f && Time.time > nextTimeToFire)
             {
                 //makes him stop moving while shooting
                 moveSpeed = 0;
@@ -137,7 +142,7 @@ public class Davy_Jones_Script : MonoBehaviour
                 isShooting = false;
                 //moveSpeed = 5;
             }
-            else if(Vector2.Distance(playerTransform.position, transform.position) > 12f && Time.time < nextTimeToFire)
+            else if(Vector2.Distance(playerTransform.position, transform.position) > 20f && Time.time < nextTimeToFire)
             {
                 //makes him move again
                 moveSpeed = 5;
@@ -188,6 +193,8 @@ public class Davy_Jones_Script : MonoBehaviour
         if (moveSpeed > 0)
         {
             anim.SetTrigger("isWalking");
+            //anim.SetBool("isSlicing", false);
+            //anim.SetBool("isShooting", false);
         }
 
         //if player is to the right, face right and vice versa
@@ -240,18 +247,12 @@ public class Davy_Jones_Script : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.CompareTag("JumpPoint"))
-        {
-            shouldJump = true;
-            return;
-        }
         if (collider.CompareTag("EnemyAttack") ||
             collider.CompareTag("Ammo") ||
             collider.CompareTag("Health") ||
             collider.CompareTag("Coin") ||
             collider.CompareTag("EnemyBullet") ||
-            collider.CompareTag("Platform") ||
-            collider.CompareTag("CheckPoint"))
+            collider.CompareTag("Platform"))
         {
             return;
         }

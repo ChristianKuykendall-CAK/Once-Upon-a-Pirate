@@ -7,10 +7,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
-    public enum Level { LevelOne, LevelTwo };
-    public Level LevelNum;
-
     public int health = 100;
     public int ammo = 5;
     public int coin = 0;
@@ -28,10 +24,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
-    }
-    private void Start()
-    {
-        LevelNum = Level.LevelOne;
     }
 
     void FixedUpdate()
