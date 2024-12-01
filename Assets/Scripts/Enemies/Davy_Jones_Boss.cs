@@ -34,7 +34,7 @@ public class Davy_Jones_Script : MonoBehaviour
 
     private float offset;
     private float distance;
-    private int health = 500;
+    public int health = 500;
     private SpriteRenderer rend;
     private Animator anim;
     private Vector2 switchX = Vector2.right;
