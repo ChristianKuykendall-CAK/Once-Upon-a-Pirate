@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        BossHealthBar.gameObject.SetActive(false);
         isDead = false;
         rend = GetComponent<SpriteRenderer>();
         rbody = GetComponent<Rigidbody2D>();
@@ -280,8 +281,12 @@ public class PlayerController : MonoBehaviour
                     GameManager.instance.Load();
                     transform.position = GameManager.instance.playerTransformBarrier;
                 }
-                //Enemy attack trigger 
-                if (collider.CompareTag("EnemyAttack") && !isPaused)
+                if (collider.CompareTag("Trigger"))
+                {
+                BossHealthBar.gameObject.SetActive(true);
+            }
+            //Enemy attack trigger 
+            if (collider.CompareTag("EnemyAttack") && !isPaused)
                 {
                     Vector2 directionAwayFromEnemy = (transform.position - collider.transform.position).normalized;
                     directionAwayFromEnemy.y = 0;
