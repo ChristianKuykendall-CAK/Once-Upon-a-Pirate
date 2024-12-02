@@ -196,7 +196,7 @@ public class Davy_Jones_Script : MonoBehaviour
             }
 
             //coffin slam attack
-            if (Vector2.Distance(playerTransform.position, transform.position) < 5f && !frozen)
+            if (Vector2.Distance(playerTransform.position, transform.position) < 10f && !frozen)
             {
                 //makes him speed up and hit the player when close enough
                 transform.position = Vector2.MoveTowards(this.transform.position, playerTransform.position, 2 * Time.deltaTime);
@@ -204,35 +204,65 @@ public class Davy_Jones_Script : MonoBehaviour
                 //slam attack
                 if (hitPlayer.collider != null && hitPlayer.collider.CompareTag("Player"))
                 {
-                    anim.SetTrigger("isSlammingCoffin");
-                    GameObject EnemyattackCollider = new GameObject("EnemyAttackCollider");
-                    EnemyattackCollider.gameObject.tag = "EnemyAttack";
-                    BoxCollider2D boxCollider = EnemyattackCollider.AddComponent<BoxCollider2D>();
-                    boxCollider.isTrigger = true;
+                    if(Vector2.Distance(playerTransform.position, transform.position) < 3f && !frozen)
+                    {
+                        anim.SetTrigger("isSlammingCoffin");
+                        GameObject EnemyattackCollider = new GameObject("EnemyAttackCollider");
+                        EnemyattackCollider.gameObject.tag = "EnemyAttack";
+                        BoxCollider2D boxCollider = EnemyattackCollider.AddComponent<BoxCollider2D>();
+                        boxCollider.isTrigger = true;
 
-                    if (switchX == Vector2.left)
-                        offset = -.25f;
-                    else if (switchX == Vector2.right)
-                        offset = .25f;
+                        if (switchX == Vector2.left)
+                            offset = -.25f;
+                        else if (switchX == Vector2.right)
+                            offset = .25f;
 
-                    frozen = true;
-                    Invoke("Freeze", 1f);
+                        frozen = true;
+                        Invoke("Freeze", 1f);
 
 
-                    EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
+                        EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
 
-                    //Audio.PlayOneShot(swordAttack);
+                        //Audio.PlayOneShot(swordAttack);
 
-                    boxCollider.size = new Vector2(.5f, .5f);
+                        boxCollider.size = new Vector2(.5f, .5f);
 
-                    Destroy(EnemyattackCollider, 0.5f);
-                    //anim.ResetTrigger("isWalking");
-                    isAttacking = true;
+                        Destroy(EnemyattackCollider, 0.5f);
+                        //anim.ResetTrigger("isWalking");
+                        isAttacking = true;
+                    }else if (Vector2.Distance(playerTransform.position, transform.position) < 5f && !frozen)
+                    {
+                        anim.SetTrigger("isTentacleAttacking");
+                        GameObject EnemyattackCollider = new GameObject("EnemyAttackCollider");
+                        EnemyattackCollider.gameObject.tag = "EnemyAttack";
+                        BoxCollider2D boxCollider = EnemyattackCollider.AddComponent<BoxCollider2D>();
+                        boxCollider.isTrigger = true;
+
+                        if (switchX == Vector2.left)
+                            offset = -.25f;
+                        else if (switchX == Vector2.right)
+                            offset = .25f;
+
+                        frozen = true;
+                        Invoke("Freeze", 1f);
+
+
+                        EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
+
+                        //Audio.PlayOneShot(swordAttack);
+
+                        boxCollider.size = new Vector2(.5f, .5f);
+
+                        Destroy(EnemyattackCollider, 0.5f);
+                        //anim.ResetTrigger("isWalking");
+                        isAttacking = true;
+                    }
+
                 }
             //AOE tentacle attack!
             }else if(Vector2.Distance(playerTransform.position, transform.position) > 10f && Vector2.Distance(playerTransform.position, transform.position) < 20f && !frozen)
             {
-                float spawnX = playerTransform.position.x; // Use the player's X position
+                float spawnX = playerTransform.position.x + 6; // Use the player's X position
                 float spawnY = transform.position.y;      // Use the Davy Bones' current Y position
                 Vector3 spawnPosition = new Vector3(spawnX, spawnY, 0); // Spawn position with adjusted Y
 
@@ -319,6 +349,7 @@ public class Davy_Jones_Script : MonoBehaviour
             collider.CompareTag("Health") ||
             collider.CompareTag("Coin") ||
             collider.CompareTag("EnemyBullet") ||
+            collider.CompareTag("Tentacle") ||
             collider.CompareTag("Platform"))
         {
             return;
