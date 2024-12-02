@@ -296,6 +296,16 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(Invicibility());
 
             }
+            if(collider.CompareTag("Tentacle") && !isPaused)
+            {
+                new WaitForSeconds(5f);
+                Vector2 directionAwayFromEnemy = (transform.position - collider.transform.position).normalized;
+                directionAwayFromEnemy.y = 0;
+                rbody.AddForce(directionAwayFromEnemy * (moveForce / 2), ForceMode2D.Impulse);
+                if (!noDamage)
+                    GameManager.instance.health -= 15;
+                StartCoroutine(Invicibility());
+            }
             if (collider.CompareTag("EnemyBullet") && !isPaused)
             {
                 StartCoroutine(Invicibility());

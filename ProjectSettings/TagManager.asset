@@ -19,8 +19,8 @@ TagManager:
   - CheckPoint
   - Barrier
   - DavyJones
-  - JumpPoint
-  - Trigger
+  - DavyBones
+  - Tentacle
   layers:
   - Default
   - TransparentFX
