@@ -33,11 +33,17 @@ public class PlayerController : MonoBehaviour
     //health bar slider variable
     public Slider HealthBar;
 
+    // Boss health information
+    public GameObject davyJones;
+    public Slider BossHealthBar;
+    private Davy_Jones_Script bossController;
+
     //Text variables
     public Text HealthText;
     public Text AmmoText;
     public Text CoinText;
     public Text CheckText;
+    public Text BossHealthText;
 
     //pause image variable
     public Image pause;
@@ -57,18 +63,23 @@ public class PlayerController : MonoBehaviour
     public AudioClip deathSound;
 
     public bool isPlayerDead()
-    { return isDead; }
+    {
+        return isDead;
+    }
 
     private TilemapCollider2D tilemapCollider;
 
     void Start()
     {
+        BossHealthBar.gameObject.SetActive(false);
         isDead = false;
         rend = GetComponent<SpriteRenderer>();
         rbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         Audio = GetComponent<AudioSource>();
+
         HealthBar.maxValue = 100;
+        BossHealthBar.maxValue = 500;
         // Set up change tilemap collider to turn into trigger so player can drop through
         GameObject tilemapObject = GameObject.Find("Platform");
         if (tilemapObject != null)
@@ -76,8 +87,11 @@ public class PlayerController : MonoBehaviour
             tilemapCollider = tilemapObject.GetComponent<TilemapCollider2D>();
             // Debug.Log("Tilemap found");
         }
+        if (davyJones != null)
+        {
+            bossController = davyJones.GetComponent<Davy_Jones_Script>();
+        }
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -97,9 +111,9 @@ public class PlayerController : MonoBehaviour
                 boxCollider.isTrigger = true;
 
                 if (facingDirection == Vector2.left)
-                    offset = -.25f;
+                    offset = -.75f;
                 else if (facingDirection == Vector2.right)
-                    offset = .25f;
+                    offset = .75f;
 
                 playerAttackCollider.transform.position = transform.position + new Vector3(facingDirection.x + offset, facingDirection.y, 0);
                 boxCollider.size = new Vector2(1f, 1f);
@@ -204,6 +218,13 @@ public class PlayerController : MonoBehaviour
 
         //Updates the player's health, ammo, and coin count every frame
         HealthBar.value = GameManager.instance.health;
+
+
+        if (bossController != null)
+        {
+            BossHealthBar.value = bossController.health;
+        }
+        BossHealthText.text = bossController.health.ToString();
         HealthText.text = "Health: " + GameManager.instance.health;
         AmmoText.text = "Ammo: " + GameManager.instance.ammo;
         CoinText.text = "Coins: " + GameManager.instance.coin;
@@ -238,7 +259,7 @@ public class PlayerController : MonoBehaviour
         Falling = true;
         tilemapCollider.isTrigger = true;
         // Debug.Log("Is working");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.8f);
         Falling = false;
 
     }
@@ -260,12 +281,16 @@ public class PlayerController : MonoBehaviour
                 GameManager.instance.Load();
                 transform.position = GameManager.instance.playerTransformBarrier;
             }
-            //Enemy attack trigger 
-            if (collider.CompareTag("EnemyAttack") && !isPaused)
+            if (collider.CompareTag("Trigger"))
+            {
+            BossHealthBar.gameObject.SetActive(true);
+        }
+        //Enemy attack trigger 
+        if (collider.CompareTag("EnemyAttack") && !isPaused)
             {
                 Vector2 directionAwayFromEnemy = (transform.position - collider.transform.position).normalized;
                 directionAwayFromEnemy.y = 0;
-                rbody.AddForce(directionAwayFromEnemy * (moveForce / 2), ForceMode2D.Impulse);
+                rbody.AddForce(directionAwayFromEnemy * (moveForce / 4), ForceMode2D.Impulse);
                 if (!noDamage)
                     GameManager.instance.health -= 25;
                 StartCoroutine(Invicibility());
@@ -340,7 +365,8 @@ public class PlayerController : MonoBehaviour
 
     void LoadSave() //load saved data
     {
-        SceneManager.LoadScene("LevelOne");
+        string sceneName = GameManager.instance.LevelNum == GameManager.Level.LevelOne ? "LevelOne" : "LevelTwo";
+        SceneManager.LoadScene(sceneName);
         // Ensure we load the game after the scene has fully loaded
         SceneManager.sceneLoaded += OnGameSceneLoaded;
         Time.timeScale = 1;
@@ -348,9 +374,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "LevelOne" && GameManager.instance != null)
+        if ((scene.name == "LevelOne" || scene.name == "LeveTwo") && GameManager.instance != null)
         {
-            GameManager.instance.Load();
+            SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
             GameObject player = GameObject.FindWithTag("Player");
 
             if (player != null)
@@ -362,7 +388,7 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.LogError("Player object not found in the scene!");
             }
-            SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
+            GameManager.instance.Load();
         }
     }
 }

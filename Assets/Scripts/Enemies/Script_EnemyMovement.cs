@@ -65,9 +65,11 @@ public class Script_EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1.5f, transform.position.z);
         // Enemies are put on their own layer so then the raycast can ignore them with ~EnemyMask
         LayerMask EnemyMask = LayerMask.GetMask("enemyLayer");
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 2f, ~EnemyMask);
+        RaycastHit2D hit = Physics2D.Raycast(lowerPosition, Vector2.down, .6f, ~EnemyMask);
+        Debug.DrawRay(lowerPosition, Vector2.down, Color.green, .6f);
 
         //Debug.DrawRay(transform.position, Vector2.down, Color.red);
         //Debug.Log(hit.collider);
@@ -122,7 +124,6 @@ public class Script_EnemyMovement : MonoBehaviour
         if (enemyType == EnemyType.Melee)
         {
 
-            Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1.5f, transform.position.z);
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
             RaycastHit2D hitWall = Physics2D.Raycast(lowerPosition, switchX, 1f, ~EnemyMask);
 

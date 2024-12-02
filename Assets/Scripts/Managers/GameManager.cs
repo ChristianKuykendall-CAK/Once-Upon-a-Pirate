@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,10 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    public enum Level { LevelOne, LevelTwo };
+    public Level LevelNum;
+
     public int health = 100;
     public int ammo = 5;
     public int coin = 0;
@@ -24,6 +29,10 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+    }
+    private void Start()
+    {
+        LevelNum = Level.LevelOne;
     }
 
     void FixedUpdate()
@@ -47,7 +56,8 @@ public class GameManager : MonoBehaviour
             playerPosY = playerTransform.y,
             playerPosZ = playerTransform.z,
             pickedUpItems = new List<string>(pickedUpItems),
-            currentEnemies = new List<string>(currentEnemies)
+            currentEnemies = new List<string>(currentEnemies),
+            level = LevelNum.ToString()
         };
 
         BinaryFormatter bf = new BinaryFormatter();
@@ -74,6 +84,12 @@ public class GameManager : MonoBehaviour
 
             pickedUpItems = new HashSet<string>(theData.pickedUpItems);
             currentEnemies = new HashSet<string>(theData.currentEnemies);
+
+            // Restore the level
+            if (Enum.TryParse(theData.level, out Level loadedLevel))
+            {
+                LevelNum = loadedLevel;
+            }
 
             DisableDefeatedEnemies();
         }
