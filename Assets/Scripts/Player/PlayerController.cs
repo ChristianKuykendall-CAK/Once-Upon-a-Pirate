@@ -199,8 +199,9 @@ public class PlayerController : MonoBehaviour
         if (rbody.velocity.x < 10 && rbody.velocity.x > -10)
             rbody.AddForce(Vector2.right * Mathf.Round(H) * moveForce);
 
-        Vector2 raycastStart = new Vector2(transform.position.x, transform.position.y - 1f);
-        RaycastHit2D hit = Physics2D.Raycast(raycastStart, Vector2.down, 1f, ~PlayerMask);
+        Vector2 raycastStart = new Vector2(transform.position.x, transform.position.y - 1.5f);
+        RaycastHit2D hit = Physics2D.Raycast(raycastStart, Vector2.down, .5f, ~PlayerMask);
+        Debug.DrawRay(raycastStart, Vector2.down, Color.blue, .5f);
 
         //Debug.DrawRay(raycastStart, Vector2.down, Color.red);
         //Debug.Log(hit.collider);

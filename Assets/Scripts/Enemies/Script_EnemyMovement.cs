@@ -125,7 +125,7 @@ public class Script_EnemyMovement : MonoBehaviour
         {
 
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
-            RaycastHit2D hitWall = Physics2D.Raycast(lowerPosition, switchX, 1f, ~EnemyMask);
+            RaycastHit2D hitWall = Physics2D.Raycast(lowerPosition, switchX, 1.5f, ~EnemyMask);
 
             if (!isDead)
             {
