@@ -105,11 +105,13 @@ public class PlayerController : MonoBehaviour
                 anim.SetTrigger("isSlicing");
                 Audio.PlayOneShot(swordAttack);
 
+                // Enemy's attack area
                 GameObject playerAttackCollider = new GameObject("PlayerAttackCollider");
                 BoxCollider2D boxCollider = playerAttackCollider.AddComponent<BoxCollider2D>();
                 playerAttackCollider.gameObject.tag = "PlayerAttack";
                 boxCollider.isTrigger = true;
 
+                // attack is offset from enemy
                 if (facingDirection == Vector2.left)
                     offset = -.75f;
                 else if (facingDirection == Vector2.right)
@@ -203,9 +205,6 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(raycastStart, Vector2.down, .5f, ~PlayerMask);
         Debug.DrawRay(raycastStart, Vector2.down, Color.blue, .5f);
 
-        //Debug.DrawRay(raycastStart, Vector2.down, Color.red);
-        //Debug.Log(hit.collider);
-
         if (hit.collider != null && hit.collider.CompareTag("Platform") && !Falling)
         {
             tilemapCollider.isTrigger = false;
@@ -225,7 +224,8 @@ public class PlayerController : MonoBehaviour
         {
             BossHealthBar.value = bossController.health;
         }
-        BossHealthText.text = bossController.health.ToString();
+
+        BossHealthText.text = bossController.health.ToString(); // bosses health from Davy Jones script
         HealthText.text = "Health: " + GameManager.instance.health;
         AmmoText.text = "Ammo: " + GameManager.instance.ammo;
         CoinText.text = "Coins: " + GameManager.instance.coin;
