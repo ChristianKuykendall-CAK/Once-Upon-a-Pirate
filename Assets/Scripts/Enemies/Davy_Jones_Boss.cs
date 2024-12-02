@@ -35,7 +35,7 @@ public class Davy_Jones_Script : MonoBehaviour
 
     private float offset;
     private float distance;
-    private int health = 500;
+    public int health = 500;
     private SpriteRenderer rend;
     private Animator anim;
     private Vector2 switchX = Vector2.right;
@@ -260,7 +260,7 @@ public class Davy_Jones_Script : MonoBehaviour
 
                 }
             //AOE tentacle attack!
-            }else if(Vector2.Distance(playerTransform.position, transform.position) > 10f && Vector2.Distance(playerTransform.position, transform.position) < 20f && !frozen)
+            }else if(Vector2.Distance(playerTransform.position, transform.position) > 10f && Vector2.Distance(playerTransform.position, transform.position) < 40f && !frozen)
             {
                 float spawnX = playerTransform.position.x + 6; // Use the player's X position
                 float spawnY = transform.position.y;      // Use the Davy Bones' current Y position
