@@ -311,10 +311,13 @@ public class Davy_Jones_Script : MonoBehaviour
         //kills davy if health runs out
         if (health <= 0 && !isDead)
         {
+            
+
             isDead = true;
 
             Audio.PlayOneShot(deathSound);
 
+            moveForce = 0;
             frozen = true;
             Freeze();
 

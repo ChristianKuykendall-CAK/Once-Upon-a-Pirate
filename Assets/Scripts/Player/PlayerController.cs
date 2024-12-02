@@ -233,6 +233,7 @@ public class PlayerController : MonoBehaviour
         if (GameManager.instance.health <= 0 && !isDead)
         {
             isDead = true;
+            H = 0;
             Audio.PlayOneShot(deathSound);
             anim.SetBool("isWalking", false);
             anim.SetTrigger("isDead");
@@ -357,19 +358,21 @@ public class PlayerController : MonoBehaviour
         CheckText.enabled = false;
     }
 
-    void LoadMenu() //clicking the menu button will load the main menu
+    public void LoadMenu() //clicking the menu button will load the main menu
     {
-        SceneManager.LoadScene("Menu");
         Time.timeScale = 1;
+        SceneManager.LoadScene("Menu");
+        
     }
 
-    void LoadSave() //load saved data
+    public void LoadSave() //load saved data
     {
+        Time.timeScale = 1;
         string sceneName = GameManager.instance.LevelNum == GameManager.Level.LevelOne ? "LevelOne" : "LevelTwo";
         SceneManager.LoadScene(sceneName);
         // Ensure we load the game after the scene has fully loaded
         SceneManager.sceneLoaded += OnGameSceneLoaded;
-        Time.timeScale = 1;
+        
     }
 
     private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)

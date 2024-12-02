@@ -21,6 +21,8 @@ TagManager:
   - DavyJones
   - DavyBones
   - Tentacle
+  - JumpPoint
+  - Trigger
   layers:
   - Default
   - TransparentFX
