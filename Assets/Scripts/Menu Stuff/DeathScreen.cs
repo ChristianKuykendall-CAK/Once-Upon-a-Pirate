@@ -6,49 +6,55 @@ using UnityEngine.UI;
 
 public class DeathScreen : MonoBehaviour
 {
-
     public Button loadButton;
     public Button menuButton;
-    
-    
+
     void Start()
     {
+        // Assign button actions
         loadButton.onClick.AddListener(LoadGame);
         menuButton.onClick.AddListener(LoadMenu);
     }
 
-    public void LoadGame() //clicking the load button will load saved data
+    public void LoadGame() // Clicking the load button will load saved data
     {
-        string sceneName = GameManager.instance.LevelNum == GameManager.Level.LevelOne ? "LevelOne" : "LevelTwo";
-        SceneManager.LoadScene(sceneName);
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.Load(); // Load saved game state
 
-        // Ensure we load the game after the scene has fully loaded
-        SceneManager.sceneLoaded += OnGameSceneLoaded;
+            string sceneName = GameManager.instance.LevelNum == GameManager.Level.LevelOne ? "LevelOne" : "LevelTwo";
+            SceneManager.LoadScene(sceneName);
+
+            // Ensure we apply saved position after the scene is fully loaded
+            SceneManager.sceneLoaded += OnGameSceneLoaded;
+        }
+        else
+        {
+            Debug.LogError("GameManager instance not found!");
+        }
     }
 
-    public void LoadMenu() //clicking the menu button will load the main menu
+    public void LoadMenu() // Clicking the menu button will load the main menu
     {
         SceneManager.LoadScene("Menu");
     }
 
     private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if ((scene.name == "LevelOne" || scene.name == "LeveTwo") && GameManager.instance != null)
+        // Ensure this runs only for LevelOne or LevelTwo
+        if ((scene.name == "LevelOne" || scene.name == "LevelTwo") && GameManager.instance != null)
         {
-            SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
+            // Unsubscribe to avoid duplicate calls
+            SceneManager.sceneLoaded -= OnGameSceneLoaded;
+
+            // Find the player object in the scene
             GameObject player = GameObject.FindWithTag("Player");
 
             if (player != null)
             {
-                // Set the player's position to the saved position in GameManager
+                // Set the player's position to the saved position
                 player.transform.position = GameManager.instance.playerTransform;
             }
-            else
-            {
-                Debug.LogError("Player object not found in the scene!");
-            }
-            GameManager.instance.Load();
         }
     }
-
 }

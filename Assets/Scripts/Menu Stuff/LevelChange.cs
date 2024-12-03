@@ -18,7 +18,11 @@ public class LevelChange : MonoBehaviour
     {
         SceneManager.LoadScene("LevelTwo");
         if (GameManager.instance != null)
+        {
             GameManager.instance.LevelNum = GameManager.Level.LevelTwo;
+            GameManager.instance.health = 100;
+            GameManager.instance.ammo = 5;
+        }
     }
 
 

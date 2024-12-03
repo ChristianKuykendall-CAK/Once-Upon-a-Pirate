@@ -6,71 +6,78 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-
     public Button startButton;
     public Button loadButton;
     public Button controlsButton;
     public Button endButton;
 
-
-
     void Start()
     {
-        //create on click listeners for start and end buttons
+        // Create on-click listeners for all buttons
         startButton.onClick.AddListener(StartGame);
         loadButton.onClick.AddListener(LoadGame);
         controlsButton.onClick.AddListener(ControlsScreen);
         endButton.onClick.AddListener(EndGame);
     }
 
-    public void StartGame() //starts game when the start button is pressed
+    public void StartGame() // Starts the game when the start button is pressed
     {
         if (GameManager.instance != null)
         {
+            // Reset game state for a new game
             GameManager.instance.health = 100;
             GameManager.instance.ammo = 5;
             GameManager.instance.coin = 0;
+            GameManager.instance.LevelNum = GameManager.Level.LevelOne; // Default to Level 1
         }
-        string sceneName = GameManager.instance.LevelNum == GameManager.Level.LevelOne ? "LevelOne" : "LevelTwo";
-        SceneManager.LoadScene(sceneName);
+
+        SceneManager.LoadScene("LevelOne");
     }
 
     public void LoadGame()
     {
-        string sceneName = GameManager.instance.LevelNum == GameManager.Level.LevelOne ? "LevelOne" : "LevelTwo";
-        SceneManager.LoadScene(sceneName);
-        // Ensure we load the game after the scene has fully loaded
-        SceneManager.sceneLoaded += OnGameSceneLoaded;
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.Load(); // Load saved game state
+            string sceneName = GameManager.instance.LevelNum == GameManager.Level.LevelOne ? "LevelOne" : "LevelTwo";
+            SceneManager.LoadScene(sceneName);
+
+            // Ensure the saved position is applied after the scene is loaded
+            SceneManager.sceneLoaded += OnGameSceneLoaded;
+        }
+        else
+        {
+            Debug.LogError("GameManager instance not found!");
+        }
     }
 
     private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if ((scene.name == "LevelOne" || scene.name == "LeveTwo") && GameManager.instance != null)
+        // Ensure this runs only for LevelOne or LevelTwo
+        if ((scene.name == "LevelOne" || scene.name == "LevelTwo") && GameManager.instance != null)
         {
-            SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
+            // Unsubscribe to avoid duplicate calls
+            SceneManager.sceneLoaded -= OnGameSceneLoaded;
+
+            // Find the player object in the scene
             GameObject player = GameObject.FindWithTag("Player");
 
             if (player != null)
             {
-                // Set the player's position to the saved position in GameManager
+                // Set the player's position to the saved position
                 player.transform.position = GameManager.instance.playerTransform;
             }
-            else
-            {
-                Debug.LogError("Player object not found in the scene!");
-            }
-            GameManager.instance.Load();
         }
     }
 
-
-    public void ControlsScreen() //opens the controls view screen when the controls button is pressed
+    public void ControlsScreen() // Opens the controls screen when the controls button is pressed
     {
         SceneManager.LoadScene("Controls");
     }
 
-    public void EndGame() //closes game when the quit button is pressed
+    public void EndGame() // Closes the game when the quit button is pressed
     {
         Application.Quit();
+        Debug.Log("Game has been exited.");
     }
 }
