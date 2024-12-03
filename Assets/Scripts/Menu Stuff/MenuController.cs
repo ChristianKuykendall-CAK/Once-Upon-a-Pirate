@@ -25,23 +25,41 @@ public class MenuManager : MonoBehaviour
 
     public void StartGame() //starts game when the start button is pressed
     {
-        //GameManager.instance.health = 100;
-        SceneManager.LoadScene("LevelOne");
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.health = 100;
+            GameManager.instance.ammo = 5;
+            GameManager.instance.coin = 0;
+        }
+        string sceneName = GameManager.instance.LevelNum == GameManager.Level.LevelOne ? "LevelOne" : "LevelTwo";
+        SceneManager.LoadScene(sceneName);
     }
 
     public void LoadGame()
     {
-        SceneManager.LoadScene("LevelOne");
+        string sceneName = GameManager.instance.LevelNum == GameManager.Level.LevelOne ? "LevelOne" : "LevelTwo";
+        SceneManager.LoadScene(sceneName);
         // Ensure we load the game after the scene has fully loaded
         SceneManager.sceneLoaded += OnGameSceneLoaded;
     }
 
     private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "LevelOne" && GameManager.instance != null)
+        if ((scene.name == "LevelOne" || scene.name == "LeveTwo") && GameManager.instance != null)
         {
-            GameManager.instance.Load();
             SceneManager.sceneLoaded -= OnGameSceneLoaded; // Unsubscribe to prevent multiple calls
+            GameObject player = GameObject.FindWithTag("Player");
+
+            if (player != null)
+            {
+                // Set the player's position to the saved position in GameManager
+                player.transform.position = GameManager.instance.playerTransform;
+            }
+            else
+            {
+                Debug.LogError("Player object not found in the scene!");
+            }
+            GameManager.instance.Load();
         }
     }
 

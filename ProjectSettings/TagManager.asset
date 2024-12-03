@@ -18,6 +18,11 @@ TagManager:
   - MeleeEnemy
   - CheckPoint
   - Barrier
+  - DavyJones
+  - DavyBones
+  - Tentacle
+  - JumpPoint
+  - Trigger
   layers:
   - Default
   - TransparentFX

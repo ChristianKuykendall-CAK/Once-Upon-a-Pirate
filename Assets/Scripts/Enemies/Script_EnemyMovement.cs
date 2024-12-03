@@ -32,6 +32,14 @@ public class Script_EnemyMovement : MonoBehaviour
     private float offset;
     private bool frozen = false;
     private bool isDead = false;
+    private bool isSlicing = false;
+
+    //Audio
+    private AudioSource Audio;
+
+    public AudioClip swordAttack;
+    public AudioClip rangedAttack;
+    public AudioClip deathSound;
 
     public bool isPlayerDead()
     { return isDead; }
@@ -42,6 +50,7 @@ public class Script_EnemyMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         rbody = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
+        Audio = GetComponent<AudioSource>();
         Vector2 switchX = Vector2.left;
 
         if (enemyType == EnemyType.Melee)
@@ -56,14 +65,21 @@ public class Script_EnemyMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1.5f, transform.position.z);
         // Enemies are put on their own layer so then the raycast can ignore them with ~EnemyMask
         LayerMask EnemyMask = LayerMask.GetMask("enemyLayer");
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 2f, ~EnemyMask);
+        RaycastHit2D hit = Physics2D.Raycast(lowerPosition, Vector2.down, .6f, ~EnemyMask);
+        Debug.DrawRay(lowerPosition, Vector2.down, Color.green, .6f);
 
         //Debug.DrawRay(transform.position, Vector2.down, Color.red);
         //Debug.Log(hit.collider);
-        if (health <= 0)
+
+
+        //enemy die
+        if (health <= 0 && !isDead) 
         {
+            isDead = true;
+
             moveSpeed = 0;
             moveForce = 0;
 
@@ -71,22 +87,27 @@ public class Script_EnemyMovement : MonoBehaviour
             {
                 anim.ResetTrigger("isWalking");
             }
+
+            Audio.PlayOneShot(deathSound);
             
-            isDead = true;
             frozen = true;
             Freeze();
 
             anim.SetTrigger("isDead");
             Invoke("Die", 2f);
         }
+
+
         if (hit.collider == null && rbody.velocity.y == 0)
         {
             if (switchX == Vector2.left)
             {
+                FlipX();
                 switchX = Vector2.right;
             }
             else
             {
+                FlipX();
                 switchX = Vector2.left;
             }
         }
@@ -94,18 +115,17 @@ public class Script_EnemyMovement : MonoBehaviour
             rbody.velocity = switchX * moveSpeed;
 
         //triggers the walking animation
-        if(moveSpeed > 0)
+        if(moveSpeed > 0 && isSlicing == false)
         {
             anim.SetTrigger("isWalking");
-            anim.SetBool("isSlicing", false);
+            //anim.SetBool("isSlicing", false);
         }
 
         if (enemyType == EnemyType.Melee)
         {
 
-            Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 1.2f, transform.position.z);
             RaycastHit2D hitPlayer = Physics2D.Raycast(transform.position, switchX, 2f, ~EnemyMask);
-            RaycastHit2D hitWall = Physics2D.Raycast(lowerPosition, switchX, .8f, ~EnemyMask);
+            RaycastHit2D hitWall = Physics2D.Raycast(lowerPosition, switchX, 1.5f, ~EnemyMask);
 
             if (!isDead)
             {
@@ -143,13 +163,22 @@ public class Script_EnemyMovement : MonoBehaviour
                     // freezes enemy after attack
                     Invoke("Freeze", 2f);
                     frozen = true;
+                    anim.ResetTrigger("isWalking");
 
                     EnemyattackCollider.transform.position = transform.position + new Vector3(switchX.x + offset, switchX.y, 0);
+
+                    Audio.PlayOneShot(swordAttack);
 
                     boxCollider.size = new Vector2(.5f, .5f);
 
                     Destroy(EnemyattackCollider, 0.5f);
+                    moveSpeed = 0;
                     anim.SetBool("isSlicing", true);
+                    
+                } else if (hitPlayer.collider == null)
+                {
+                    moveSpeed = 5;
+                    anim.SetBool("isSlicing", false);
                 }
             }
         }
@@ -185,6 +214,7 @@ public class Script_EnemyMovement : MonoBehaviour
 
                     //spawns bullet prefab in direction facing
                     Instantiate(bullet_prefab, firePoint.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : firePoint.rotation);
+                    Audio.PlayOneShot(rangedAttack);
 
                     //bullet fire time, DELAY!
                     nextTimeToFire = Time.time + fireDelay;
@@ -199,9 +229,13 @@ public class Script_EnemyMovement : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+
+            if (collision.gameObject.CompareTag("Bullet"))
         {
-            health -= 25;
+            Debug.Log(collision.gameObject);
+            rend.color = Color.red;
+            health -= 50;
+            Invoke("ColorDelay", .5f);
         }
     }
     void OnTriggerEnter2D(Collider2D collider)
@@ -211,11 +245,16 @@ public class Script_EnemyMovement : MonoBehaviour
             collider.CompareTag("Ammo") || 
             collider.CompareTag("Health") || 
             collider.CompareTag("Coin") ||
-            collider.CompareTag("EnemyBullet"))
+            collider.CompareTag("EnemyBullet") ||
+            collider.CompareTag("Platform") ||
+            collider.CompareTag("CheckPoint"))
         {
             return;
         }
-        health -= 20;
+        Debug.Log(collider);
+        rend.color = Color.red;
+        health -= 50;
+        Invoke("ColorDelay", .5f);
     }
 
     //flips the sprite 
@@ -225,6 +264,12 @@ public class Script_EnemyMovement : MonoBehaviour
         theScale.x = theScale.x * -1;
         transform.localScale = theScale;
     }
+
+    void ColorDelay()
+    {
+        rend.color = Color.white;
+    }
+
 
     void Die()
     {
