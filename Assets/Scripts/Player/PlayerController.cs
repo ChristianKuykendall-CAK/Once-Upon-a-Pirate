@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        LayerMask PlayerMask = LayerMask.GetMask("playerLayer"); // player has their own layer so raycast can ignore it
+        LayerMask PlayerMask = LayerMask.GetMask("playerLayer"); // player has their own layer so the raycast can ignore it
 
         if (rbody.velocity.x < 10 && rbody.velocity.x > -10)
             rbody.AddForce(Vector2.right * Mathf.Round(H) * moveForce);
@@ -260,7 +260,7 @@ public class PlayerController : MonoBehaviour
     {
         Falling = true;
         tilemapCollider.isTrigger = true;
-        // Debug.Log("Is working");
+
         yield return new WaitForSeconds(.8f);
         Falling = false;
 
@@ -290,6 +290,7 @@ public class PlayerController : MonoBehaviour
         //Enemy attack trigger 
         if (collider.CompareTag("EnemyAttack") && !isPaused)
             {
+                // This is how the player reacts to being hit by the melee attack
                 Vector2 directionAwayFromEnemy = (transform.position - collider.transform.position).normalized;
                 directionAwayFromEnemy.y = 0;
                 rbody.AddForce(directionAwayFromEnemy * (moveForce / 4), ForceMode2D.Impulse);
@@ -339,7 +340,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        IEnumerator Invicibility()
+        IEnumerator Invicibility() // Invicibility frames
         {
             rend.color = Color.red;
             noDamage = true;

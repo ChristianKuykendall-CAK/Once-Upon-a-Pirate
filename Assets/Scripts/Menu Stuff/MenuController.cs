@@ -13,22 +13,22 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
-        // Create on-click listeners for all buttons
+        // Create listeners for buttons
         startButton.onClick.AddListener(StartGame);
         loadButton.onClick.AddListener(LoadGame);
         controlsButton.onClick.AddListener(ControlsScreen);
         endButton.onClick.AddListener(EndGame);
     }
 
-    public void StartGame() // Starts the game when the start button is pressed
+    public void StartGame() // Starts game
     {
         if (GameManager.instance != null)
         {
-            // Reset game state for a new game
+            // Reset game for a new game
             GameManager.instance.health = 100;
             GameManager.instance.ammo = 5;
             GameManager.instance.coin = 0;
-            GameManager.instance.LevelNum = GameManager.Level.LevelOne; // Default to Level 1
+            GameManager.instance.LevelNum = GameManager.Level.LevelOne; // Default Level 1
         }
 
         SceneManager.LoadScene("LevelOne");
@@ -38,11 +38,11 @@ public class MenuManager : MonoBehaviour
     {
         if (GameManager.instance != null)
         {
-            GameManager.instance.Load(); // Load saved game state
+            GameManager.instance.Load(); // Loads saved game state
             string sceneName = GameManager.instance.LevelNum == GameManager.Level.LevelOne ? "LevelOne" : "LevelTwo";
             SceneManager.LoadScene(sceneName);
 
-            // Ensure the saved position is applied after the scene is loaded
+            // Ensures the saved position is applied after the scene is loaded
             SceneManager.sceneLoaded += OnGameSceneLoaded;
         }
         else
@@ -53,13 +53,13 @@ public class MenuManager : MonoBehaviour
 
     private void OnGameSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Ensure this runs only for LevelOne or LevelTwo
+        // Runs only for LevelOne or LevelTwo
         if ((scene.name == "LevelOne" || scene.name == "LevelTwo") && GameManager.instance != null)
         {
             // Unsubscribe to avoid duplicate calls
             SceneManager.sceneLoaded -= OnGameSceneLoaded;
 
-            // Find the player object in the scene
+            // Find the player in the scene
             GameObject player = GameObject.FindWithTag("Player");
 
             if (player != null)
@@ -70,12 +70,12 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void ControlsScreen() // Opens the controls screen when the controls button is pressed
+    public void ControlsScreen() // Opens the controls screen
     {
         SceneManager.LoadScene("Controls");
     }
 
-    public void EndGame() // Closes the game when the quit button is pressed
+    public void EndGame() // Closes the game
     {
         Application.Quit();
         Debug.Log("Game has been exited.");

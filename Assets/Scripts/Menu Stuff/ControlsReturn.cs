@@ -15,7 +15,7 @@ public class ControlsReturn : MonoBehaviour
         returnButton.onClick.AddListener(returnGame);
     }
 
-    public void returnGame() //returns to the menu after the return button is clicked
+    public void returnGame() //returns to the menu
     {
         SceneManager.LoadScene("Menu");
     }

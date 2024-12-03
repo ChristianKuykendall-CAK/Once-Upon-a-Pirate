@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    // Depending on the level the game will save for current level information
     public enum Level { LevelOne, LevelTwo };
     public Level LevelNum;
 
@@ -17,7 +18,7 @@ public class GameManager : MonoBehaviour
     public int coin = 0;
     public Vector3 playerTransform;
     public Vector3 playerTransformBarrier;
-
+    // Items and Enemies are in lists so that they can be individually saved and loaded back in
     private HashSet<string> pickedUpItems = new HashSet<string>();
     private HashSet<string> currentEnemies = new HashSet<string>();
 
@@ -57,7 +58,7 @@ public class GameManager : MonoBehaviour
             playerPosZ = playerTransform.z,
             pickedUpItems = new List<string>(pickedUpItems),
             currentEnemies = new List<string>(currentEnemies),
-            level = LevelNum.ToString()
+            level = LevelNum.ToString() // Saves level
         };
 
         BinaryFormatter bf = new BinaryFormatter();
@@ -85,7 +86,7 @@ public class GameManager : MonoBehaviour
             pickedUpItems = new HashSet<string>(theData.pickedUpItems);
             currentEnemies = new HashSet<string>(theData.currentEnemies);
 
-            // Restore the level
+            // Restore the current level
             if (Enum.TryParse(theData.level, out Level loadedLevel))
             {
                 LevelNum = loadedLevel;
