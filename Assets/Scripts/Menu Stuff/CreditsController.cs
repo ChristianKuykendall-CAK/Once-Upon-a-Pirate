@@ -9,4 +9,8 @@ public class CreditsController : MonoBehaviour
     {
         SceneManager.LoadScene("Menu");
     }
+    public void LoadCoin() //clicking the menu button will load the main menu
+    {
+        SceneManager.LoadScene("CoinsCollected");
+    }
 }

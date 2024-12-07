@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menu Screens/Credits.unity
     guid: ca2c463d19121a74babc57b294b12808
+  - enabled: 1
+    path: Assets/Scenes/Menu Screens/CoinsCollected.unity
+    guid: dc26b7c7fa156f946bb136a55d692eae
   m_configObjects: {}
