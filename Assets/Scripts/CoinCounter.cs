@@ -10,12 +10,15 @@ public class CoinCounter : MonoBehaviour
     public Slider coinSlider;
     private int totalCoins;
 
+    public Text allCoins;
+
     private AudioSource Audio;
     public AudioClip coinSound;
 
     // Start is called before the first frame update
     void Start()
     {
+        allCoins.enabled = false;
         if (GameManager.instance != null)
         {
             totalCoins = GameManager.instance.coin;
@@ -59,5 +62,10 @@ public class CoinCounter : MonoBehaviour
         // Makes sure final coint displayed
         coinText.text = "Coins: " + totalCoins.ToString();
         coinSlider.value = GameManager.instance.coin;
+
+        if (currentCount >= 100)
+        {
+            allCoins.enabled = true;
+        }
     }
 }

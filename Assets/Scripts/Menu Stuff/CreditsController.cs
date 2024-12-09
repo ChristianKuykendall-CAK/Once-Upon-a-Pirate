@@ -8,7 +8,7 @@ public class CreditsController : MonoBehaviour
 {
     public Button Next1;
     public Button Next2;
-    public Button Menu;
+    public Button CoinCounter;
 
     public Image Dev;
     public Image Test;
@@ -30,8 +30,8 @@ public class CreditsController : MonoBehaviour
         Thanks.enabled = true;
         Next2.enabled = false;
         Next2.image.enabled = false;
-        Menu.enabled = true;
-        Menu.image.enabled = true;
+        CoinCounter.enabled = true;
+        CoinCounter.image.enabled = true;
     }
 
     public void LoadMenu() //clicking the menu button will load the main menu
