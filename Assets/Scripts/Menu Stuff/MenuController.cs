@@ -31,7 +31,7 @@ public class MenuManager : MonoBehaviour
             GameManager.instance.LevelNum = GameManager.Level.LevelOne; // Default Level 1
         }
 
-        SceneManager.LoadScene("LevelOne");
+        SceneManager.LoadScene("Intro Story");
     }
 
     public void LoadGame()

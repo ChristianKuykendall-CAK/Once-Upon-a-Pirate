@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu Screens/Death.unity
     guid: 4f259299492827e47b70a6d80db7613e
   - enabled: 1
+    path: Assets/Scenes/Menu Screens/Intro Story.unity
+    guid: 42969630ccec6ca46a88abc6f33c50e7
+  - enabled: 1
     path: Assets/Scenes/Levels/LevelOne.unity
     guid: a50d405117e344f4f87f700008f066ed
   - enabled: 1
