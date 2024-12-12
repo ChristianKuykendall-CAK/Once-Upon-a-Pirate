@@ -11,6 +11,7 @@ public class CoinCounter : MonoBehaviour
     private int totalCoins;
 
     public Text allCoins;
+    public Text notAllCoins;
 
     private AudioSource Audio;
     public AudioClip coinSound;
@@ -19,6 +20,7 @@ public class CoinCounter : MonoBehaviour
     void Start()
     {
         allCoins.enabled = false;
+        notAllCoins.enabled = false;
         if (GameManager.instance != null)
         {
             totalCoins = GameManager.instance.coin;
@@ -66,6 +68,10 @@ public class CoinCounter : MonoBehaviour
         if (currentCount >= 100)
         {
             allCoins.enabled = true;
+        }
+        else
+        {
+            notAllCoins.enabled = true;
         }
     }
 }
