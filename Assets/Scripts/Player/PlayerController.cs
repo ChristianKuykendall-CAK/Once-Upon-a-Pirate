@@ -102,8 +102,9 @@ public class PlayerController : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && Time.time > nextTimeToFire && !isPaused)
             {
                 //triggers the melee animation
-                anim.SetTrigger("isSlicing");
                 Audio.PlayOneShot(swordAttack);
+                anim.SetTrigger("isSlicing");
+                
 
                 // Enemy's attack area
                 GameObject playerAttackCollider = new GameObject("PlayerAttackCollider");
@@ -129,8 +130,9 @@ public class PlayerController : MonoBehaviour
             if (Input.GetMouseButtonDown(1) && GameManager.instance.ammo > 0 && Time.time > nextTimeToFire && !isPaused)
             {
                 //triggers the shooting animation
-                anim.SetTrigger("isShooting");
                 Audio.PlayOneShot(rangedAttack);
+                anim.SetTrigger("isShooting");
+                
 
                 //Summons bullet prefab, remove ammo!!!!!!!!
                 Instantiate(bullet, bullet_point.position, facingDirection == Vector2.left ? Quaternion.Euler(0, 180, 0) : bullet_point.rotation);
@@ -261,7 +263,7 @@ public class PlayerController : MonoBehaviour
         Falling = true;
         tilemapCollider.isTrigger = true;
 
-        yield return new WaitForSeconds(.8f);
+        yield return new WaitForSeconds(.3f);
         Falling = false;
 
     }
