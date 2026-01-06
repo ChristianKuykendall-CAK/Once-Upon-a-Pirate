@@ -10,6 +10,7 @@ public class MenuManager : MonoBehaviour
     public Button loadButton;
     public Button controlsButton;
     public Button endButton;
+    public Button winterButton;
 
     void Start()
     {
@@ -18,6 +19,7 @@ public class MenuManager : MonoBehaviour
         loadButton.onClick.AddListener(LoadGame);
         controlsButton.onClick.AddListener(ControlsScreen);
         endButton.onClick.AddListener(EndGame);
+        winterButton.onClick.AddListener(WinterLevel);
     }
 
     public void StartGame() // Starts game
@@ -32,6 +34,22 @@ public class MenuManager : MonoBehaviour
         }
 
         SceneManager.LoadScene("Intro Story");
+    }
+
+    public void WinterLevel() // Starts game
+    {
+        if (GameManager.instance != null)
+        {
+            // Reset game for a new game
+            GameManager.instance.health = 100;
+            GameManager.instance.ammo = 5;
+            GameManager.instance.coin = 0;
+
+        }
+
+            SceneManager.LoadScene("LevelThree");
+
+
     }
 
     public void LoadGame()
