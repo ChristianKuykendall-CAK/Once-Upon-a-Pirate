@@ -41,4 +41,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/LevelThree.unity
     guid: c9831297e3a87394fb6922019ec0190f
+  - enabled: 1
+    path: Assets/Scenes/Menu Screens/WinterEnd.unity
+    guid: 04f793871bb64934898815a32f6d81a5
   m_configObjects: {}
